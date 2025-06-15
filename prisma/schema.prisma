@@ -11,298 +11,342 @@ datasource db {
 }
 
 model Movie {
-  id              Int      @id @default(autoincrement())
-  title           String   @db.VarChar(255)
-  originalTitle   String?  @map("original_title") @db.VarChar(255)
-  slug            String?  @unique @db.VarChar(255)
-  year            Int?
-  releaseDate     DateTime? @map("release_date") @db.Date
-  runtime         Int?
-  tagline         String?  @db.Text
-  overview        String?  @db.Text
-  contentRating   String?  @map("content_rating") @db.VarChar(10)
-  
-  // Financial information
-  budget          BigInt?
-  boxOffice       BigInt?  @map("box_office")
-  revenue         BigInt?
-  
-  // Media assets
-  posterUrl       String?  @map("poster_url") @db.Text
-  backdropUrl     String?  @map("backdrop_url") @db.Text
-  trailerUrl      String?  @map("trailer_url") @db.Text
-  
-  // External API integration
-  tmdbId          Int?     @unique @map("tmdb_id")
-  tmdbUrl         String?  @map("tmdb_url") @db.Text
-  tmdbRating      Decimal? @map("tmdb_rating") @db.Decimal(3, 1)
-  tmdbVotes       Int?     @map("tmdb_votes")
-  tmdbPopularity  Decimal? @map("tmdb_popularity") @db.Decimal(8, 3)
-  imdbId          String?  @map("imdb_id") @db.VarChar(20)
-  imdbUrl         String?  @map("imdb_url") @db.Text
-  
-  // Affiliate monetization
-  amazonLink      String?  @map("amazon_link") @db.Text
-  netflixLink     String?  @map("netflix_link") @db.Text
-  huluLink        String?  @map("hulu_link") @db.Text
-  disneyPlusLink  String?  @map("disney_plus_link") @db.Text
-  primeVideoLink  String?  @map("prime_video_link") @db.Text
-  
-  // Metadata
-  status          String   @default("released") @db.VarChar(20)
-  languageCode    String?  @map("language_code") @db.VarChar(5)
-  adult           Boolean  @default(false)
-  video           Boolean  @default(false)
-  
-  // WordPress integration
-  wordpressId     Int?     @unique @map("wordpress_id")
-  podsData        Json?    @map("pods_data")
-  
+  id Int @id @default(autoincrement())
+
+  // Core movie information - EXACT Pods field mapping
+  movieTitle         String?   @map("movie_title") @db.VarChar(255)
+  movieOriginalTitle String?   @map("movie_original_title") @db.VarChar(255)
+  movieYear          String?   @map("movie_year") @db.VarChar(255) // Pods: text, max 255
+  movieReleaseDate   DateTime? @map("movie_release_date") @db.Date // Pods: date, Y-m-d format
+  movieRuntime       Int?      @map("movie_runtime") // Pods: number, integer
+  movieTagline       String?   @map("movie_tagline") @db.Text
+  movieOverview      String?   @map("movie_overview") @db.Text // Pods: paragraph
+  movieContentRating String?   @map("movie_content_rating") @db.VarChar(255)
+
+  // Financial information - Pods stores as TEXT, not numeric
+  movieBudget    String? @map("movie_budget") @db.Text // Pods: text
+  movieBoxOffice String? @map("movie_box_office") @db.Text // Pods: text
+
+  // Media assets - Pods file/image fields
+  moviePoster   String? @map("movie_poster") @db.Text // Pods: file/image
+  movieBackdrop String? @map("movie_backdrop") @db.Text // Pods: file/image
+  movieTrailer  String? @map("movie_trailer") @db.Text // Pods: text
+
+  // TMDb integration - EXACT Pods field names and types
+  movieTmdbId     String? @map("movie_tmdb_id") @db.Text // Pods: text (not numeric!)
+  movieTmdbUrl    String? @map("movie_tmdb_url") @db.Text // Pods: website
+  movieTmdbRating String? @map("movie_tmdb_rating") @db.Text // Pods: text (not decimal!)
+  movieTmdbVotes  String? @map("movie_tmdb_votes") @db.Text // Pods: text (not integer!)
+
+  // IMDb integration - EXACT Pods field names
+  movieImdbId  String? @map("movie_imdb_id") @db.Text // Pods: text
+  movieImdbUrl String? @map("movie_imdb_url") @db.Text // Pods: website
+
+  // Characters field - Pods REPEATABLE text field
+  movieCharacters Json? @map("movie_characters") // Store repeatable as JSON array
+
+  // Affiliate monetization - EXACT Pods structure
+  movieAmazonLink String? @map("movie_amazon_link") @db.VarChar(555) // Pods: website, max 555
+
+  // Additional fields for bidirectional Pods relationships
+  movieActors      Json? @map("movie_actors") // Bidirectional with actor.related_movies_actor
+  movieDirectors   Json? @map("movie_directors") // Bidirectional with director.related_movies_director  
+  movieWriters     Json? @map("movie_writers") // Bidirectional with writer.related_movies_writer
+  movieGenres      Json? @map("movie_genres") // Bidirectional with genre.related_movies_genre
+  movieCountries   Json? @map("movie_countries") // Bidirectional with country.related_movies_country
+  movieLanguages   Json? @map("movie_languages") // Bidirectional with language.related_movies_language
+  movieStudios     Json? @map("movie_studios") // Bidirectional with studio.related_movies_studio
+  movieExperiments Json? @map("movie_experiments") // Bidirectional with experiment.experiment_movies
+
+  // WordPress/Pods integration - CRITICAL for seamless sync
+  wordpressId Int?    @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json?   @map("pods_data") // Store complete original Pods data
+  slug        String? @unique @db.VarChar(255) // WordPress post slug
+
   // System fields
-  syncStatus      String   @default("pending") @map("sync_status") @db.VarChar(20)
-  lastSynced      DateTime? @map("last_synced")
-  lastTmdbFetch   DateTime? @map("last_tmdb_fetch")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-  
-  // Relationships
-  cast            MovieCast[]
-  crew            MovieCrew[]
-  genres          MovieGenre[]
-  studios         MovieStudio[]
-  countries       MovieCountry[]
-  languages       MovieLanguage[]
-  experiments     ExperimentMovie[]
-  
+  syncStatus    String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced    DateTime? @map("last_synced")
+  lastTmdbFetch DateTime? @map("last_tmdb_fetch")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
   @@map("movies")
 }
 
-model Person {
-  id                  Int      @id @default(autoincrement())
-  name                String   @db.VarChar(255)
-  originalName        String?  @map("original_name") @db.VarChar(255)
-  gender              Int?     // 0=unknown, 1=female, 2=male, 3=non-binary
-  birthday            DateTime? @db.Date
-  deathday            DateTime? @db.Date
-  placeOfBirth        String?  @map("place_of_birth") @db.Text
-  biography           String?  @db.Text
-  knownForDepartment  String?  @map("known_for_department") @db.VarChar(50)
-  popularity          Decimal? @db.Decimal(8, 3)
-  profileImageUrl     String?  @map("profile_image_url") @db.Text
-  
-  // External IDs
-  tmdbId              Int?     @unique @map("tmdb_id")
-  tmdbUrl             String?  @map("tmdb_url") @db.Text
-  imdbId              String?  @map("imdb_id") @db.VarChar(20)
-  imdbUrl             String?  @map("imdb_url") @db.Text
-  
-  // Social media
-  instagramId         String?  @map("instagram_id") @db.VarChar(100)
-  twitterId           String?  @map("twitter_id") @db.VarChar(100)
-  facebookId          String?  @map("facebook_id") @db.VarChar(100)
-  
-  // WordPress integration
-  wordpressId         Int?     @map("wordpress_id")
-  
+// ACTOR Pod - EXACT Pods field mapping
+model Actor {
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods actor fields
+  actorName               String    @map("actor_name") @db.VarChar(255) // Required in Pods
+  profileImage            String?   @map("profile_image") @db.Text // Pods: file/image
+  actorBiography          String?   @map("actor_biography") @db.Text // Pods: wysiwyg
+  actorBirthday           DateTime? @map("actor_birthday") @db.Date // Pods: date, mdy format
+  actorDeathday           DateTime? @map("actor_deathday") @db.Date // Pods: date, mdy format
+  actorPlaceOfBirth       String?   @map("actor_place_of_birth") @db.VarChar(255) // Pods: text, max 255
+  actorMovieCount         String?   @map("actor_movie_count") @db.Text // Pods: text (not numeric!)
+  actorPopularity         String?   @map("actor_popularity") @db.Text // Pods: text (not numeric!)
+  actorKnownForDepartment String?   @map("actor_known_for_department") @db.VarChar(255)
+
+  // External IDs - EXACT Pods field names
+  actorImdbId  String? @map("actor_imdb_id") @db.Text // Pods: text
+  actorImdbUrl String? @map("actor_imdb_url") @db.Text // Pods: website
+  actorTmdbUrl String? @map("actor_tmdb_url") @db.Text // Pods: website
+
+  // Social media - EXACT Pods field names (note the underscore in twitter!)
+  actorInstagramId String? @map("actor_instagram_id") @db.VarChar(255)
+  actorTwitterId   String? @map("actor_twitter_id_") @db.VarChar(255) // NOTE: Pods has underscore!
+  actorFacebookId  String? @map("actor_facebook_id") @db.VarChar(255)
+
+  // Bidirectional relationship with movies
+  relatedMoviesActor Json? @map("related_movies_actor") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
   // System fields
-  syncStatus          String   @default("pending") @map("sync_status") @db.VarChar(20)
-  lastSynced          DateTime? @map("last_synced")
-  createdAt           DateTime @default(now()) @map("created_at")
-  updatedAt           DateTime @updatedAt @map("updated_at")
-  
-  // Relationships
-  movieCast           MovieCast[]
-  movieCrew           MovieCrew[]
-  
-  @@map("people")
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("actors")
 }
 
+// DIRECTOR Pod - EXACT Pods field mapping  
+model Director {
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods director fields
+  directorName         String    @map("director_name") @db.VarChar(255) // Required in Pods
+  directorBiography    String?   @map("director_biography") @db.Text // Pods: wysiwyg
+  directorMovieCount   String?   @map("director_movie_count") @db.Text // Pods: text (not numeric!)
+  directorBirthday     DateTime? @map("director_birthday") @db.Date // Pods: date, mdy format
+  directorDeathday     DateTime? @map("director_deathday") @db.Date // Pods: date, mdy format
+  directorPlaceOfBirth String?   @map("director_place_of_birth") @db.VarChar(255) // Pods: text, max 255
+  directorPopularity   String?   @map("director_popularity") @db.Text // Pods: text (not numeric!)
+  directorProfileImage String?   @map("director_profile_image") @db.Text // Pods: file/image
+
+  // External IDs - EXACT Pods field names
+  directorImdbId  String? @map("director_imdb_id") @db.Text // Pods: text
+  directorImdbUrl String? @map("director_imdb_url") @db.Text // Pods: website
+  directorTmdbUrl String? @map("director_tmdb_url") @db.Text // Pods: website
+
+  // Social media - EXACT Pods field names
+  directorInstagramId String? @map("director_instagram_id") @db.VarChar(255)
+  directorTwitterId   String? @map("director_twitter_id") @db.VarChar(255)
+  directorFacebookId  String? @map("director_facebook_id") @db.VarChar(255)
+
+  // Bidirectional relationship with movies
+  relatedMoviesDirector Json? @map("related_movies_director") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("directors")
+}
+
+// WRITER Pod - EXACT Pods field mapping
+model Writer {
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods writer fields (similar structure to actors/directors)
+  writerName         String    @map("writer_name") @db.VarChar(255) // Required in Pods
+  writerBiography    String?   @map("writer_biography") @db.Text // Pods: wysiwyg
+  writerMovieCount   String?   @map("writer_movie_count") @db.Text // Pods: text (not numeric!)
+  writerBirthday     DateTime? @map("writer_birthday") @db.Date // Pods: date, mdy format
+  writerDeathday     DateTime? @map("writer_deathday") @db.Date // Pods: date, mdy format
+  writerPlaceOfBirth String?   @map("writer_place_of_birth") @db.VarChar(255) // Pods: text, max 255
+  writerPopularity   String?   @map("writer_popularity") @db.Text // Pods: text (not numeric!)
+  writerProfileImage String?   @map("writer_profile_image") @db.Text // Pods: file/image
+
+  // External IDs - EXACT Pods field names
+  writerImdbId  String? @map("writer_imdb_id") @db.Text // Pods: text
+  writerImdbUrl String? @map("writer_imdb_url") @db.Text // Pods: website
+  writerTmdbUrl String? @map("writer_tmdb_url") @db.Text // Pods: website
+
+  // Social media - EXACT Pods field names
+  writerInstagramId String? @map("writer_instagram_id") @db.VarChar(255)
+  writerTwitterId   String? @map("writer_twitter_id") @db.VarChar(255)
+  writerFacebookId  String? @map("writer_facebook_id") @db.VarChar(255)
+
+  // Bidirectional relationship with movies
+  relatedMoviesWriter Json? @map("related_movies_writer") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("writers")
+}
+
+// STUDIO Pod - EXACT Pods field mapping
 model Studio {
-  id              Int      @id @default(autoincrement())
-  name            String   @db.VarChar(255)
-  originalName    String?  @map("original_name") @db.VarChar(255)
-  headquarters    String?  @db.Text
-  description     String?  @db.Text
-  logoUrl         String?  @map("logo_url") @db.Text
-  websiteUrl      String?  @map("website_url") @db.Text
-  tmdbId          Int?     @unique @map("tmdb_id")
-  wordpressId     Int?     @map("wordpress_id")
-  syncStatus      String   @default("pending") @map("sync_status") @db.VarChar(20)
-  lastSynced      DateTime? @map("last_synced")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-  
-  // Relationships
-  movies          MovieStudio[]
-  
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods studio fields
+  studioName String @map("studio_name") @db.VarChar(255) // Required in Pods
+
+  // Bidirectional relationship with movies
+  relatedMoviesStudio Json? @map("related_movies_studio") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields  
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
   @@map("studios")
 }
 
+// GENRE Pod - EXACT Pods field mapping
 model Genre {
-  id            Int      @id @default(autoincrement())
-  name          String   @unique @db.VarChar(100)
-  tmdbId        Int?     @unique @map("tmdb_id")
-  wordpressId   Int?     @map("wordpress_id")
-  createdAt     DateTime @default(now()) @map("created_at")
-  
-  // Relationships
-  movies        MovieGenre[]
-  
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods genre fields
+  genreName String @map("genre_name") @db.VarChar(255) // Required in Pods
+
+  // Bidirectional relationship with movies
+  relatedMoviesGenre Json? @map("related_movies_genre") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
   @@map("genres")
 }
 
+// COUNTRY Pod - EXACT Pods field mapping
 model Country {
-  id            Int      @id @default(autoincrement())
-  name          String   @db.VarChar(100)
-  isoCode       String   @unique @map("iso_code") @db.VarChar(2)
-  wordpressId   Int?     @map("wordpress_id")
-  createdAt     DateTime @default(now()) @map("created_at")
-  
-  // Relationships
-  movies        MovieCountry[]
-  
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods country fields
+  countryName String  @map("country_name") @db.VarChar(255) // Required in Pods
+  isoCode     String? @map("iso_code") @db.VarChar(10) // Pods: text
+
+  // Bidirectional relationship with movies
+  relatedMoviesCountry Json? @map("related_movies_country") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
   @@map("countries")
 }
 
+// LANGUAGE Pod - EXACT Pods field mapping
 model Language {
-  id            Int      @id @default(autoincrement())
-  name          String   @db.VarChar(100)
-  isoCode       String   @unique @map("iso_code") @db.VarChar(5)
-  englishName   String?  @map("english_name") @db.VarChar(100)
-  wordpressId   Int?     @map("wordpress_id")
-  createdAt     DateTime @default(now()) @map("created_at")
-  
-  // Relationships
-  movies        MovieLanguage[]
-  
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods language fields
+  languageName String @map("language_name") @db.VarChar(255) // Required in Pods
+
+  // Bidirectional relationship with movies
+  relatedMoviesLanguage Json? @map("related_movies_language") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
   @@map("languages")
 }
 
+// EXPERIMENT Pod - EXACT Pods field mapping
 model Experiment {
-  id                  Int      @id @default(autoincrement())
-  experimentNumber    String?  @map("experiment_number") @db.VarChar(50)
-  eventDate           DateTime? @map("event_date") @db.Date
-  eventLocation       String?  @map("event_location") @db.Text
-  eventHost           String?  @map("event_host") @db.VarChar(255)
-  experimentNotes     String?  @map("experiment_notes") @db.Text
-  experimentImageUrl  String?  @map("experiment_image_url") @db.Text
-  status              String   @default("planned") @db.VarChar(20)
-  participantCount    Int?     @map("participant_count")
-  wordpressId         Int?     @unique @map("wordpress_id")
-  syncStatus          String   @default("pending") @map("sync_status") @db.VarChar(20)
-  lastSynced          DateTime? @map("last_synced")
-  createdAt           DateTime @default(now()) @map("created_at")
-  updatedAt           DateTime @updatedAt @map("updated_at")
-  
-  // Relationships
-  movies              ExperimentMovie[]
-  
+  id Int @id @default(autoincrement())
+
+  // EXACT Pods experiment fields
+  experimentNumber String?  @map("experiment_number") @db.VarChar(255) // Pods: text, max 255
+  eventDate        DateTime @map("event_date") @db.Date // Pods: date, fjsy format, HTML5, REQUIRED
+  eventLocation    Json     @map("event_location") // Pods: pick custom-simple, REPEATABLE, REQUIRED
+  // Options: "Bigscreen VR\nDiscord\nTwitch\nYoutube\nVimeo"
+  eventHost        String?  @map("event_host") @db.VarChar(255) // Pods: pick user, single dropdown
+  experimentImage  String?  @map("experiment_image") @db.Text // Pods: file/image
+  experimentNotes  String?  @map("experiment_notes") @db.Text // Pods: wysiwyg
+
+  // Bidirectional relationship with movies
+  experimentMovies Json? @map("experiment_movies") // Bidirectional pick to movies
+
+  // WordPress/Pods integration
+  wordpressId Int?  @unique @map("wordpress_id") // WordPress post ID  
+  podsData    Json? @map("pods_data") // Store complete Pods data
+
+  // System fields
+  syncStatus String    @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced DateTime? @map("last_synced")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
   @@map("experiments")
 }
 
-// Relationship tables
-model MovieCast {
-  id            Int      @id @default(autoincrement())
-  movieId       Int      @map("movie_id")
-  personId      Int      @map("person_id")
-  characterName String?  @map("character_name") @db.VarChar(255)
-  castOrder     Int?     @map("cast_order")
-  createdAt     DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie         Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  person        Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, personId, characterName])
-  @@map("movie_cast")
+// WordPress/Pods Sync Management Tables
+
+// Track sync operations and status
+model SyncLog {
+  id           Int       @id @default(autoincrement())
+  operation    String    @db.VarChar(50) // create, update, delete
+  entityType   String    @map("entity_type") @db.VarChar(50) // movie, actor, experiment, etc.
+  entityId     Int       @map("entity_id")
+  wordpressId  Int?      @map("wordpress_id")
+  direction    String    @db.VarChar(20) // to_wordpress, from_wordpress, bidirectional
+  status       String    @db.VarChar(20) // pending, success, failed, conflict
+  errorMessage String?   @map("error_message") @db.Text
+  syncData     Json?     @map("sync_data") // Store sync payload
+  createdAt    DateTime  @default(now()) @map("created_at")
+  completedAt  DateTime? @map("completed_at")
+
+  @@map("sync_logs")
 }
 
-model MovieCrew {
-  id          Int      @id @default(autoincrement())
-  movieId     Int      @map("movie_id")
-  personId    Int      @map("person_id")
-  job         String   @db.VarChar(100)
-  department  String?  @db.VarChar(100)
-  creditOrder Int?     @map("credit_order")
-  createdAt   DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie       Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  person      Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, personId, job])
-  @@map("movie_crew")
-}
+// Store WordPress/Pods configuration and mapping
+model PodsConfig {
+  id            Int       @id @default(autoincrement())
+  podName       String    @map("pod_name") @db.VarChar(100) // actor, movie, experiment, etc.
+  wordpressUrl  String    @map("wordpress_url") @db.Text
+  restBase      String    @map("rest_base") @db.VarChar(100) // actors, movies, experiments
+  fieldMappings Json      @map("field_mappings") // Complete field mapping configuration
+  lastSync      DateTime? @map("last_sync")
+  enabled       Boolean   @default(true)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
 
-model MovieGenre {
-  id        Int      @id @default(autoincrement())
-  movieId   Int      @map("movie_id")
-  genreId   Int      @map("genre_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  genre     Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, genreId])
-  @@map("movie_genres")
-}
-
-model MovieStudio {
-  id        Int      @id @default(autoincrement())
-  movieId   Int      @map("movie_id")
-  studioId  Int      @map("studio_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  studio    Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, studioId])
-  @@map("movie_studios")
-}
-
-model MovieCountry {
-  id        Int      @id @default(autoincrement())
-  movieId   Int      @map("movie_id")
-  countryId Int      @map("country_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  country   Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, countryId])
-  @@map("movie_countries")
-}
-
-model MovieLanguage {
-  id         Int      @id @default(autoincrement())
-  movieId    Int      @map("movie_id")
-  languageId Int      @map("language_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  movie      Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
-  @@unique([movieId, languageId])
-  @@map("movie_languages")
-}
-
-model ExperimentMovie {
-  id           Int      @id @default(autoincrement())
-  experimentId Int      @map("experiment_id")
-  movieId      Int      @map("movie_id")
-  watchOrder   Int?     @map("watch_order")
-  notes        String?  @db.Text
-  rating       Int?     @db.SmallInt
-  createdAt    DateTime @default(now()) @map("created_at")
-  
-  // Relations
-  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
-  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  
-  @@unique([experimentId, movieId])
-  @@map("experiment_movies")
+  @@unique([podName])
+  @@map("pods_config")
 }
