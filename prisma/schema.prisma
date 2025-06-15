@@ -1,0 +1,308 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Movie {
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(255)
+  originalTitle   String?  @map("original_title") @db.VarChar(255)
+  slug            String?  @unique @db.VarChar(255)
+  year            Int?
+  releaseDate     DateTime? @map("release_date") @db.Date
+  runtime         Int?
+  tagline         String?  @db.Text
+  overview        String?  @db.Text
+  contentRating   String?  @map("content_rating") @db.VarChar(10)
+  
+  // Financial information
+  budget          BigInt?
+  boxOffice       BigInt?  @map("box_office")
+  revenue         BigInt?
+  
+  // Media assets
+  posterUrl       String?  @map("poster_url") @db.Text
+  backdropUrl     String?  @map("backdrop_url") @db.Text
+  trailerUrl      String?  @map("trailer_url") @db.Text
+  
+  // External API integration
+  tmdbId          Int?     @unique @map("tmdb_id")
+  tmdbUrl         String?  @map("tmdb_url") @db.Text
+  tmdbRating      Decimal? @map("tmdb_rating") @db.Decimal(3, 1)
+  tmdbVotes       Int?     @map("tmdb_votes")
+  tmdbPopularity  Decimal? @map("tmdb_popularity") @db.Decimal(8, 3)
+  imdbId          String?  @map("imdb_id") @db.VarChar(20)
+  imdbUrl         String?  @map("imdb_url") @db.Text
+  
+  // Affiliate monetization
+  amazonLink      String?  @map("amazon_link") @db.Text
+  netflixLink     String?  @map("netflix_link") @db.Text
+  huluLink        String?  @map("hulu_link") @db.Text
+  disneyPlusLink  String?  @map("disney_plus_link") @db.Text
+  primeVideoLink  String?  @map("prime_video_link") @db.Text
+  
+  // Metadata
+  status          String   @default("released") @db.VarChar(20)
+  languageCode    String?  @map("language_code") @db.VarChar(5)
+  adult           Boolean  @default(false)
+  video           Boolean  @default(false)
+  
+  // WordPress integration
+  wordpressId     Int?     @unique @map("wordpress_id")
+  podsData        Json?    @map("pods_data")
+  
+  // System fields
+  syncStatus      String   @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced      DateTime? @map("last_synced")
+  lastTmdbFetch   DateTime? @map("last_tmdb_fetch")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relationships
+  cast            MovieCast[]
+  crew            MovieCrew[]
+  genres          MovieGenre[]
+  studios         MovieStudio[]
+  countries       MovieCountry[]
+  languages       MovieLanguage[]
+  experiments     ExperimentMovie[]
+  
+  @@map("movies")
+}
+
+model Person {
+  id                  Int      @id @default(autoincrement())
+  name                String   @db.VarChar(255)
+  originalName        String?  @map("original_name") @db.VarChar(255)
+  gender              Int?     // 0=unknown, 1=female, 2=male, 3=non-binary
+  birthday            DateTime? @db.Date
+  deathday            DateTime? @db.Date
+  placeOfBirth        String?  @map("place_of_birth") @db.Text
+  biography           String?  @db.Text
+  knownForDepartment  String?  @map("known_for_department") @db.VarChar(50)
+  popularity          Decimal? @db.Decimal(8, 3)
+  profileImageUrl     String?  @map("profile_image_url") @db.Text
+  
+  // External IDs
+  tmdbId              Int?     @unique @map("tmdb_id")
+  tmdbUrl             String?  @map("tmdb_url") @db.Text
+  imdbId              String?  @map("imdb_id") @db.VarChar(20)
+  imdbUrl             String?  @map("imdb_url") @db.Text
+  
+  // Social media
+  instagramId         String?  @map("instagram_id") @db.VarChar(100)
+  twitterId           String?  @map("twitter_id") @db.VarChar(100)
+  facebookId          String?  @map("facebook_id") @db.VarChar(100)
+  
+  // WordPress integration
+  wordpressId         Int?     @map("wordpress_id")
+  
+  // System fields
+  syncStatus          String   @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced          DateTime? @map("last_synced")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  // Relationships
+  movieCast           MovieCast[]
+  movieCrew           MovieCrew[]
+  
+  @@map("people")
+}
+
+model Studio {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(255)
+  originalName    String?  @map("original_name") @db.VarChar(255)
+  headquarters    String?  @db.Text
+  description     String?  @db.Text
+  logoUrl         String?  @map("logo_url") @db.Text
+  websiteUrl      String?  @map("website_url") @db.Text
+  tmdbId          Int?     @unique @map("tmdb_id")
+  wordpressId     Int?     @map("wordpress_id")
+  syncStatus      String   @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced      DateTime? @map("last_synced")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relationships
+  movies          MovieStudio[]
+  
+  @@map("studios")
+}
+
+model Genre {
+  id            Int      @id @default(autoincrement())
+  name          String   @unique @db.VarChar(100)
+  tmdbId        Int?     @unique @map("tmdb_id")
+  wordpressId   Int?     @map("wordpress_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  
+  // Relationships
+  movies        MovieGenre[]
+  
+  @@map("genres")
+}
+
+model Country {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(100)
+  isoCode       String   @unique @map("iso_code") @db.VarChar(2)
+  wordpressId   Int?     @map("wordpress_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  
+  // Relationships
+  movies        MovieCountry[]
+  
+  @@map("countries")
+}
+
+model Language {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(100)
+  isoCode       String   @unique @map("iso_code") @db.VarChar(5)
+  englishName   String?  @map("english_name") @db.VarChar(100)
+  wordpressId   Int?     @map("wordpress_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  
+  // Relationships
+  movies        MovieLanguage[]
+  
+  @@map("languages")
+}
+
+model Experiment {
+  id                  Int      @id @default(autoincrement())
+  experimentNumber    String?  @map("experiment_number") @db.VarChar(50)
+  eventDate           DateTime? @map("event_date") @db.Date
+  eventLocation       String?  @map("event_location") @db.Text
+  eventHost           String?  @map("event_host") @db.VarChar(255)
+  experimentNotes     String?  @map("experiment_notes") @db.Text
+  experimentImageUrl  String?  @map("experiment_image_url") @db.Text
+  status              String   @default("planned") @db.VarChar(20)
+  participantCount    Int?     @map("participant_count")
+  wordpressId         Int?     @unique @map("wordpress_id")
+  syncStatus          String   @default("pending") @map("sync_status") @db.VarChar(20)
+  lastSynced          DateTime? @map("last_synced")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  // Relationships
+  movies              ExperimentMovie[]
+  
+  @@map("experiments")
+}
+
+// Relationship tables
+model MovieCast {
+  id            Int      @id @default(autoincrement())
+  movieId       Int      @map("movie_id")
+  personId      Int      @map("person_id")
+  characterName String?  @map("character_name") @db.VarChar(255)
+  castOrder     Int?     @map("cast_order")
+  createdAt     DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie         Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  person        Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, personId, characterName])
+  @@map("movie_cast")
+}
+
+model MovieCrew {
+  id          Int      @id @default(autoincrement())
+  movieId     Int      @map("movie_id")
+  personId    Int      @map("person_id")
+  job         String   @db.VarChar(100)
+  department  String?  @db.VarChar(100)
+  creditOrder Int?     @map("credit_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie       Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  person      Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, personId, job])
+  @@map("movie_crew")
+}
+
+model MovieGenre {
+  id        Int      @id @default(autoincrement())
+  movieId   Int      @map("movie_id")
+  genreId   Int      @map("genre_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  genre     Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, genreId])
+  @@map("movie_genres")
+}
+
+model MovieStudio {
+  id        Int      @id @default(autoincrement())
+  movieId   Int      @map("movie_id")
+  studioId  Int      @map("studio_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  studio    Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, studioId])
+  @@map("movie_studios")
+}
+
+model MovieCountry {
+  id        Int      @id @default(autoincrement())
+  movieId   Int      @map("movie_id")
+  countryId Int      @map("country_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  country   Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, countryId])
+  @@map("movie_countries")
+}
+
+model MovieLanguage {
+  id         Int      @id @default(autoincrement())
+  movieId    Int      @map("movie_id")
+  languageId Int      @map("language_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  movie      Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  
+  @@unique([movieId, languageId])
+  @@map("movie_languages")
+}
+
+model ExperimentMovie {
+  id           Int      @id @default(autoincrement())
+  experimentId Int      @map("experiment_id")
+  movieId      Int      @map("movie_id")
+  watchOrder   Int?     @map("watch_order")
+  notes        String?  @db.Text
+  rating       Int?     @db.SmallInt
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  // Relations
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  
+  @@unique([experimentId, movieId])
+  @@map("experiment_movies")
+}
