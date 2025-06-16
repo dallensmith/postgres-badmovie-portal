@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { apiService, DashboardData } from '../services/api';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -128,6 +130,30 @@ export default function Dashboard() {
             {data?.stats.averageRating}/10
           </p>
           <p className="text-sm text-gray-500 mt-1">TMDb average</p>
+        </div>
+      </div>
+
+      {/* Data Export Section */}
+      <div className="mb-8">
+        <div className="bg-dark-800 p-6 rounded-lg shadow-md border border-dark-600 hover:border-primary-500 transition-colors">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-300 flex items-center">
+                <span className="text-2xl mr-3">💾</span>
+                Database Export
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Export your data for backup, analysis, or migration. Preview data before downloading.
+              </p>
+            </div>
+            <button
+              onClick={() => navigate('/export')}
+              className="bg-primary-500 hover:bg-primary-600 px-6 py-3 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+            >
+              <span>📊</span>
+              <span>Export Data</span>
+            </button>
+          </div>
         </div>
       </div>
       

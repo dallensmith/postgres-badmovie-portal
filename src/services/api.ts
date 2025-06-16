@@ -23,6 +23,20 @@ export interface RecentExperiment {
   createdAt: string;
 }
 
+export interface ExportOptions {
+  format: 'csv' | 'json';
+  scope: 'all' | 'movies' | 'experiments' | 'people';
+  includeRelationships: boolean;
+  includeMetadata: boolean;
+}
+
+export interface ExportPreview {
+  totalRecords: number;
+  sampleData: any[];
+  columns: string[];
+  estimatedFileSize: string;
+}
+
 export interface DashboardData {
   stats: DashboardStats;
   recentActivity: {
@@ -131,6 +145,32 @@ class ApiService {
     return this.fetchWithErrorHandling<any>(`/experiments/${experimentId}/movies/${movieId}`, {
       method: 'DELETE',
     });
+  }
+
+  async getExportPreview(options: ExportOptions): Promise<ExportPreview> {
+    return this.fetchWithErrorHandling<ExportPreview>('/export/preview', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(options),
+    });
+  }
+
+  async exportData(options: ExportOptions): Promise<Blob> {
+    const response = await fetch(`${API_BASE_URL}/export/download`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(options),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Export failed: ${response.statusText}`);
+    }
+
+    return await response.blob();
   }
 }
 

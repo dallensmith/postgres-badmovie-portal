@@ -293,14 +293,40 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         }
       });
 
-      // Handle arrays - convert empty arrays to null
+      console.log('🐛 DEBUG: Form data before processing:', formData);
+      console.log('🐛 DEBUG: Clean data before array processing:', cleanData);
+
+      // Handle arrays - convert empty arrays to null, ensure arrays are arrays
       const arrayFields = ['movieActors', 'movieDirectors', 'movieWriters', 'movieGenres', 'movieCountries', 'movieLanguages', 'movieStudios'];
       arrayFields.forEach(field => {
-        const value = cleanData[field as keyof MovieFormData] as string[];
-        if (Array.isArray(value) && value.length === 0) {
+        const value = cleanData[field as keyof MovieFormData];
+        console.log(`🐛 DEBUG: Processing ${field}:`, typeof value, value);
+        
+        // If it's a string, convert to array (split by comma)
+        if (typeof value === 'string') {
+          if (value.trim() === '') {
+            (cleanData as any)[field] = null;
+            console.log(`🐛 DEBUG: Set ${field} to null (empty string)`);
+          } else {
+            (cleanData as any)[field] = value.split(',').map(item => item.trim()).filter(item => item.length > 0);
+            console.log(`🐛 DEBUG: Converted ${field} to array:`, (cleanData as any)[field]);
+          }
+        }
+        // If it's already an array
+        else if (Array.isArray(value)) {
+          if (value.length === 0) {
+            (cleanData as any)[field] = null;
+            console.log(`🐛 DEBUG: Set ${field} to null (empty array)`);
+          }
+        }
+        // If it's neither string nor array, set to null
+        else {
           (cleanData as any)[field] = null;
+          console.log(`🐛 DEBUG: Set ${field} to null (not string or array)`);
         }
       });
+
+      console.log('🐛 DEBUG: Final clean data being sent to API:', cleanData);
 
       // Handle date field - convert to proper DateTime format
       if (cleanData.movieReleaseDate === '') {

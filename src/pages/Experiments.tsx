@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { apiService } from '../services/api';
+import { ExperimentFilters } from '../components/ExperimentFilters';
+import { Pagination } from '../components/Pagination';
+import { MovieGridSkeleton } from '../components/LoadingStates';
 
 interface Experiment {
   id: number;
@@ -34,18 +37,41 @@ interface NewExperiment {
   postUrl: string;
 }
 
+interface ExperimentsResponse {
+  experiments: Experiment[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+}
+
 export default function Experiments() {
   const [experiments, setExperiments] = useState<Experiment[]>([]);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 24,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Filters - matching movies page pattern
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [sortBy, setSortBy] = useState('date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  
+  // Available years for filtering
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
+
+  // Modal states
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingExperiment, setEditingExperiment] = useState<Experiment | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'date' | 'number'>('date');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalExperiments, setTotalExperiments] = useState(0);
 
   const [newExperiment, setNewExperiment] = useState<NewExperiment>({
     experimentNumber: '',
@@ -58,40 +84,112 @@ export default function Experiments() {
     postUrl: ''
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+  // Fetch experiments with current filters
+  const fetchExperiments = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-  useEffect(() => {
-    setCurrentPage(1); // Reset to first page when search/sort changes
-    loadExperiments();
-  }, [debouncedSearchTerm, sortBy, sortOrder]);
-
-  useEffect(() => {
-    loadExperiments();
-  }, [currentPage]);
-
-  const loadExperiments = async () => {
     try {
-      setLoading(true);
-      const data = await apiService.getExperimentsWithMovies(
-        currentPage, 
-        50, // Load 50 per page
-        debouncedSearchTerm,
+      const params = new URLSearchParams({
+        page: pagination.page.toString(),
+        limit: pagination.limit.toString(),
         sortBy,
         sortOrder
-      );
+      });
+
+      if (searchQuery) params.append('search', searchQuery);
+      if (selectedYear) params.append('year', selectedYear);
+
+      const response = await fetch(`/api/experiments?${params}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: ExperimentsResponse = await response.json();
       setExperiments(data.experiments || []);
-      setTotalPages(data.pagination?.pages || 1);
-      setTotalExperiments(data.pagination?.total || 0);
-    } catch (error) {
-      console.error('Failed to load experiments:', error);
+      setPagination({
+        page: data.pagination.page,
+        limit: data.pagination.limit,
+        total: data.pagination.total,
+        totalPages: data.pagination.pages,
+        hasNext: data.pagination.page < data.pagination.pages,
+        hasPrev: data.pagination.page > 1
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch experiments');
+      console.error('Error fetching experiments:', err);
     } finally {
       setLoading(false);
     }
+  }, [pagination.page, pagination.limit, searchQuery, selectedYear, sortBy, sortOrder]);
+
+  // Fetch available years for filtering
+  const fetchYears = useCallback(async () => {
+    try {
+      const response = await fetch('/api/experiments/years');
+      if (response.ok) {
+        const years = await response.json();
+        setAvailableYears(years);
+      }
+    } catch (err) {
+      console.error('Error fetching years:', err);
+    }
+  }, []);
+
+  // Initial data load
+  useEffect(() => {
+    fetchYears();
+  }, [fetchYears]);
+
+  // Fetch experiments when filters change
+  useEffect(() => {
+    fetchExperiments();
+  }, [fetchExperiments]);
+
+  // Debounced search
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (pagination.page !== 1) {
+        setPagination(prev => ({ ...prev, page: 1 }));
+      } else {
+        fetchExperiments();
+      }
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Event handlers
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const handleYearChange = (year: string) => {
+    setSelectedYear(year);
+    setPagination(prev => ({ ...prev, page: 1 }));
+  };
+
+  const handleSortChange = (newSortBy: string, newSortOrder: 'asc' | 'desc') => {
+    setSortBy(newSortBy);
+    setSortOrder(newSortOrder);
+    setPagination(prev => ({ ...prev, page: 1 }));
+  };
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setSelectedYear('');
+    setSortBy('date');
+    setSortOrder('desc');
+    setPagination(prev => ({ ...prev, page: 1 }));
+  };
+
+  const handlePageChange = (page: number) => {
+    setPagination(prev => ({ ...prev, page }));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleItemsPerPageChange = (limit: number) => {
+    setPagination(prev => ({ ...prev, limit, page: 1 }));
   };
 
   const handleCreateExperiment = async () => {
@@ -108,7 +206,7 @@ export default function Experiments() {
         eventImage: '',
         postUrl: ''
       });
-      await loadExperiments();
+      await fetchExperiments();
     } catch (error) {
       console.error('Failed to create experiment:', error);
     }
@@ -129,7 +227,7 @@ export default function Experiments() {
         postUrl: editingExperiment.postUrl
       });
       setEditingExperiment(null);
-      await loadExperiments();
+      await fetchExperiments();
     } catch (error) {
       console.error('Failed to update experiment:', error);
     }
@@ -142,7 +240,7 @@ export default function Experiments() {
     
     try {
       await apiService.deleteExperiment(id);
-      await loadExperiments();
+      await fetchExperiments();
     } catch (error) {
       console.error('Failed to delete experiment:', error);
     }
@@ -160,10 +258,22 @@ export default function Experiments() {
   };
 
   if (loading) {
+    return <MovieGridSkeleton />;
+  }
+
+  if (error) {
     return (
       <div className="flex items-center justify-center min-h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
-        <span className="ml-3 text-gray-400">Loading experiments...</span>
+        <div className="text-center">
+          <div className="text-red-400 text-lg mb-2">Error loading experiments</div>
+          <div className="text-gray-400 mb-4">{error}</div>
+          <button
+            onClick={fetchExperiments}
+            className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
@@ -191,7 +301,7 @@ export default function Experiments() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-dark-800 p-4 rounded-lg">
-          <div className="text-2xl font-bold text-white">{totalExperiments}</div>
+          <div className="text-2xl font-bold text-white">{pagination.total}</div>
           <div className="text-gray-400">Total Experiments</div>
         </div>
         <div className="bg-dark-800 p-4 rounded-lg">
@@ -204,44 +314,27 @@ export default function Experiments() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-dark-800 p-4 rounded-lg">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder="Search experiments by number, host, or location..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            />
-          </div>
-          <div className="flex gap-2">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'date' | 'number')}
-              className="bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <option value="date">Sort by Date</option>
-              <option value="number">Sort by Number</option>
-            </select>
-            <button
-              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-              className="bg-dark-700 border border-dark-600 rounded-lg px-3 py-2 text-white hover:bg-dark-600 transition-colors"
-            >
-              {sortOrder === 'asc' ? '↑' : '↓'}
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* Search and Filters */}
+      <ExperimentFilters
+        searchQuery={searchQuery}
+        selectedYear={selectedYear}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        availableYears={availableYears}
+        onSearchChange={handleSearchChange}
+        onYearChange={handleYearChange}
+        onSortChange={handleSortChange}
+        onClearFilters={handleClearFilters}
+        totalResults={pagination.total}
+      />
 
       {/* Experiments Grid */}
       {experiments.length === 0 ? (
         <div className="bg-dark-800 p-8 rounded-lg text-center">
           <div className="text-gray-400 text-lg">
-            {debouncedSearchTerm ? 'No experiments found matching your search.' : 'No experiments created yet.'}
+            {searchQuery ? 'No experiments found matching your search.' : 'No experiments created yet.'}
           </div>
-          {!debouncedSearchTerm && (
+          {!searchQuery && (
             <button
               onClick={() => {
                 setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber() }));
@@ -266,30 +359,15 @@ export default function Experiments() {
             ))}
           </div>
           
-          {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-8">
-              <button
-                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-dark-700 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-dark-600"
-              >
-                Previous
-              </button>
-              
-              <span className="text-white">
-                Page {currentPage} of {totalPages} ({totalExperiments} total experiments)
-              </span>
-              
-              <button
-                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-dark-700 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-dark-600"
-              >
-                Next
-              </button>
-            </div>
-          )}
+          {/* Pagination */}
+          <Pagination
+            currentPage={pagination.page}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.total}
+            itemsPerPage={pagination.limit}
+            onPageChange={handlePageChange}
+            onItemsPerPageChange={handleItemsPerPageChange}
+          />
         </>
       )}
 

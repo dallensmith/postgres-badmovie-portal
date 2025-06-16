@@ -12,6 +12,7 @@ import peopleRoutes from './routes/people.js';
 import tmdbRoutes from './routes/tmdb.js';
 import wordpressRoutes from './routes/wordpress.js';
 import dashboardRoutes from './routes/dashboard.js';
+import exportRoutes from './routes/export.js';
 import testRoutes from './routes/test.js';
 
 // Load environment variables
@@ -66,6 +67,7 @@ app.use('/api/people', peopleRoutes);
 app.use('/api/tmdb', tmdbRoutes);
 app.use('/api/wordpress', wordpressRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/export', exportRoutes);
 app.use('/api/test', testRoutes);
 
 // Error handling middleware

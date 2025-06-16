@@ -8,47 +8,46 @@ datasource db {
 }
 
 model Movie {
-  id                 Int       @id @default(autoincrement())
-  movieTitle         String?   @map("movie_title") @db.VarChar(255)
-  movieOriginalTitle String?   @map("movie_original_title") @db.VarChar(255)
-  movieYear          String?   @map("movie_year") @db.VarChar(255)
-  movieReleaseDate   DateTime? @map("movie_release_date") @db.Date
-  movieRuntime       Int?      @map("movie_runtime")
-  movieTagline       String?   @map("movie_tagline")
-  movieOverview      String?   @map("movie_overview")
-  movieContentRating String?   @map("movie_content_rating") @db.VarChar(255)
-  movieBudget        String?   @map("movie_budget")
-  movieBoxOffice     String?   @map("movie_box_office")
-  moviePoster        String?   @map("movie_poster")
-  movieBackdrop      String?   @map("movie_backdrop")
-  movieTrailer       String?   @map("movie_trailer")
-  movieTmdbId        String?   @map("movie_tmdb_id")
-  movieTmdbUrl       String?   @map("movie_tmdb_url")
-  movieTmdbRating    String?   @map("movie_tmdb_rating")
-  movieTmdbVotes     String?   @map("movie_tmdb_votes")
-  movieImdbId        String?   @map("movie_imdb_id")
-  movieImdbUrl       String?   @map("movie_imdb_url")
-  movieCharacters    Json?     @map("movie_characters")
-  movieAmazonLink    String?   @map("movie_amazon_link") @db.VarChar(555)
-  movieActors        Json?     @map("movie_actors")
-  movieDirectors     Json?     @map("movie_directors")
-  movieWriters       Json?     @map("movie_writers")
-  movieGenres        Json?     @map("movie_genres")
-  movieCountries     Json?     @map("movie_countries")
-  movieLanguages     Json?     @map("movie_languages")
-  movieStudios       Json?     @map("movie_studios")
-  wordpressId        Int?      @unique @map("wordpress_id")
-  podsData           Json?     @map("pods_data")
-  slug               String?   @unique @db.VarChar(255)
-  syncStatus         String    @default("pending") @map("sync_status") @db.VarChar(20)
-  excludeFromTmdbSync Boolean  @default(false) @map("exclude_from_tmdb_sync")
-  lastSynced         DateTime? @map("last_synced")
-  lastTmdbFetch      DateTime? @map("last_tmdb_fetch")
-  createdAt          DateTime  @default(now()) @map("created_at")
-  updatedAt          DateTime  @updatedAt @map("updated_at")
-
-  // Relationships
-  movieExperiments   MovieExperiment[]
+  id                  Int               @id @default(autoincrement())
+  movieTitle          String?           @map("movie_title") @db.VarChar(255)
+  movieOriginalTitle  String?           @map("movie_original_title") @db.VarChar(255)
+  movieYear           String?           @map("movie_year") @db.VarChar(255)
+  movieReleaseDate    DateTime?         @map("movie_release_date") @db.Date
+  movieRuntime        Int?              @map("movie_runtime")
+  movieTagline        String?           @map("movie_tagline")
+  movieOverview       String?           @map("movie_overview")
+  movieContentRating  String?           @map("movie_content_rating") @db.VarChar(255)
+  movieBudget         String?           @map("movie_budget")
+  movieBoxOffice      String?           @map("movie_box_office")
+  moviePoster         String?           @map("movie_poster")
+  movieBackdrop       String?           @map("movie_backdrop")
+  movieTrailer        String?           @map("movie_trailer")
+  movieTmdbId         String?           @map("movie_tmdb_id")
+  movieTmdbUrl        String?           @map("movie_tmdb_url")
+  movieTmdbRating     String?           @map("movie_tmdb_rating")
+  movieTmdbVotes      String?           @map("movie_tmdb_votes")
+  movieImdbId         String?           @map("movie_imdb_id")
+  movieImdbUrl        String?           @map("movie_imdb_url")
+  movieCharacters     Json?             @map("movie_characters")
+  movieAmazonLink     String?           @map("movie_amazon_link") @db.VarChar(555)
+  movieActors         Json?             @map("movie_actors")
+  movieDirectors      Json?             @map("movie_directors")
+  movieWriters        Json?             @map("movie_writers")
+  movieGenres         Json?             @map("movie_genres")
+  movieCountries      Json?             @map("movie_countries")
+  movieLanguages      Json?             @map("movie_languages")
+  movieStudios        Json?             @map("movie_studios")
+  wordpressId         Int?              @unique @map("wordpress_id")
+  podsData            Json?             @map("pods_data")
+  slug                String?           @unique @db.VarChar(255)
+  syncStatus          String            @default("pending") @map("sync_status") @db.VarChar(20)
+  excludeFromTmdbSync Boolean           @default(false) @map("exclude_from_tmdb_sync")
+  shown3D             Boolean           @default(false) @map("shown_3d")
+  lastSynced          DateTime?         @map("last_synced")
+  lastTmdbFetch       DateTime?         @map("last_tmdb_fetch")
+  createdAt           DateTime          @default(now()) @map("created_at")
+  updatedAt           DateTime          @updatedAt @map("updated_at")
+  movieExperiments    MovieExperiment[]
 
   @@map("movies")
 }
@@ -193,22 +192,20 @@ model Language {
 }
 
 model Experiment {
-  id                  Int       @id @default(autoincrement())
-  experimentNumber    String    @unique @map("experiment_number") @db.VarChar(10)
-  eventDate           DateTime  @map("event_date") @db.Date
-  eventHost           String    @map("event_host") @db.VarChar(255)
-  postUrl             String?   @map("post_url")
-  eventEncore         Boolean   @default(false) @map("event_encore")
-  eventLocation       String    @map("event_location") @db.VarChar(255)
-  eventImageWpId      Int?      @map("event_image_wp_id")
-  eventImage          String?   @map("event_image")
-  eventNotes          String?   @map("event_notes")
-  eventAttendees      String?   @map("event_attendees")
-  createdAt           DateTime  @default(now()) @map("created_at")
-  updatedAt           DateTime  @updatedAt @map("updated_at")
-
-  // Relationships
-  movieExperiments    MovieExperiment[]
+  id               Int               @id @default(autoincrement())
+  experimentNumber String            @unique @map("experiment_number") @db.VarChar(10)
+  eventDate        DateTime          @map("event_date") @db.Date
+  eventHost        String            @map("event_host") @db.VarChar(255)
+  postUrl          String?           @map("post_url")
+  eventEncore      Boolean           @default(false) @map("event_encore")
+  eventLocation    String            @map("event_location") @db.VarChar(255)
+  eventImageWpId   Int?              @map("event_image_wp_id")
+  eventImage       String?           @map("event_image")
+  eventNotes       String?           @map("event_notes")
+  eventAttendees   String?           @map("event_attendees")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  movieExperiments MovieExperiment[]
 
   @@map("experiments")
 }
@@ -218,10 +215,8 @@ model MovieExperiment {
   movieId      Int        @map("movie_id")
   experimentId Int        @map("experiment_id")
   createdAt    DateTime   @default(now()) @map("created_at")
-
-  // Relationships
-  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
   experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@unique([movieId, experimentId])
   @@map("movie_experiments")

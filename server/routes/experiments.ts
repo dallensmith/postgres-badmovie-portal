@@ -60,17 +60,33 @@ router.get('/', async (req, res) => {
     const limit = parseInt(req.query.limit as string) || 20;
     const skip = (page - 1) * limit;
     const search = req.query.search as string || '';
+    const year = req.query.year as string || '';
     const sortBy = req.query.sortBy as string || 'date';
     const sortOrder = req.query.sortOrder as string || 'desc';
     
-    // Build where clause for search
-    const whereClause = search ? {
-      OR: [
-        { experimentNumber: { contains: search, mode: 'insensitive' as const } },
-        { eventHost: { contains: search, mode: 'insensitive' as const } },
-        { eventLocation: { contains: search, mode: 'insensitive' as const } }
-      ]
-    } : {};
+    // Build where clause for search and filters
+    const whereClause: any = {};
+    
+    // Search filter - more comprehensive like movies
+    if (search) {
+      whereClause.OR = [
+        { experimentNumber: { contains: search, mode: 'insensitive' } },
+        { eventHost: { contains: search, mode: 'insensitive' } },
+        { eventLocation: { contains: search, mode: 'insensitive' } },
+        { eventNotes: { contains: search, mode: 'insensitive' } },
+        { eventAttendees: { contains: search, mode: 'insensitive' } }
+      ];
+    }
+    
+    // Year filter
+    if (year) {
+      const startOfYear = new Date(`${year}-01-01`);
+      const endOfYear = new Date(`${year}-12-31`);
+      whereClause.eventDate = {
+        gte: startOfYear,
+        lte: endOfYear
+      };
+    }
     
     // Build orderBy clause
     const orderByClause = sortBy === 'number' 
@@ -131,6 +147,32 @@ router.get('/list', async (_req, res) => {
   } catch (error) {
     console.error('Error fetching experiments list:', error);
     res.status(500).json({ error: 'Failed to fetch experiments list' });
+  }
+});
+
+// GET /api/experiments/years - Get available years for filtering
+router.get('/years', async (_req, res) => {
+  try {
+    const experiments = await prisma.experiment.findMany({
+      select: {
+        eventDate: true
+      },
+      orderBy: {
+        eventDate: 'desc'
+      }
+    });
+
+    // Extract years from dates and remove duplicates
+    const years = Array.from(new Set(
+      experiments
+        .map(exp => exp.eventDate.getFullYear().toString())
+        .filter(year => year && year.trim() !== '')
+    )).sort((a, b) => parseInt(b) - parseInt(a));
+
+    res.json(years);
+  } catch (error) {
+    console.error('Error fetching experiment years:', error);
+    res.status(500).json({ error: 'Failed to fetch experiment years' });
   }
 });
 

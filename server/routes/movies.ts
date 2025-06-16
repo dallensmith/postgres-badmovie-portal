@@ -193,14 +193,25 @@ router.post('/', async (req, res) => {
   try {
     const movieData = req.body;
     
+    // Debug logging
+    console.log('📝 Movie creation request received');
+    console.log('Request body keys:', Object.keys(movieData));
+    console.log('Movie title:', movieData.movieTitle);
+    console.log('Movie year:', movieData.movieYear);
+    
     // Handle date conversion for movieReleaseDate
     const processedData = { ...movieData };
-    if (processedData.movieReleaseDate && processedData.movieReleaseDate !== '') {
-      // Convert YYYY-MM-DD to ISO DateTime string
-      processedData.movieReleaseDate = new Date(processedData.movieReleaseDate + 'T00:00:00.000Z').toISOString();
-    } else {
+    console.log('MovieReleaseDate received:', processedData.movieReleaseDate);
+    
+    // The frontend already converts dates to ISO format, so we just need to handle nulls
+    if (!processedData.movieReleaseDate || processedData.movieReleaseDate === '') {
       processedData.movieReleaseDate = null;
+      console.log('Set movieReleaseDate to null');
+    } else {
+      console.log('Using movieReleaseDate as provided:', processedData.movieReleaseDate);
     }
+    
+    console.log('Processed data ready for database insertion');
     
     // Create movie
     const movie = await prisma.movie.create({
@@ -210,9 +221,15 @@ router.post('/', async (req, res) => {
       }
     });
 
+    console.log('✅ Movie created successfully with ID:', movie.id);
     res.status(201).json(movie);
-  } catch (error) {
-    console.error('Error creating movie:', error);
+  } catch (error: any) {
+    console.error('❌ Error creating movie:', error);
+    console.error('Error details:', {
+      message: error?.message,
+      code: error?.code,
+      meta: error?.meta
+    });
     res.status(500).json({ error: 'Failed to create movie' });
   }
 });

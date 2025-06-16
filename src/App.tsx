@@ -6,6 +6,7 @@ import Movies from './pages/Movies';
 import Experiments from './pages/Experiments';
 import ExperimentDetail from './pages/ExperimentDetail';
 import People from './pages/People';
+import Export from './pages/Export';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/experiments" element={<Experiments />} />
               <Route path="/experiments/:id" element={<ExperimentDetail />} />
               <Route path="/people" element={<People />} />
+              <Route path="/export" element={<Export />} />
             </Routes>
           </main>
         </div>
