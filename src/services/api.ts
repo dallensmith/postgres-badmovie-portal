@@ -31,10 +31,18 @@ export interface DashboardData {
   };
 }
 
+export interface Experiment {
+  id: number;
+  experimentNumber: string;
+  eventDate: string;
+  eventHost: string;
+  eventLocation: string;
+}
+
 class ApiService {
-  private async fetchWithErrorHandling<T>(endpoint: string): Promise<T> {
+  private async fetchWithErrorHandling<T>(endpoint: string, options?: RequestInit): Promise<T> {
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -57,6 +65,72 @@ class ApiService {
 
   async getExperiments(): Promise<any> {
     return this.fetchWithErrorHandling<any>('/experiments');
+  }
+
+  async getExperimentsList(): Promise<Experiment[]> {
+    return this.fetchWithErrorHandling<Experiment[]>('/experiments/list');
+  }
+
+  async getExperimentsWithMovies(
+    page: number = 1, 
+    limit: number = 20, 
+    search: string = '', 
+    sortBy: string = 'date', 
+    sortOrder: string = 'desc'
+  ): Promise<any> {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      search,
+      sortBy,
+      sortOrder
+    });
+    return this.fetchWithErrorHandling<any>(`/experiments?${params}`);
+  }
+
+  async getExperiment(id: number): Promise<any> {
+    return this.fetchWithErrorHandling<any>(`/experiments/${id}`);
+  }
+
+  async createExperiment(data: any): Promise<any> {
+    return this.fetchWithErrorHandling<any>('/experiments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateExperiment(id: number, data: any): Promise<any> {
+    return this.fetchWithErrorHandling<any>(`/experiments/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteExperiment(id: number): Promise<any> {
+    return this.fetchWithErrorHandling<any>(`/experiments/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async linkMovieToExperiment(experimentId: number, movieId: number): Promise<any> {
+    return this.fetchWithErrorHandling<any>(`/experiments/${experimentId}/movies/${movieId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  async unlinkMovieFromExperiment(experimentId: number, movieId: number): Promise<any> {
+    return this.fetchWithErrorHandling<any>(`/experiments/${experimentId}/movies/${movieId}`, {
+      method: 'DELETE',
+    });
   }
 }
 

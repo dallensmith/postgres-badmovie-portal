@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Movie } from './MovieCard';
+import { Movie, MovieExperiment } from './MovieCard';
 
 export interface MovieDetailModalProps {
   movie: Movie | null;
@@ -59,7 +59,8 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
       return;
     }
 
-    if (!window.confirm('This will update the movie with fresh data from TMDb. Continue?')) {
+    if (fullMovie?.excludeFromTmdbSync) {
+      alert('This movie is excluded from TMDb syncing. Edit the movie to change this setting.');
       return;
     }
 
@@ -123,9 +124,11 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
         onRefresh();
       }
 
-      alert('Movie successfully synced with TMDb!');
+      // Show success message in console instead of alert for better UX
+      console.log('Movie successfully synced with TMDb!');
     } catch (error) {
       console.error('Sync error:', error);
+      // Could be improved to show toast notification instead of alert
       alert('Failed to sync with TMDb: ' + (error instanceof Error ? error.message : 'Unknown error'));
     } finally {
       setSyncing(false);
@@ -141,24 +144,64 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
       <div className="bg-dark-800 rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Backdrop Hero Section */}
+        {displayMovie.movieBackdrop && (
+          <div className="relative h-48 bg-dark-700 rounded-t-lg overflow-hidden">
+            <img
+              src={displayMovie.movieBackdrop}
+              alt={`${displayMovie.movieTitle} backdrop`}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLElement).style.display = 'none';
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-dark-800 via-dark-800/60 to-transparent"></div>
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl p-2 bg-black/50 rounded-full"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Header */}
-        <div className="flex justify-between items-start p-6 border-b border-dark-600">
+        <div className={`flex justify-between items-start p-6 ${!displayMovie.movieBackdrop ? 'border-b border-dark-600' : ''}`}>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-white mb-2">
-              {displayMovie.movieTitle || 'Untitled Movie'}
-            </h2>
+            <div className="flex items-center gap-3 mb-2">
+              <h2 className="text-2xl font-bold text-white">
+                {displayMovie.movieTitle || 'Untitled Movie'}
+              </h2>
+              {displayMovie.movieContentRating && (
+                <span className="bg-gray-600 text-white px-2 py-1 rounded text-sm font-semibold">
+                  {displayMovie.movieContentRating}
+                </span>
+              )}
+              {displayMovie.movieTmdbRating && (
+                <span className="bg-yellow-500 text-black px-2 py-1 rounded text-sm font-semibold">
+                  ★ {parseFloat(displayMovie.movieTmdbRating).toFixed(1)}
+                </span>
+              )}
+            </div>
             {displayMovie.movieOriginalTitle && displayMovie.movieOriginalTitle !== displayMovie.movieTitle && (
               <p className="text-gray-400 italic">
                 Original: {displayMovie.movieOriginalTitle}
               </p>
             )}
+            {displayMovie.movieTagline && (
+              <p className="text-primary-400 italic mt-2">
+                "{displayMovie.movieTagline}"
+              </p>
+            )}
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl p-2"
-          >
-            ✕
-          </button>
+          {!displayMovie.movieBackdrop && (
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-white text-2xl p-2"
+            >
+              ✕
+            </button>
+          )}
         </div>
 
         {loading ? (
@@ -307,14 +350,21 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-3">Experiments</h3>
                     <div className="flex flex-wrap gap-2">
-                      {displayMovie.movieExperiments.map((experimentId: number, index: number) => (
-                        <span
-                          key={index}
-                          className="bg-purple-600 px-3 py-1 rounded-full text-sm text-white"
-                        >
-                          Experiment #{experimentId}
-                        </span>
-                      ))}
+                      {displayMovie.movieExperiments.map((movieExp: MovieExperiment) => {
+                        // Add safety check for experiment data
+                        if (!movieExp.experiment) {
+                          console.error('Missing experiment data for MovieExperiment:', movieExp);
+                          return null;
+                        }
+                        return (
+                          <span
+                            key={movieExp.id}
+                            className="bg-purple-600 px-3 py-1 rounded-full text-sm text-white"
+                          >
+                            EXP {movieExp.experiment.experimentNumber}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -361,6 +411,65 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                   )}
                 </div>
 
+                {/* Experiments Section */}
+                {displayMovie.movieExperiments && displayMovie.movieExperiments.length > 0 && (
+                  <div className="bg-purple-900/30 border border-purple-500/30 rounded-lg p-4">
+                    <h3 className="text-lg font-semibold text-purple-300 mb-3 flex items-center gap-2">
+                      🎬 Bad Movie Experiments
+                    </h3>
+                    <div className="space-y-3">
+                      {displayMovie.movieExperiments.map((movieExp: MovieExperiment) => {
+                        // Add safety check for experiment data
+                        if (!movieExp.experiment) {
+                          console.error('Missing experiment data for MovieExperiment:', movieExp);
+                          return null;
+                        }
+                        
+                        const experiment = movieExp.experiment;
+                        
+                        return (
+                          <div key={movieExp.id} className="bg-dark-700 rounded-lg p-3 border border-purple-500/20">
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                    Experiment {experiment.experimentNumber || 'Unknown'}
+                                  </span>
+                                  <span className="text-gray-300 text-sm">
+                                    {experiment.eventDate ? new Date(experiment.eventDate).toLocaleDateString() : 'Unknown Date'}
+                                  </span>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                  <div>
+                                    <span className="text-gray-400">Host:</span>
+                                    <span className="text-white ml-2">{experiment.eventHost || 'Unknown'}</span>
+                                  </div>
+                                  <div>
+                                    <span className="text-gray-400">Location:</span>
+                                    <span className="text-white ml-2">{experiment.eventLocation || 'Unknown'}</span>
+                                  </div>
+                                </div>
+                                {experiment.eventNotes && (
+                                  <p className="text-gray-300 text-sm mt-2 italic">
+                                    "{experiment.eventNotes}"
+                                  </p>
+                                )}
+                              </div>
+                              {experiment.eventImage && (
+                                <img 
+                                  src={experiment.eventImage} 
+                                  alt={`Experiment ${experiment.experimentNumber || 'Unknown'}`}
+                                  className="w-16 h-16 object-cover rounded ml-3"
+                                />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {/* System Info */}
                 <div className="border-t border-dark-600 pt-4">
                   <h4 className="text-md font-semibold text-white mb-3">System Information</h4>
@@ -400,7 +509,7 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
             <div className="flex justify-between items-center mt-8 pt-6 border-t border-dark-600">
               {/* Left side - Sync button */}
               <div>
-                {displayMovie.movieTmdbId && (
+                {displayMovie.movieTmdbId && !displayMovie.excludeFromTmdbSync && (
                   <button
                     onClick={handleSyncWithTMDb}
                     disabled={syncing}
@@ -418,6 +527,11 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                       </>
                     )}
                   </button>
+                )}
+                {displayMovie.excludeFromTmdbSync && (
+                  <span className="bg-orange-600 text-white px-4 py-2 rounded text-sm flex items-center gap-2">
+                    🚫 TMDb sync disabled
+                  </span>
                 )}
               </div>
 

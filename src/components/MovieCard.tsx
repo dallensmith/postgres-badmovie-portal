@@ -1,5 +1,29 @@
 import React from 'react';
 
+export interface Experiment {
+  id: number;
+  experimentNumber: string;
+  eventDate: string;
+  eventHost: string;
+  postUrl: string | null;
+  eventEncore: boolean;
+  eventLocation: string;
+  eventImageWpId: number | null;
+  eventImage: string | null;
+  eventNotes: string | null;
+  eventAttendees: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MovieExperiment {
+  id: number;
+  movieId: number;
+  experimentId: number;
+  experiment: Experiment;
+  createdAt: string;
+}
+
 export interface Movie {
   id: number;
   movieTitle: string | null;
@@ -31,6 +55,8 @@ export interface Movie {
   movieAmazonLink: string | null;
   wordpressId: number | null;
   syncStatus: string;
+  excludeFromTmdbSync: boolean;
+  movieExperiments?: MovieExperiment[];
   createdAt: string;
 }
 
@@ -52,7 +78,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({
   const runtime = movie.movieRuntime ? `${movie.movieRuntime} min` : 'Unknown';
 
   return (
-    <div className="bg-dark-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-dark-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
       {/* Movie Poster */}
       <div className="relative aspect-[2/3] bg-dark-700">
         <img
@@ -70,35 +96,45 @@ export const MovieCard: React.FC<MovieCardProps> = ({
         </div>
       </div>
 
-      {/* Movie Info */}
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-white mb-1 line-clamp-2">
-          {movie.movieTitle || 'Untitled Movie'}
-        </h3>
+      {/* Movie Info - Flex grow to push buttons to bottom */}
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Title and Rating */}
+        <div className="flex items-start justify-between mb-1">
+          <h3 className="text-lg font-semibold text-white line-clamp-2 flex-1">
+            {movie.movieTitle || 'Untitled Movie'}
+          </h3>
+          <div className="flex items-center gap-1 ml-2">
+            {movie.movieContentRating && (
+              <span className="bg-gray-600 text-white px-2 py-1 rounded text-xs font-semibold">
+                {movie.movieContentRating}
+              </span>
+            )}
+            {movie.movieExperiments && movie.movieExperiments.length > 0 && (
+              <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold">
+                Exp {movie.movieExperiments[0].experiment.experimentNumber}
+                {movie.movieExperiments.length > 1 && ` +${movie.movieExperiments.length - 1}`}
+              </span>
+            )}
+          </div>
+        </div>
         
         {movie.movieOriginalTitle && movie.movieOriginalTitle !== movie.movieTitle && (
-          <p className="text-gray-400 text-sm mb-2 italic">
+          <p className="text-gray-400 text-sm mb-2 italic line-clamp-1">
             {movie.movieOriginalTitle}
           </p>
         )}
 
+        {/* Year and Runtime */}
         <div className="flex items-center justify-between text-sm text-gray-300 mb-2">
           <span>{movie.movieYear || 'Unknown Year'}</span>
           <span>{runtime}</span>
         </div>
 
-        {movie.movieContentRating && (
-          <div className="mb-2">
-            <span className="bg-dark-600 px-2 py-1 rounded text-xs text-gray-300">
-              {movie.movieContentRating}
-            </span>
-          </div>
-        )}
-
+        {/* Genres */}
         {movie.movieGenres && movie.movieGenres.length > 0 && (
-          <div className="mb-3">
+          <div className="mb-2">
             <div className="flex flex-wrap gap-1">
-              {movie.movieGenres.slice(0, 3).map((genre, index) => (
+              {movie.movieGenres.slice(0, 2).map((genre, index) => (
                 <span
                   key={index}
                   className="bg-primary-600 px-2 py-1 rounded text-xs text-white"
@@ -106,67 +142,64 @@ export const MovieCard: React.FC<MovieCardProps> = ({
                   {genre}
                 </span>
               ))}
-              {movie.movieGenres.length > 3 && (
+              {movie.movieGenres.length > 2 && (
                 <span className="text-xs text-gray-400">
-                  +{movie.movieGenres.length - 3} more
+                  +{movie.movieGenres.length - 2} more
                 </span>
               )}
             </div>
           </div>
         )}
 
+        {/* Overview - Limited height */}
         {movie.movieOverview && (
-          <p className="text-gray-300 text-sm mb-3 line-clamp-3">
+          <p className="text-gray-300 text-sm mb-2 line-clamp-2">
             {movie.movieOverview}
           </p>
         )}
 
-        {/* Directors and Actors */}
+        {/* Directors - Compact */}
         {movie.movieDirectors && movie.movieDirectors.length > 0 && (
-          <p className="text-xs text-gray-400 mb-1">
-            <span className="font-medium">Director:</span> {movie.movieDirectors.slice(0, 2).join(', ')}
-            {movie.movieDirectors.length > 2 && ` +${movie.movieDirectors.length - 2} more`}
+          <p className="text-xs text-gray-400 mb-1 line-clamp-1">
+            <span className="font-medium">Dir:</span> {movie.movieDirectors.slice(0, 1).join(', ')}
+            {movie.movieDirectors.length > 1 && ` +${movie.movieDirectors.length - 1}`}
           </p>
         )}
 
-        {movie.movieActors && movie.movieActors.length > 0 && (
-          <p className="text-xs text-gray-400 mb-3">
-            <span className="font-medium">Stars:</span> {movie.movieActors.slice(0, 3).join(', ')}
-            {movie.movieActors.length > 3 && ` +${movie.movieActors.length - 3} more`}
-          </p>
-        )}
+        {/* Spacer to push buttons to bottom */}
+        <div className="flex-grow"></div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-2">
-          {onView && (
-            <button
-              onClick={() => onView(movie)}
-              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white py-2 px-3 rounded text-sm transition-colors"
-            >
-              View Details
-            </button>
-          )}
-          {onEdit && (
-            <button
-              onClick={() => onEdit(movie)}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm transition-colors"
-            >
-              Edit
-            </button>
-          )}
-          {onDelete && (
-            <button
-              onClick={() => onDelete(movie.id)}
-              className="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-sm transition-colors"
-            >
-              Delete
-            </button>
-          )}
-        </div>
+        {/* Action Buttons - Always at bottom */}
+        <div className="mt-3 space-y-2">
+          <div className="flex gap-2">
+            {onView && (
+              <button
+                onClick={() => onView(movie)}
+                className="flex-1 bg-primary-600 hover:bg-primary-700 text-white py-2 px-3 rounded text-sm transition-colors"
+              >
+                View
+              </button>
+            )}
+            {onEdit && (
+              <button
+                onClick={() => onEdit(movie)}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded text-sm transition-colors"
+              >
+                Edit
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={() => onDelete(movie.id)}
+                className="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-sm transition-colors"
+              >
+                Del
+              </button>
+            )}
+          </div>
 
-        {/* Sync Status */}
-        <div className="mt-2 pt-2 border-t border-dark-600">
-          <div className="flex items-center justify-between text-xs">
+          {/* Sync Status */}
+          <div className="flex items-center justify-between text-xs pt-2 border-t border-dark-600">
             <span className="text-gray-400">
               ID: {movie.id}
             </span>

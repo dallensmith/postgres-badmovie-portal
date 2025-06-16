@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Movie } from './MovieCard';
+import { apiService, Experiment } from '../services/api';
 
 export interface MovieFormData {
   movieTitle: string;
@@ -29,6 +30,7 @@ export interface MovieFormData {
   movieLanguages?: string[];
   movieStudios?: string[];
   movieAmazonLink?: string;
+  excludeFromTmdbSync?: boolean;
 }
 
 export interface MovieFormModalProps {
@@ -52,38 +54,56 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState('basic');
+  const [syncing, setSyncing] = useState(false);
+
+  // Experiment-related state
+  const [availableExperiments, setAvailableExperiments] = useState<Experiment[]>([]);
+  const [movieExperiments, setMovieExperiments] = useState<number[]>([]);
+  const [experimentChanges, setExperimentChanges] = useState<{
+    toAdd: number[];
+    toRemove: number[];
+  }>({ toAdd: [], toRemove: [] });
+  const [experimentSearch, setExperimentSearch] = useState('');
+
+  // Filter experiments based on search
+  const filteredExperiments = experimentSearch
+    ? availableExperiments.filter(exp =>
+        exp.experimentNumber.toLowerCase().includes(experimentSearch.toLowerCase())
+      )
+    : [];
 
   // Initialize form data from movie prop or defaults
   const getInitialFormData = (): MovieFormData => {
     if (isEditMode && movie) {
       return {
-        movieTitle: movie.movieTitle || '',
-        movieOriginalTitle: movie.movieOriginalTitle || '',
-        movieYear: movie.movieYear || '',
-        movieReleaseDate: movie.movieReleaseDate ? movie.movieReleaseDate.split('T')[0] : '',
-        movieRuntime: movie.movieRuntime || undefined,
-        movieTagline: movie.movieTagline || '',
-        movieOverview: movie.movieOverview || '',
-        movieContentRating: movie.movieContentRating || '',
-        movieBudget: movie.movieBudget || '',
-        movieBoxOffice: movie.movieBoxOffice || '',
-        moviePoster: movie.moviePoster || '',
-        movieBackdrop: movie.movieBackdrop || '',
-        movieTrailer: movie.movieTrailer || '',
-        movieTmdbId: movie.movieTmdbId || '',
-        movieTmdbUrl: movie.movieTmdbUrl || '',
-        movieTmdbRating: movie.movieTmdbRating || '',
-        movieTmdbVotes: movie.movieTmdbVotes || '',
-        movieImdbId: movie.movieImdbId || '',
-        movieImdbUrl: movie.movieImdbUrl || '',
-        movieActors: movie.movieActors || [],
-        movieDirectors: movie.movieDirectors || [],
-        movieWriters: movie.movieWriters || [],
-        movieGenres: movie.movieGenres || [],
-        movieCountries: movie.movieCountries || [],
-        movieLanguages: movie.movieLanguages || [],
-        movieStudios: movie.movieStudios || [],
-        movieAmazonLink: movie.movieAmazonLink || ''
+        movieTitle: String(movie.movieTitle ?? ''),
+        movieOriginalTitle: String(movie.movieOriginalTitle ?? ''),
+        movieYear: String(movie.movieYear ?? ''),
+        movieReleaseDate: movie.movieReleaseDate ? String(movie.movieReleaseDate).split('T')[0] : '',
+        movieRuntime: movie.movieRuntime ?? undefined,
+        movieTagline: String(movie.movieTagline ?? ''),
+        movieOverview: String(movie.movieOverview ?? ''),
+        movieContentRating: String(movie.movieContentRating ?? ''),
+        movieBudget: String(movie.movieBudget ?? ''),
+        movieBoxOffice: String(movie.movieBoxOffice ?? ''),
+        moviePoster: String(movie.moviePoster ?? ''),
+        movieBackdrop: String(movie.movieBackdrop ?? ''),
+        movieTrailer: String(movie.movieTrailer ?? ''),
+        movieTmdbId: String(movie.movieTmdbId ?? ''),
+        movieTmdbUrl: String(movie.movieTmdbUrl ?? ''),
+        movieTmdbRating: String(movie.movieTmdbRating ?? ''),
+        movieTmdbVotes: String(movie.movieTmdbVotes ?? ''),
+        movieImdbId: String(movie.movieImdbId ?? ''),
+        movieImdbUrl: String(movie.movieImdbUrl ?? ''),
+        movieActors: movie.movieActors ?? [],
+        movieDirectors: movie.movieDirectors ?? [],
+        movieWriters: movie.movieWriters ?? [],
+        movieGenres: movie.movieGenres ?? [],
+        movieCountries: movie.movieCountries ?? [],
+        movieLanguages: movie.movieLanguages ?? [],
+        movieStudios: movie.movieStudios ?? [],
+        movieAmazonLink: String(movie.movieAmazonLink ?? ''),
+        excludeFromTmdbSync: movie.excludeFromTmdbSync ?? false
       };
     } else {
       return {
@@ -113,20 +133,48 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieCountries: [],
         movieLanguages: [],
         movieStudios: [],
-        movieAmazonLink: ''
+        movieAmazonLink: '',
+        excludeFromTmdbSync: false
       };
     }
   };
 
-  const [formData, setFormData] = useState<MovieFormData>(getInitialFormData);
+  const [formData, setFormData] = useState<MovieFormData>(() => getInitialFormData());
 
-  // Reset form data when movie changes
+  // Reset form data when movie changes or modal opens
   useEffect(() => {
-    console.log('MovieFormModal - movie or isOpen changed:', { isEditMode, movieId: movie?.id, isOpen });
-    setFormData(getInitialFormData());
-    setErrors({});
-    setActiveTab('basic');
-  }, [movie?.id, isOpen]);
+    if (isOpen) {
+      const newFormData = getInitialFormData();
+      setFormData(newFormData);
+      setErrors({});
+      setActiveTab('basic');
+      
+      // Initialize movie experiments
+      if (isEditMode && movie?.movieExperiments) {
+        setMovieExperiments(movie.movieExperiments.map(me => me.experimentId));
+      } else {
+        setMovieExperiments([]);
+      }
+      setExperimentChanges({ toAdd: [], toRemove: [] });
+      setExperimentSearch('');
+    }
+  }, [movie, isOpen, isEditMode]);
+
+  // Load available experiments when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      const loadExperiments = async () => {
+        try {
+          const experiments = await apiService.getExperimentsList();
+          setAvailableExperiments(experiments);
+        } catch (error) {
+          console.error('Failed to load experiments:', error);
+        }
+      };
+      
+      loadExperiments();
+    }
+  }, [isOpen]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -147,6 +195,73 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
+  // TMDb sync function
+  const handleSyncWithTMDb = async () => {
+    if (!formData.movieTmdbId) {
+      setErrors({ movieTmdbId: 'TMDb ID is required for syncing' });
+      return;
+    }
+
+    if (formData.excludeFromTmdbSync) {
+      setErrors({ excludeFromTmdbSync: 'This movie is excluded from TMDb syncing. Uncheck the option to sync.' });
+      return;
+    }
+
+    setSyncing(true);
+    try {
+      // Get fresh data from TMDb
+      const tmdbResponse = await fetch(`/api/tmdb/movie/${formData.movieTmdbId}`);
+      if (!tmdbResponse.ok) {
+        throw new Error('Failed to fetch data from TMDb');
+      }
+
+      const tmdbData = await tmdbResponse.json();
+
+      // Update form data with TMDb data, keeping any existing data for empty fields
+      setFormData(prev => ({
+        ...prev,
+        movieTitle: tmdbData.title || prev.movieTitle,
+        movieOriginalTitle: tmdbData.originalTitle || prev.movieOriginalTitle,
+        movieYear: tmdbData.year || prev.movieYear,
+        movieReleaseDate: tmdbData.releaseDate ? tmdbData.releaseDate.split('T')[0] : prev.movieReleaseDate,
+        movieRuntime: tmdbData.runtime || prev.movieRuntime,
+        movieTagline: tmdbData.tagline || prev.movieTagline,
+        movieOverview: tmdbData.overview || prev.movieOverview,
+        movieBudget: tmdbData.budget?.toString() || prev.movieBudget,
+        movieBoxOffice: tmdbData.boxOffice?.toString() || prev.movieBoxOffice,
+        moviePoster: tmdbData.poster || prev.moviePoster,
+        movieBackdrop: tmdbData.backdrop || prev.movieBackdrop,
+        movieTrailer: tmdbData.trailer || prev.movieTrailer,
+        movieTmdbUrl: tmdbData.tmdbUrl || prev.movieTmdbUrl,
+        movieTmdbRating: tmdbData.rating?.toString() || prev.movieTmdbRating,
+        movieTmdbVotes: tmdbData.voteCount?.toString() || prev.movieTmdbVotes,
+        movieImdbId: tmdbData.imdbId || prev.movieImdbId,
+        movieImdbUrl: tmdbData.imdbUrl || prev.movieImdbUrl,
+        movieActors: tmdbData.cast || prev.movieActors,
+        movieDirectors: tmdbData.directors || prev.movieDirectors,
+        movieWriters: tmdbData.writers || prev.movieWriters,
+        movieGenres: tmdbData.genres || prev.movieGenres,
+        movieCountries: tmdbData.productionCountries || prev.movieCountries,
+        movieLanguages: tmdbData.spokenLanguages || prev.movieLanguages,
+        movieStudios: tmdbData.productionCompanies || prev.movieStudios,
+      }));
+
+      // Clear any TMDb sync errors
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.movieTmdbId;
+        delete newErrors.excludeFromTmdbSync;
+        return newErrors;
+      });
+
+    } catch (error) {
+      console.error('TMDb sync error:', error);
+      setErrors({ movieTmdbId: 'Failed to sync with TMDb: ' + (error instanceof Error ? error.message : 'Unknown error') });
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -164,7 +279,44 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         cleanData.movieRuntime = Number(cleanData.movieRuntime);
       }
 
+      // Convert empty strings to null for optional fields
+      const fieldsToNullify = [
+        'movieOriginalTitle', 'movieTagline', 'movieBudget', 'movieBoxOffice',
+        'moviePoster', 'movieBackdrop', 'movieTrailer', 'movieTmdbId', 
+        'movieTmdbUrl', 'movieTmdbRating', 'movieTmdbVotes', 'movieImdbId', 
+        'movieImdbUrl', 'movieAmazonLink', 'movieContentRating'
+      ];
+
+      fieldsToNullify.forEach(field => {
+        if (cleanData[field as keyof MovieFormData] === '') {
+          (cleanData as any)[field] = null;
+        }
+      });
+
+      // Handle arrays - convert empty arrays to null
+      const arrayFields = ['movieActors', 'movieDirectors', 'movieWriters', 'movieGenres', 'movieCountries', 'movieLanguages', 'movieStudios'];
+      arrayFields.forEach(field => {
+        const value = cleanData[field as keyof MovieFormData] as string[];
+        if (Array.isArray(value) && value.length === 0) {
+          (cleanData as any)[field] = null;
+        }
+      });
+
+      // Handle date field - convert to proper DateTime format
+      if (cleanData.movieReleaseDate === '') {
+        (cleanData as any).movieReleaseDate = null;
+      } else if (cleanData.movieReleaseDate) {
+        // Convert date string to ISO DateTime
+        (cleanData as any).movieReleaseDate = new Date(cleanData.movieReleaseDate + 'T00:00:00.000Z').toISOString();
+      }
+
       await onSave(cleanData);
+      
+      // Save experiment changes for edit mode
+      if (isEditMode && (experimentChanges.toAdd.length > 0 || experimentChanges.toRemove.length > 0)) {
+        await saveExperimentChanges();
+      }
+      
       onClose();
     } catch (error) {
       console.error('Error saving movie:', error);
@@ -179,7 +331,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
     setFormData(prev => ({ ...prev, [field]: items }));
   };
 
-  const handleInputChange = (field: keyof MovieFormData, value: string | number) => {
+  const handleInputChange = (field: keyof MovieFormData, value: string | number | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -187,15 +339,85 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
     }
   };
 
-  if (!isOpen) return null;
+  // Experiment management functions
+  const handleExperimentToggle = (experimentId: number) => {
+    const isCurrentlyLinked = movieExperiments.includes(experimentId);
+    const wasOriginallyLinked = isEditMode && movie?.movieExperiments?.some(me => me.experimentId === experimentId);
+    
+    if (isCurrentlyLinked) {
+      // Remove from current experiments
+      setMovieExperiments(prev => prev.filter(id => id !== experimentId));
+      
+      // Track changes for API calls
+      if (wasOriginallyLinked) {
+        // Was originally linked, now removing - add to toRemove
+        setExperimentChanges(prev => ({
+          toAdd: prev.toAdd.filter(id => id !== experimentId),
+          toRemove: [...prev.toRemove.filter(id => id !== experimentId), experimentId]
+        }));
+      } else {
+        // Was added in this session, now removing - remove from toAdd
+        setExperimentChanges(prev => ({
+          ...prev,
+          toAdd: prev.toAdd.filter(id => id !== experimentId)
+        }));
+      }
+    } else {
+      // Add to current experiments
+      setMovieExperiments(prev => [...prev, experimentId]);
+      
+      // Track changes for API calls
+      if (wasOriginallyLinked) {
+        // Was originally linked, was removed, now adding back - remove from toRemove
+        setExperimentChanges(prev => ({
+          ...prev,
+          toRemove: prev.toRemove.filter(id => id !== experimentId)
+        }));
+      } else {
+        // Was not originally linked, now adding - add to toAdd
+        setExperimentChanges(prev => ({
+          toAdd: [...prev.toAdd.filter(id => id !== experimentId), experimentId],
+          toRemove: prev.toRemove.filter(id => id !== experimentId)
+        }));
+      }
+    }
+  };
 
-  // Debug: Log current form data
-  console.log('Current formData state:', formData);
+  const saveExperimentChanges = async () => {
+    if (!isEditMode || !movie) {
+      return;
+    }
+
+    try {
+      const promises: Promise<any>[] = [];
+      
+      // Link new experiments
+      for (const experimentId of experimentChanges.toAdd) {
+        promises.push(apiService.linkMovieToExperiment(experimentId, movie.id));
+      }
+      
+      // Unlink removed experiments
+      for (const experimentId of experimentChanges.toRemove) {
+        promises.push(apiService.unlinkMovieFromExperiment(experimentId, movie.id));
+      }
+      
+      await Promise.all(promises);
+      
+      // Reset changes tracking
+      setExperimentChanges({ toAdd: [], toRemove: [] });
+    } catch (error) {
+      console.error('Failed to save experiment changes:', error);
+      throw error;
+    }
+  };
+
+  if (!isOpen) return null;
 
   const tabs = [
     { id: 'basic', label: 'Basic Info', icon: '📝' },
     { id: 'details', label: 'Details', icon: '📊' },
     { id: 'people', label: 'Cast & Crew', icon: '👥' },
+    { id: 'experiments', label: 'Experiments', icon: '🧪' },
     { id: 'external', label: 'External Links', icon: '🔗' }
   ];
 
@@ -231,7 +453,11 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="overflow-y-auto max-h-[calc(90vh-200px)]">
+        <form 
+          key={`form-${isEditMode ? movie?.id : 'new'}`}
+          onSubmit={handleSubmit} 
+          className="overflow-y-auto max-h-[calc(90vh-200px)]"
+        >
           <div className="p-6">
             {/* Basic Info Tab */}
             {activeTab === 'basic' && (
@@ -244,7 +470,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieTitle}
+                      value={String(formData.movieTitle ?? '')}
                       onChange={(e) => handleInputChange('movieTitle', e.target.value)}
                       className={`w-full bg-dark-700 border rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                         errors.movieTitle ? 'border-red-500' : 'border-dark-600'
@@ -263,7 +489,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieOriginalTitle}
+                      value={String(formData.movieOriginalTitle || '')}
                       onChange={(e) => handleInputChange('movieOriginalTitle', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="Original title (if different)"
@@ -277,7 +503,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieYear}
+                      value={String(formData.movieYear || '')}
                       onChange={(e) => handleInputChange('movieYear', e.target.value)}
                       className={`w-full bg-dark-700 border rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                         errors.movieYear ? 'border-red-500' : 'border-dark-600'
@@ -297,7 +523,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="date"
-                      value={formData.movieReleaseDate}
+                      value={String(formData.movieReleaseDate || '')}
                       onChange={(e) => handleInputChange('movieReleaseDate', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
@@ -310,7 +536,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={formData.movieRuntime || ''}
+                      value={String(formData.movieRuntime || '')}
                       onChange={(e) => handleInputChange('movieRuntime', e.target.value ? Number(e.target.value) : 0)}
                       className={`w-full bg-dark-700 border rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                         errors.movieRuntime ? 'border-red-500' : 'border-dark-600'
@@ -329,7 +555,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                       Content Rating
                     </label>
                     <select
-                      value={formData.movieContentRating}
+                      value={String(formData.movieContentRating || '')}
                       onChange={(e) => handleInputChange('movieContentRating', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
@@ -339,6 +565,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                       <option value="PG-13">PG-13</option>
                       <option value="R">R</option>
                       <option value="NC-17">NC-17</option>
+                      <option value="X">X</option>
                       <option value="NR">Not Rated</option>
                     </select>
                   </div>
@@ -351,7 +578,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                   </label>
                   <input
                     type="url"
-                    value={formData.moviePoster}
+                    value={String(formData.moviePoster || '')}
                     onChange={(e) => handleInputChange('moviePoster', e.target.value)}
                     className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="https://image.tmdb.org/t/p/w500/..."
@@ -376,7 +603,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     Overview
                   </label>
                   <textarea
-                    value={formData.movieOverview}
+                    value={String(formData.movieOverview || '')}
                     onChange={(e) => handleInputChange('movieOverview', e.target.value)}
                     rows={4}
                     className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -396,14 +623,11 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                   </label>
                   <input
                     type="text"
-                    value={formData.movieTagline}
+                    value={String(formData.movieTagline || '')}
                     onChange={(e) => handleInputChange('movieTagline', e.target.value)}
                     className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Catchy movie tagline"
                   />
-                  <div style={{fontSize: '10px', color: 'yellow'}}>
-                    Debug - tagline value: "{formData.movieTagline}"
-                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -414,7 +638,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieBudget}
+                      value={String(formData.movieBudget || '')}
                       onChange={(e) => handleInputChange('movieBudget', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="$1,000,000"
@@ -428,7 +652,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieBoxOffice}
+                      value={String(formData.movieBoxOffice || '')}
                       onChange={(e) => handleInputChange('movieBoxOffice', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="$5,000,000"
@@ -523,9 +747,6 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Writer 1, Writer 2 (comma-separated)"
                   />
-                  <div style={{fontSize: '10px', color: 'yellow'}}>
-                    Debug - writers value: "{formData.movieWriters?.join(', ') || ''}"
-                  </div>
                 </div>
 
                 {/* Actors */}
@@ -544,6 +765,191 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
               </div>
             )}
 
+            {/* Experiments Tab */}
+            {activeTab === 'experiments' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium text-white">Movie Experiments</h3>
+                  <span className="text-sm text-gray-400">
+                    {movieExperiments.length} experiment{movieExperiments.length !== 1 ? 's' : ''} linked
+                  </span>
+                </div>
+
+                {!isEditMode && (
+                  <div className="bg-blue-900 border border-blue-700 text-blue-100 px-4 py-3 rounded-lg">
+                    <p className="text-sm">
+                      📝 Experiment linking is only available when editing existing movies. Save the movie first, then edit it to manage experiments.
+                    </p>
+                  </div>
+                )}
+
+                {isEditMode && (
+                  <>
+                    {/* Currently Linked Experiments */}
+                    {movieExperiments.length > 0 && (
+                      <div className="space-y-3">
+                        <h4 className="text-md font-medium text-white">Currently Linked Experiments</h4>
+                        <div className="space-y-2">
+                          {movieExperiments.map(experimentId => {
+                            const experiment = availableExperiments.find(e => e.id === experimentId);
+                            if (!experiment) return null;
+                            
+                            const isChanged = experimentChanges.toRemove.includes(experimentId);
+                            
+                            return (
+                              <div
+                                key={experimentId}
+                                className={`bg-green-900 border border-green-700 rounded-lg p-3 flex items-center justify-between ${
+                                  isChanged ? 'ring-2 ring-yellow-500 opacity-50' : ''
+                                }`}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="w-4 h-4 bg-green-500 border-green-500 rounded border-2 flex items-center justify-center">
+                                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                  </div>
+                                  <div>
+                                    <p className="text-white font-medium">
+                                      Experiment #{experiment.experimentNumber}
+                                    </p>
+                                    <p className="text-green-200 text-sm">
+                                      {new Date(experiment.eventDate).toLocaleDateString()} - {experiment.eventHost} at {experiment.eventLocation}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {isChanged && (
+                                    <span className="text-yellow-400 text-xs px-2 py-1 bg-yellow-900 rounded">
+                                      Will Remove
+                                    </span>
+                                  )}
+                                  <button
+                                    onClick={() => handleExperimentToggle(experimentId)}
+                                    className="text-red-400 hover:text-red-300 p-1 rounded transition-colors"
+                                    title="Remove experiment"
+                                  >
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Add New Experiments */}
+                    <div className="space-y-3">
+                      <h4 className="text-md font-medium text-white">Add Experiments</h4>
+                      
+                      {/* Search Box */}
+                      <div className="space-y-2">
+                        <input
+                          type="text"
+                          placeholder="Search by experiment number (e.g., 001, 042)..."
+                          value={experimentSearch}
+                          onChange={(e) => setExperimentSearch(e.target.value)}
+                          className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        />
+                        
+                        {/* Search Results */}
+                        {experimentSearch && (
+                          <div className="max-h-48 overflow-y-auto space-y-2">
+                            {filteredExperiments.length === 0 ? (
+                              <div className="text-gray-400 text-sm p-3 bg-dark-700 rounded-lg">
+                                No experiments found matching "{experimentSearch}"
+                              </div>
+                            ) : (
+                              filteredExperiments.map(experiment => {
+                                const isLinked = movieExperiments.includes(experiment.id);
+                                const isChanged = experimentChanges.toAdd.includes(experiment.id);
+                                
+                                // Don't show experiments that are already linked (unless they're being removed)
+                                if (isLinked && !experimentChanges.toRemove.includes(experiment.id)) {
+                                  return null;
+                                }
+                                
+                                return (
+                                  <div
+                                    key={experiment.id}
+                                    className={`border rounded-lg p-3 cursor-pointer transition-all hover:bg-dark-600 ${
+                                      isChanged 
+                                        ? 'bg-green-900 border-green-700 ring-2 ring-yellow-500' 
+                                        : 'bg-dark-700 border-dark-600'
+                                    }`}
+                                    onClick={() => handleExperimentToggle(experiment.id)}
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-3">
+                                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                                          isChanged 
+                                            ? 'bg-green-500 border-green-500' 
+                                            : 'border-gray-500'
+                                        }`}>
+                                          {isChanged && (
+                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                            </svg>
+                                          )}
+                                        </div>
+                                        <div>
+                                          <p className="text-white font-medium">
+                                            Experiment #{experiment.experimentNumber}
+                                          </p>
+                                          <p className="text-gray-400 text-sm">
+                                            {new Date(experiment.eventDate).toLocaleDateString()} - {experiment.eventHost} at {experiment.eventLocation}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      {isChanged && (
+                                        <span className="text-yellow-400 text-xs px-2 py-1 bg-yellow-900 rounded">
+                                          Will Add
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Pending Changes Summary */}
+                    {(experimentChanges.toAdd.length > 0 || experimentChanges.toRemove.length > 0) && (
+                      <div className="bg-yellow-900 border border-yellow-700 text-yellow-100 px-4 py-3 rounded-lg">
+                        <p className="text-sm font-medium mb-2">Pending Changes:</p>
+                        <ul className="text-sm space-y-1">
+                          {experimentChanges.toAdd.map(id => {
+                            const exp = availableExperiments.find(e => e.id === id);
+                            return (
+                              <li key={`add-${id}`} className="flex items-center gap-2">
+                                <span className="text-green-400">+</span>
+                                Link to Experiment #{exp?.experimentNumber}
+                              </li>
+                            );
+                          })}
+                          {experimentChanges.toRemove.map(id => {
+                            const exp = availableExperiments.find(e => e.id === id);
+                            return (
+                              <li key={`remove-${id}`} className="flex items-center gap-2">
+                                <span className="text-red-400">-</span>
+                                Unlink from Experiment #{exp?.experimentNumber}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+
             {/* External Links Tab */}
             {activeTab === 'external' && (
               <div className="space-y-6">
@@ -553,13 +959,33 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       TMDb ID
                     </label>
-                    <input
-                      type="text"
-                      value={formData.movieTmdbId}
-                      onChange={(e) => handleInputChange('movieTmdbId', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="123456"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={String(formData.movieTmdbId || '')}
+                        onChange={(e) => handleInputChange('movieTmdbId', e.target.value)}
+                        className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="123456"
+                      />
+                      {formData.movieTmdbId && (
+                        <button
+                          type="button"
+                          onClick={handleSyncWithTMDb}
+                          disabled={loading || syncing}
+                          className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
+                          title="Sync with TMDb"
+                        >
+                          {syncing ? (
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          ) : (
+                            <span>🔄</span>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    {errors.movieTmdbId && (
+                      <p className="text-red-400 text-sm mt-1">{errors.movieTmdbId}</p>
+                    )}
                   </div>
 
                   {/* TMDb Rating */}
@@ -569,7 +995,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieTmdbRating}
+                      value={String(formData.movieTmdbRating || '')}
                       onChange={(e) => handleInputChange('movieTmdbRating', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="7.5"
@@ -583,7 +1009,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieImdbId}
+                      value={String(formData.movieImdbId || '')}
                       onChange={(e) => handleInputChange('movieImdbId', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="tt1234567"
@@ -597,7 +1023,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      value={formData.movieTmdbVotes}
+                      value={String(formData.movieTmdbVotes || '')}
                       onChange={(e) => handleInputChange('movieTmdbVotes', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="1500"
@@ -614,11 +1040,34 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="url"
-                      value={formData.movieTmdbUrl}
+                      value={String(formData.movieTmdbUrl || '')}
                       onChange={(e) => handleInputChange('movieTmdbUrl', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="https://www.themoviedb.org/movie/123456"
                     />
+                  </div>
+
+                  {/* Exclude from TMDb Sync */}
+                  <div className="bg-dark-600 p-4 rounded-lg border border-orange-500">
+                    <label className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={formData.excludeFromTmdbSync || false}
+                        onChange={(e) => handleInputChange('excludeFromTmdbSync', e.target.checked)}
+                        className="w-4 h-4 text-orange-500 bg-dark-700 border-dark-600 rounded focus:ring-orange-500 focus:ring-2"
+                      />
+                      <div>
+                        <span className="text-sm font-medium text-orange-300">
+                          Exclude from TMDb syncing
+                        </span>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Check this box to prevent TMDb from overwriting this movie's data. Useful for obscure movies not in TMDb.
+                        </p>
+                      </div>
+                    </label>
+                    {errors.excludeFromTmdbSync && (
+                      <p className="text-red-400 text-sm mt-2">{errors.excludeFromTmdbSync}</p>
+                    )}
                   </div>
 
                   {/* IMDb URL */}
@@ -628,14 +1077,11 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="url"
-                      value={formData.movieImdbUrl}
+                      value={String(formData.movieImdbUrl || '')}
                       onChange={(e) => handleInputChange('movieImdbUrl', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="https://www.imdb.com/title/tt1234567"
                     />
-                    <div style={{fontSize: '10px', color: 'yellow'}}>
-                      Debug - IMDb URL value: "{formData.movieImdbUrl}"
-                    </div>
                   </div>
 
                   {/* Amazon Link */}
@@ -645,7 +1091,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="url"
-                      value={formData.movieAmazonLink}
+                      value={String(formData.movieAmazonLink || '')}
                       onChange={(e) => handleInputChange('movieAmazonLink', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="https://amazon.com/..."
@@ -659,7 +1105,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     </label>
                     <input
                       type="url"
-                      value={formData.movieTrailer}
+                      value={String(formData.movieTrailer || '')}
                       onChange={(e) => handleInputChange('movieTrailer', e.target.value)}
                       className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       placeholder="https://youtube.com/watch?v=..."
@@ -678,22 +1124,49 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-4 p-6 border-t border-dark-600 bg-dark-700">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded transition-colors"
-              disabled={loading}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded transition-colors disabled:opacity-50"
-              disabled={loading}
-            >
-              {loading ? 'Saving...' : (isEditMode ? 'Update Movie' : 'Add Movie')}
-            </button>
+          <div className="flex justify-between items-center p-6 border-t border-dark-600 bg-dark-700">
+            {/* Left side - TMDb sync button (only in edit mode) */}
+            <div>
+              {isEditMode && formData.movieTmdbId && (
+                <button
+                  type="button"
+                  onClick={handleSyncWithTMDb}
+                  disabled={loading || syncing}
+                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded transition-colors flex items-center gap-2"
+                >
+                  {syncing ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Syncing with TMDb...
+                    </>
+                  ) : (
+                    <>
+                      <span>🔄</span>
+                      Sync with TMDb
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+
+            {/* Right side - Cancel and Save buttons */}
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded transition-colors"
+                disabled={loading || syncing}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded transition-colors disabled:opacity-50"
+                disabled={loading || syncing}
+              >
+                {loading ? 'Saving...' : (isEditMode ? 'Update Movie' : 'Add Movie')}
+              </button>
+            </div>
           </div>
         </form>
       </div>

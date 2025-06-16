@@ -145,7 +145,8 @@ export const TMDbSearchModal: React.FC<TMDbSearchModalProps> = ({
         movieCountries: detailedMovie.productionCountries || [],
         movieLanguages: detailedMovie.spokenLanguages || [],
         movieStudios: detailedMovie.productionCompanies || [],
-        movieAmazonLink: '' // User can add manually
+        movieAmazonLink: '', // User can add manually
+        excludeFromTmdbSync: false // Default to false for imported movies
       };
 
       await onImport(movieData);

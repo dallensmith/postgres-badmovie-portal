@@ -45,25 +45,13 @@ router.get('/', async (req, res) => {
       skip,
       take: limitNum,
       orderBy: { [sortBy as string]: sortOrder as 'asc' | 'desc' },
-      select: {
-        id: true,
-        movieTitle: true,
-        movieOriginalTitle: true,
-        movieYear: true,
-        movieReleaseDate: true,
-        movieOverview: true,
-        moviePoster: true,
-        movieTmdbId: true,
-        movieTmdbRating: true,
-        movieRuntime: true,
-        movieContentRating: true,
-        movieActors: true,
-        movieDirectors: true,
-        movieGenres: true,
-        wordpressId: true,
-        syncStatus: true,
-        createdAt: true,
-      },
+      include: {
+        movieExperiments: {
+          include: {
+            experiment: true
+          }
+        }
+      }
     });
 
     const totalPages = Math.ceil(totalCount / limitNum);
@@ -180,6 +168,13 @@ router.get('/:id', async (req, res) => {
     
     const movie = await prisma.movie.findUnique({
       where: { id },
+      include: {
+        movieExperiments: {
+          include: {
+            experiment: true
+          }
+        }
+      }
     });
 
     if (!movie) {
@@ -198,10 +193,19 @@ router.post('/', async (req, res) => {
   try {
     const movieData = req.body;
     
+    // Handle date conversion for movieReleaseDate
+    const processedData = { ...movieData };
+    if (processedData.movieReleaseDate && processedData.movieReleaseDate !== '') {
+      // Convert YYYY-MM-DD to ISO DateTime string
+      processedData.movieReleaseDate = new Date(processedData.movieReleaseDate + 'T00:00:00.000Z').toISOString();
+    } else {
+      processedData.movieReleaseDate = null;
+    }
+    
     // Create movie
     const movie = await prisma.movie.create({
       data: {
-        ...movieData,
+        ...processedData,
         syncStatus: 'pending'
       }
     });
@@ -230,10 +234,17 @@ router.put('/:id', async (req, res) => {
     res.json(movie);
   } catch (error: any) {
     console.error('Error updating movie:', error);
+    
     if (error?.code === 'P2025') {
       return res.status(404).json({ error: 'Movie not found' });
     }
-    res.status(500).json({ error: 'Failed to update movie' });
+    
+    // Return more detailed error information
+    res.status(500).json({ 
+      error: 'Failed to update movie',
+      details: error?.message || 'Unknown error',
+      code: error?.code
+    });
   }
 });
 

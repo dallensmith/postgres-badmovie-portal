@@ -321,7 +321,9 @@ export default function Movies() {
     });
     
     if (!response.ok) {
-      throw new Error(`Failed to ${isEdit ? 'update' : 'create'} movie`);
+      const errorData = await response.text();
+      console.error('Server error:', errorData);
+      throw new Error(`Failed to ${isEdit ? 'update' : 'create'} movie: ${errorData}`);
     }
 
     // Refresh the movie list and stats

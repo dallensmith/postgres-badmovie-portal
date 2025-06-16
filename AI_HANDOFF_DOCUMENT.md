@@ -2,54 +2,152 @@
 
 ## Project Overview
 
-This is a PostgreSQL-first admin portal for managing bad movie viewing experiments. The application is built with:
+**PRIMARY GOAL**: Build a comprehensive admin portal and content management system for the Big Screen Bad Movies community. This will serve as the central hub for managing all aspects of bad movie viewing experiments, including movies, people, experiments, and community data.
+
+**BIG PICTURE VISION**:
+- Complete movie database with rich metadata (actors, directors, writers, genres, ratings, etc.)
+- Experiment management system for tracking movie viewing sessions with notes, attendees, and outcomes
+- People management for actors, directors, writers, and community members
+- Integration with external APIs (TMDb, WordPress) for data enrichment and synchronization
+- Modern, user-friendly interface for browsing, searching, and managing all content
+- Robust backend API supporting the portal and potentially mobile apps or other clients
+- Data accuracy and consistency as the authoritative source for the community
+
+**TECHNOLOGY STACK**:
 - **Frontend**: React + TypeScript + Vite + Tailwind CSS
-- **Backend**: Node.js + Express + TypeScript
+- **Backend**: Node.js + Express + TypeScript  
 - **Database**: PostgreSQL (remote server)
 - **ORM**: Prisma
-- **API Integration**: TMDb (The Movie Database)
+- **API Integration**: TMDb (The Movie Database), WordPress
 
-## Current Critical Issue
+## Current Focus: Data Validation & WordPress Integration
 
-**PROBLEM**: The MovieFormModal edit functionality is not properly displaying movie data in form fields, even though the data exists in the database and is being fetched correctly.
+**CURRENT PHASE**: We're working on ensuring data accuracy and building tools to cross-reference with the existing WordPress site (the current source of truth). This is foundational work to ensure the portal becomes the reliable system of record.
 
-**STATUS**: 
-- ✅ Data exists in database correctly
-- ✅ API endpoints work correctly (`/api/movies/:id` returns full movie data)
-- ✅ Data is being fetched when edit button is clicked
-- ✅ Data is passed to MovieFormModal component
-- ❌ Form fields show placeholder text instead of actual values
+**RECENT ACCOMPLISHMENTS**:
+- ✅ Built core portal architecture with PostgreSQL backend and React frontend
+- ✅ Implemented movie management with TMDb integration for rich metadata
+- ✅ Created experiment management system with proper database relationships
+- ✅ Fixed data consistency issues - portal now always reflects true database state
+- ✅ Moved experiment filtering/sorting from client-side to server-side for performance
+- ✅ Fixed missing movie-experiment links in database (resolved issues with experiments 393, 381)
+- ✅ Built WordPress scraper foundation to cross-reference with existing community data
+- ✅ Successfully identified correct data extraction patterns from WordPress posts
 
-**EVIDENCE**: Debug logs show form state contains correct data, but input fields display placeholders (lighter text) instead of values (darker text).
+**CURRENT TASK**: WordPress scraper bulk processing needs content selector fix to extract all historical experiment data
 
-## Architecture
+## Broader Project Roadmap (Future Work)
 
-### Frontend Structure
-```
-src/
-├── components/
-│   ├── MovieCard.tsx           # Movie display component + Movie interface
-│   ├── MovieDetailModal.tsx    # Movie details view + TMDb sync
-│   ├── MovieFormModal.tsx      # Movie add/edit form (BROKEN)
-│   ├── SearchFilters.tsx       # Search and filter controls
-│   └── Pagination.tsx          # Pagination component
-├── pages/
-│   └── Movies.tsx              # Main movie management page
-└── App.tsx                     # Main app component
-```
+**PHASE 1: Core Foundation** ✅ (Mostly Complete)
+- Movie database with TMDb integration
+- Experiment management system  
+- Basic portal functionality
+- Data consistency and accuracy
 
-### Backend Structure
-```
-server/
-├── routes/
-│   ├── movies.ts               # Movie CRUD + batch sync
-│   ├── tmdb.ts                 # TMDb API proxy
-│   ├── dashboard.ts            # Dashboard stats
-│   └── [other routes]
-└── index.ts                    # Express server setup
-```
+**PHASE 2: Data Enrichment** 🔄 (In Progress)
+- WordPress data cross-reference and migration
+- Complete people management (actors, directors, writers)
+- Advanced search and filtering
+- Data validation and cleanup tools
+
+**PHASE 3: Community Features** 📋 (Planned)
+- User authentication and roles
+- Community member profiles
+- Experiment attendance tracking
+- Notes and comments system
+- Rating and review system
+
+**PHASE 4: Advanced Features** 📋 (Future)
+- Public-facing website integration
+- Mobile app support
+- Analytics and reporting
+- API for third-party integrations
+- Automated content recommendations
+
+**PHASE 5: Scale & Polish** 📋 (Future)
+- Performance optimization
+- Advanced caching
+- Full test coverage
+- Documentation and training materials
+
+## Current WordPress Data Integration Status
+
+**CONTEXT**: The existing WordPress site (https://bigscreenbadmovies.com/archive/) contains years of historical experiment data that needs to be cross-referenced with our database to ensure completeness and accuracy.
+**WHAT WE DISCOVERED**:
+- WordPress site contains the historical authoritative source of experiment data (hundreds of experiments)
+- Individual experiment posts use `.et_pb_post_content_0_tb_body` as the main content selector
+- Date extraction needs specific selector `.et_pb_title_meta_container .published` to avoid concatenation
+- Movies are linked via TMDb/IMDb URLs within the post content
+- Test extraction from experiment 196 works perfectly and returns correct data structure
+- This will enable complete historical data migration and ongoing synchronization
+
+**CURRENT TECHNICAL ISSUE**: 
+The bulk scraper (`scrape-wordpress-complete.mjs`) completed but found no movies for any experiments. Root cause: it uses wrong content selectors (`.entry-content, .post-content, .content`) instead of the correct `.et_pb_post_content_0_tb_body` that we identified in testing.
+
+**IMMEDIATE NEXT STEP FOR CONTINUING AI**: 
+Fix the content selector in `scrape-wordpress-complete.mjs` and re-run to extract all historical experiment data for database cross-reference and migration.
+
+**SPECIFIC TECHNICAL TASK**:
+1. Open `/home/das/dev/postgres-badmovie-portal/scrape-wordpress-complete.mjs`
+2. Find the content selector around line 64 (currently uses `.entry-content, .post-content, .content`)
+3. Replace with the correct selector: `.et_pb_post_content_0_tb_body`
+4. Re-run the scraper: `node scrape-wordpress-complete.mjs`
+5. Verify the output contains movies for experiments (should extract hundreds of experiments with complete data)
+
+**REFERENCE FILES**:
+- `test-exp196-proper.mjs` - Working test script showing correct extraction pattern
+- `test-date-extraction.mjs` - Working date extraction test
+- `wordpress-complete-data.json` - Current (incorrect) scraped data that needs to be regenerated
+
+## Key Architecture & Technical Decisions
 
 ### Database Schema (Prisma)
+```prisma
+model Movie {
+  id          Int      @id @default(autoincrement())
+  title       String
+  year        Int?
+  tmdbId      Int?     @unique
+  imdbId      String?
+  genres      Json?    // Array of genre objects
+  actors      Json?    // Array of actor objects  
+  directors   Json?    // Array of director objects
+  writers     Json?    // Array of writer objects
+  experiments Json?    // Array of experiment IDs
+  // ... other fields
+}
+
+model Experiment {
+  id          Int      @id @default(autoincrement())
+  number      Int      @unique
+  title       String?
+  date        DateTime?
+  host        String?
+  notes       String?
+  movies      Json?    // Array of movie IDs
+  // ... other fields
+}
+
+model Actor {
+  id          Int      @id @default(autoincrement())
+  name        String
+  tmdbId      Int?     @unique
+  movies      Json?    // Array of movie IDs
+}
+// Similar for Director, Writer models
+```
+
+### Database Design Philosophy
+- **PostgreSQL-first**: Database as single source of truth for all data
+- **JSON Fields**: Used for array data (actors, genres, etc.) while maintaining relational integrity
+- **Bidirectional Relationships**: Proper foreign keys with JSON field support for complex relationships
+- **Prisma ORM**: Type-safe database operations with migration management
+
+### API Design
+- **RESTful endpoints** with consistent response formats
+- **Server-side pagination, filtering, and sorting** for performance
+- **External API integration** (TMDb) with proper error handling and rate limiting
+- **Type-safe** request/response handling throughout
 Key models:
 - `Movie` - Main movie data with JSON fields for arrays
 - `Actor`, `Director`, `Writer` - People entities

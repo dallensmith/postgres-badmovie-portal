@@ -37,15 +37,18 @@ model Movie {
   movieCountries     Json?     @map("movie_countries")
   movieLanguages     Json?     @map("movie_languages")
   movieStudios       Json?     @map("movie_studios")
-  movieExperiments   Json?     @map("movie_experiments")
   wordpressId        Int?      @unique @map("wordpress_id")
   podsData           Json?     @map("pods_data")
   slug               String?   @unique @db.VarChar(255)
   syncStatus         String    @default("pending") @map("sync_status") @db.VarChar(20)
+  excludeFromTmdbSync Boolean  @default(false) @map("exclude_from_tmdb_sync")
   lastSynced         DateTime? @map("last_synced")
   lastTmdbFetch      DateTime? @map("last_tmdb_fetch")
   createdAt          DateTime  @default(now()) @map("created_at")
   updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  // Relationships
+  movieExperiments   MovieExperiment[]
 
   @@map("movies")
 }
@@ -190,22 +193,38 @@ model Language {
 }
 
 model Experiment {
-  id               Int       @id @default(autoincrement())
-  experimentNumber String?   @map("experiment_number") @db.VarChar(255)
-  eventDate        DateTime  @map("event_date") @db.Date
-  eventLocation    Json      @map("event_location")
-  eventHost        String?   @map("event_host") @db.VarChar(255)
-  experimentImage  String?   @map("experiment_image")
-  experimentNotes  String?   @map("experiment_notes")
-  experimentMovies Json?     @map("experiment_movies")
-  wordpressId      Int?      @unique @map("wordpress_id")
-  podsData         Json?     @map("pods_data")
-  syncStatus       String    @default("pending") @map("sync_status") @db.VarChar(20)
-  lastSynced       DateTime? @map("last_synced")
-  createdAt        DateTime  @default(now()) @map("created_at")
-  updatedAt        DateTime  @updatedAt @map("updated_at")
+  id                  Int       @id @default(autoincrement())
+  experimentNumber    String    @unique @map("experiment_number") @db.VarChar(10)
+  eventDate           DateTime  @map("event_date") @db.Date
+  eventHost           String    @map("event_host") @db.VarChar(255)
+  postUrl             String?   @map("post_url")
+  eventEncore         Boolean   @default(false) @map("event_encore")
+  eventLocation       String    @map("event_location") @db.VarChar(255)
+  eventImageWpId      Int?      @map("event_image_wp_id")
+  eventImage          String?   @map("event_image")
+  eventNotes          String?   @map("event_notes")
+  eventAttendees      String?   @map("event_attendees")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  // Relationships
+  movieExperiments    MovieExperiment[]
 
   @@map("experiments")
+}
+
+model MovieExperiment {
+  id           Int        @id @default(autoincrement())
+  movieId      Int        @map("movie_id")
+  experimentId Int        @map("experiment_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  // Relationships
+  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+
+  @@unique([movieId, experimentId])
+  @@map("movie_experiments")
 }
 
 model SyncLog {

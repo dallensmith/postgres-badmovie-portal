@@ -67,45 +67,31 @@ router.get('/stats', async (_req, res) => {
       }
     });
 
-    // Get recent experiments - group by experiment number
-    const allRecentExperiments = await prisma.experiment.findMany({
+    // Get recent experiments with their movies
+    const recentExperiments = await prisma.experiment.findMany({
       orderBy: { createdAt: 'desc' },
-      take: 25, // Get more to account for grouping
+      take: 5,
       select: {
         id: true,
         experimentNumber: true,
         eventDate: true,
-        experimentMovies: true,
-        createdAt: true
+        eventHost: true,
+        eventLocation: true,
+        createdAt: true,
+        movieExperiments: {
+          select: {
+            movie: {
+              select: {
+                id: true,
+                movieTitle: true,
+                movieYear: true,
+                moviePoster: true
+              }
+            }
+          }
+        }
       }
     });
-
-    // Group experiments by number and combine movies
-    const experimentGroups = new Map();
-    allRecentExperiments.forEach(exp => {
-      const key = exp.experimentNumber || 'unknown';
-      if (!experimentGroups.has(key)) {
-        experimentGroups.set(key, {
-          id: exp.id,
-          experimentNumber: exp.experimentNumber,
-          eventDate: exp.eventDate,
-          experimentMovies: [],
-          createdAt: exp.createdAt
-        });
-      }
-      const group = experimentGroups.get(key);
-      if (Array.isArray(exp.experimentMovies)) {
-        group.experimentMovies.push(...exp.experimentMovies);
-      }
-      // Use earliest creation date
-      if (exp.createdAt < group.createdAt) {
-        group.createdAt = exp.createdAt;
-      }
-    });
-
-    const recentExperiments = Array.from(experimentGroups.values())
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .slice(0, 5);
 
     res.json({
       stats: {
