@@ -11,6 +11,8 @@ import experimentRoutes from './routes/experiments.js';
 import peopleRoutes from './routes/people.js';
 import tmdbRoutes from './routes/tmdb.js';
 import wordpressRoutes from './routes/wordpress.js';
+import dashboardRoutes from './routes/dashboard.js';
+import testRoutes from './routes/test.js';
 
 // Load environment variables
 dotenv.config();
@@ -22,14 +24,22 @@ export const prisma = new PrismaClient({
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3007;
 
 // Security middleware
 app.use(helmet());
 app.use(compression());
 
 // CORS configuration
-const corsOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:5173'];
+const corsOrigins = process.env.CORS_ORIGINS?.split(',') || [
+  'http://localhost:3000', 
+  'http://localhost:3001', 
+  'http://localhost:3002', 
+  'http://localhost:3003', 
+  'http://localhost:3004', 
+  'http://localhost:3005', 
+  'http://localhost:5173'
+];
 app.use(cors({
   origin: corsOrigins,
   credentials: true,
@@ -55,6 +65,8 @@ app.use('/api/experiments', experimentRoutes);
 app.use('/api/people', peopleRoutes);
 app.use('/api/tmdb', tmdbRoutes);
 app.use('/api/wordpress', wordpressRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/test', testRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

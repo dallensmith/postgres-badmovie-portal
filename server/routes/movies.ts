@@ -1,94 +1,82 @@
 import express from 'express';
 import { prisma } from '../index.js';
-import { z } from 'zod';
 
 const router = express.Router();
 
-// Validation schemas
-const createMovieSchema = z.object({
-  title: z.string().min(1).max(255),
-  originalTitle: z.string().max(255).optional(),
-  year: z.number().int().min(1900).max(2100).optional(),
-  releaseDate: z.string().transform(str => new Date(str)).optional(),
-  runtime: z.number().int().positive().optional(),
-  tagline: z.string().optional(),
-  overview: z.string().optional(),
-  contentRating: z.string().max(10).optional(),
-  budget: z.number().optional(),
-  boxOffice: z.number().optional(),
-  revenue: z.number().optional(),
-  tmdbId: z.number().int().optional(),
-  imdbId: z.string().max(20).optional(),
-});
-
-const updateMovieSchema = createMovieSchema.partial();
-
-// GET /api/movies - List all movies with pagination and filtering
+// GET /api/movies - List movies with search, filters, and pagination
 router.get('/', async (req, res) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 20;
-    const search = req.query.search as string;
-    const genre = req.query.genre as string;
-    const year = req.query.year as string;
-    
-    const skip = (page - 1) * limit;
-    
-    // Build where clause
+    const {
+      page = '1',
+      limit = '20',
+      search = '',
+      year = '',
+      sortBy = 'createdAt',
+      sortOrder = 'desc'
+    } = req.query;
+
+    const pageNum = parseInt(page as string);
+    const limitNum = parseInt(limit as string);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Build where clause for filtering
     const where: any = {};
-    
+
+    // Search filter
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { originalTitle: { contains: search, mode: 'insensitive' } },
-        { overview: { contains: search, mode: 'insensitive' } }
+        { movieTitle: { contains: search as string, mode: 'insensitive' } },
+        { movieOriginalTitle: { contains: search as string, mode: 'insensitive' } },
+        { movieOverview: { contains: search as string, mode: 'insensitive' } }
       ];
     }
-    
+
+    // Year filter
     if (year) {
-      where.year = parseInt(year);
+      where.movieYear = year as string;
     }
-    
-    if (genre) {
-      where.genres = {
-        some: {
-          genre: {
-            name: { equals: genre, mode: 'insensitive' }
-          }
-        }
-      };
-    }
-    
-    const [movies, total] = await Promise.all([
-      prisma.movie.findMany({
-        where,
-        skip,
-        take: limit,
-        include: {
-          genres: {
-            include: { genre: true }
-          },
-          cast: {
-            include: { person: true },
-            orderBy: { castOrder: 'asc' }
-          },
-          crew: {
-            include: { person: true },
-            where: { job: 'Director' }
-          }
-        },
-        orderBy: { createdAt: 'desc' }
-      }),
-      prisma.movie.count({ where })
-    ]);
-    
+
+    // Get total count for pagination
+    const totalCount = await prisma.movie.count({ where });
+
+    // Get movies with filters and pagination
+    const movies = await prisma.movie.findMany({
+      where,
+      skip,
+      take: limitNum,
+      orderBy: { [sortBy as string]: sortOrder as 'asc' | 'desc' },
+      select: {
+        id: true,
+        movieTitle: true,
+        movieOriginalTitle: true,
+        movieYear: true,
+        movieReleaseDate: true,
+        movieOverview: true,
+        moviePoster: true,
+        movieTmdbId: true,
+        movieTmdbRating: true,
+        movieRuntime: true,
+        movieContentRating: true,
+        movieActors: true,
+        movieDirectors: true,
+        movieGenres: true,
+        wordpressId: true,
+        syncStatus: true,
+        createdAt: true,
+      },
+    });
+
+    const totalPages = Math.ceil(totalCount / limitNum);
+
     res.json({
       movies,
       pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
+        page: pageNum,
+        limit: limitNum,
+        total: totalCount,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1
       }
     });
   } catch (error) {
@@ -97,37 +85,107 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/movies/:id - Get single movie with full details
+// GET /api/movies/years - Get available years for filtering
+router.get('/years', async (_req, res) => {
+  try {
+    const years = await prisma.movie.findMany({
+      where: {
+        movieYear: {
+          not: null
+        }
+      },
+      select: {
+        movieYear: true
+      },
+      distinct: ['movieYear'],
+      orderBy: {
+        movieYear: 'desc'
+      }
+    });
+
+    const yearList = years
+      .map(y => y.movieYear)
+      .filter((y): y is string => y !== null && y.trim() !== '')
+      .sort((a, b) => parseInt(b) - parseInt(a));
+
+    res.json(yearList);
+  } catch (error) {
+    console.error('Error fetching years:', error);
+    res.status(500).json({ error: 'Failed to fetch years' });
+  }
+});
+
+// GET /api/movies/stats - Get movie statistics
+router.get('/stats', async (_req, res) => {
+  try {
+    const totalMovies = await prisma.movie.count();
+    
+    const moviesByYear = await prisma.movie.groupBy({
+      by: ['movieYear'],
+      _count: {
+        id: true
+      },
+      where: {
+        movieYear: {
+          not: null
+        }
+      },
+      orderBy: {
+        movieYear: 'desc'
+      },
+      take: 10
+    });
+
+    // Calculate average TMDb rating manually since it's stored as string
+    const moviesWithRatings = await prisma.movie.findMany({
+      where: {
+        movieTmdbRating: {
+          not: null
+        }
+      },
+      select: {
+        movieTmdbRating: true
+      }
+    });
+
+    let averageRating = 0;
+    if (moviesWithRatings.length > 0) {
+      const validRatings = moviesWithRatings
+        .map(m => parseFloat(m.movieTmdbRating || '0'))
+        .filter(r => !isNaN(r) && r > 0);
+      
+      if (validRatings.length > 0) {
+        averageRating = validRatings.reduce((sum, rating) => sum + rating, 0) / validRatings.length;
+      }
+    }
+
+    res.json({
+      totalMovies,
+      moviesByYear: moviesByYear.map(item => ({
+        year: item.movieYear,
+        count: item._count.id
+      })),
+      averageRating: Number(averageRating.toFixed(1))
+    });
+  } catch (error) {
+    console.error('Error fetching movie stats:', error);
+    res.status(500).json({ error: 'Failed to fetch movie stats' });
+  }
+});
+
+// GET /api/movies/:id - Get a specific movie
 router.get('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     
     const movie = await prisma.movie.findUnique({
       where: { id },
-      include: {
-        genres: { include: { genre: true } },
-        cast: { 
-          include: { person: true },
-          orderBy: { castOrder: 'asc' }
-        },
-        crew: { 
-          include: { person: true },
-          orderBy: { creditOrder: 'asc' }
-        },
-        studios: { include: { studio: true } },
-        countries: { include: { country: true } },
-        languages: { include: { language: true } },
-        experiments: { 
-          include: { experiment: true },
-          orderBy: { createdAt: 'desc' }
-        }
-      }
     });
-    
+
     if (!movie) {
       return res.status(404).json({ error: 'Movie not found' });
     }
-    
+
     res.json(movie);
   } catch (error) {
     console.error('Error fetching movie:', error);
@@ -135,125 +193,238 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/movies - Create new movie
+// POST /api/movies - Create a new movie
 router.post('/', async (req, res) => {
   try {
-    const validatedData = createMovieSchema.parse(req.body);
+    const movieData = req.body;
     
+    // Create movie
     const movie = await prisma.movie.create({
       data: {
-        ...validatedData,
-        slug: validatedData.title.toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '')
-      },
-      include: {
-        genres: { include: { genre: true } },
-        cast: { include: { person: true } },
-        crew: { include: { person: true } }
+        ...movieData,
+        syncStatus: 'pending'
       }
     });
-    
+
     res.status(201).json(movie);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: 'Validation failed', details: error.errors });
-    }
     console.error('Error creating movie:', error);
     res.status(500).json({ error: 'Failed to create movie' });
   }
 });
 
-// PUT /api/movies/:id - Update movie
+// PUT /api/movies/:id - Update a movie
 router.put('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const validatedData = updateMovieSchema.parse(req.body);
-    
+    const movieData = req.body;
+
     const movie = await prisma.movie.update({
       where: { id },
-      data: validatedData,
-      include: {
-        genres: { include: { genre: true } },
-        cast: { include: { person: true } },
-        crew: { include: { person: true } }
+      data: {
+        ...movieData,
+        updatedAt: new Date()
       }
     });
-    
+
     res.json(movie);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: 'Validation failed', details: error.errors });
-    }
+  } catch (error: any) {
     console.error('Error updating movie:', error);
+    if (error?.code === 'P2025') {
+      return res.status(404).json({ error: 'Movie not found' });
+    }
     res.status(500).json({ error: 'Failed to update movie' });
   }
 });
 
-// DELETE /api/movies/:id - Delete movie
+// DELETE /api/movies/:id - Delete a movie
 router.delete('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    
+
     await prisma.movie.delete({
       where: { id }
     });
-    
+
     res.status(204).send();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error deleting movie:', error);
+    if (error?.code === 'P2025') {
+      return res.status(404).json({ error: 'Movie not found' });
+    }
     res.status(500).json({ error: 'Failed to delete movie' });
   }
 });
 
-// POST /api/movies/:id/cast - Add cast member to movie
-router.post('/:id/cast', async (req, res) => {
+// POST /api/movies/batch-sync-tmdb - Sync all movies with TMDb data
+router.post('/batch-sync-tmdb', async (_req, res) => {
   try {
-    const movieId = parseInt(req.params.id);
-    const { personId, characterName, castOrder } = req.body;
-    
-    const castMember = await prisma.movieCast.create({
-      data: {
-        movieId,
-        personId: parseInt(personId),
-        characterName,
-        castOrder: castOrder ? parseInt(castOrder) : undefined
-      },
-      include: {
-        person: true
-      }
-    });
-    
-    res.status(201).json(castMember);
-  } catch (error) {
-    console.error('Error adding cast member:', error);
-    res.status(500).json({ error: 'Failed to add cast member' });
-  }
-});
+    const TMDB_API_KEY = process.env.TMDB_API_KEY;
+    const TMDB_BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
 
-// POST /api/movies/:id/crew - Add crew member to movie
-router.post('/:id/crew', async (req, res) => {
-  try {
-    const movieId = parseInt(req.params.id);
-    const { personId, job, department, creditOrder } = req.body;
-    
-    const crewMember = await prisma.movieCrew.create({
-      data: {
-        movieId,
-        personId: parseInt(personId),
-        job,
-        department,
-        creditOrder: creditOrder ? parseInt(creditOrder) : undefined
+    if (!TMDB_API_KEY) {
+      return res.status(500).json({ error: 'TMDb API key not configured' });
+    }
+
+    // Get all movies that have TMDb IDs
+    const movies = await prisma.movie.findMany({
+      where: {
+        movieTmdbId: {
+          not: null
+        },
+        NOT: {
+          movieTmdbId: ''
+        }
       },
-      include: {
-        person: true
+      select: {
+        id: true,
+        movieTmdbId: true,
+        movieTitle: true
       }
     });
-    
-    res.status(201).json(crewMember);
-  } catch (error) {
-    console.error('Error adding crew member:', error);
-    res.status(500).json({ error: 'Failed to add crew member' });
+
+    if (movies.length === 0) {
+      return res.json({ 
+        message: 'No movies with TMDb IDs found to sync',
+        updated: 0,
+        failed: 0,
+        results: []
+      });
+    }
+
+    interface SyncResult {
+      id: number;
+      title: string;
+      status: 'success' | 'error';
+      message: string;
+    }
+
+    const results: SyncResult[] = [];
+    let updated = 0;
+    let failed = 0;
+
+    // Helper function for TMDb API requests
+    const tmdbRequest = async (endpoint: string) => {
+      const url = `${TMDB_BASE_URL}${endpoint}${endpoint.includes('?') ? '&' : '?'}api_key=${TMDB_API_KEY}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`TMDb API error: ${response.status} ${response.statusText}`);
+      }
+      
+      return response.json();
+    };
+
+    // Process movies in batches to avoid overwhelming the API
+    const BATCH_SIZE = 5;
+    const DELAY_MS = 500; // Delay between batches to respect rate limits
+
+    for (let i = 0; i < movies.length; i += BATCH_SIZE) {
+      const batch = movies.slice(i, i + BATCH_SIZE);
+      
+      await Promise.all(
+        batch.map(async (movie) => {
+          try {
+            // Get fresh data from TMDb
+            const tmdbData = await tmdbRequest(`/movie/${movie.movieTmdbId}?append_to_response=credits`);
+
+            // Transform TMDb data to our format
+            const updateData: any = {
+              movieTitle: tmdbData.title,
+              movieOriginalTitle: tmdbData.original_title || '',
+              movieYear: tmdbData.release_date ? new Date(tmdbData.release_date).getFullYear().toString() : '',
+              movieReleaseDate: tmdbData.release_date ? new Date(tmdbData.release_date) : null,
+              movieRuntime: tmdbData.runtime ? tmdbData.runtime : null,
+              movieTagline: tmdbData.tagline || '',
+              movieOverview: tmdbData.overview || '',
+              movieBudget: tmdbData.budget ? tmdbData.budget.toString() : '',
+              movieBoxOffice: tmdbData.revenue ? tmdbData.revenue.toString() : '',
+              moviePoster: tmdbData.poster_path ? `https://image.tmdb.org/t/p/w500${tmdbData.poster_path}` : '',
+              movieBackdrop: tmdbData.backdrop_path ? `https://image.tmdb.org/t/p/w1280${tmdbData.backdrop_path}` : '',
+              movieTmdbUrl: `https://www.themoviedb.org/movie/${tmdbData.id}`,
+              movieTmdbRating: tmdbData.vote_average ? tmdbData.vote_average.toString() : '',
+              movieTmdbVotes: tmdbData.vote_count ? tmdbData.vote_count.toString() : '',
+              movieImdbId: tmdbData.imdb_id || '',
+              movieImdbUrl: tmdbData.imdb_id ? `https://www.imdb.com/title/${tmdbData.imdb_id}` : '',
+              movieGenres: tmdbData.genres ? tmdbData.genres.map((g: any) => g.name) : [],
+              movieCountries: tmdbData.production_countries ? tmdbData.production_countries.map((c: any) => c.name) : [],
+              movieLanguages: tmdbData.spoken_languages ? tmdbData.spoken_languages.map((l: any) => l.english_name) : [],
+              movieStudios: tmdbData.production_companies ? tmdbData.production_companies.map((c: any) => c.name) : [],
+              lastTmdbFetch: new Date().toISOString()
+            };
+
+            // Extract cast and crew
+            if (tmdbData.credits) {
+              if (tmdbData.credits.cast) {
+                updateData.movieActors = tmdbData.credits.cast
+                  .slice(0, 10) // Top 10 actors
+                  .map((actor: any) => actor.name);
+              }
+
+              if (tmdbData.credits.crew) {
+                const directors = tmdbData.credits.crew
+                  .filter((member: any) => member.job === 'Director')
+                  .map((director: any) => director.name);
+                updateData.movieDirectors = directors;
+
+                const writers = tmdbData.credits.crew
+                  .filter((member: any) => 
+                    member.job === 'Writer' || 
+                    member.job === 'Screenplay' || 
+                    member.job === 'Story'
+                  )
+                  .map((writer: any) => writer.name);
+                updateData.movieWriters = [...new Set(writers)]; // Remove duplicates
+              }
+            }
+
+            // Update the movie in database
+            await prisma.movie.update({
+              where: { id: movie.id },
+              data: updateData
+            });
+
+            results.push({
+              id: movie.id,
+              title: movie.movieTitle || 'Unknown Title',
+              status: 'success',
+              message: 'Successfully updated from TMDb'
+            });
+            updated++;
+
+          } catch (error) {
+            console.error(`Error syncing movie ${movie.id} (${movie.movieTitle}):`, error);
+            results.push({
+              id: movie.id,
+              title: movie.movieTitle || 'Unknown Title',
+              status: 'error',
+              message: error instanceof Error ? error.message : 'Unknown error'
+            });
+            failed++;
+          }
+        })
+      );
+
+      // Add delay between batches (except for the last batch)
+      if (i + BATCH_SIZE < movies.length) {
+        await new Promise(resolve => setTimeout(resolve, DELAY_MS));
+      }
+    }
+
+    res.json({
+      message: `Batch sync completed. Updated: ${updated}, Failed: ${failed}`,
+      updated,
+      failed,
+      total: movies.length,
+      results
+    });
+
+  } catch (error: any) {
+    console.error('Batch sync error:', error);
+    res.status(500).json({ 
+      error: 'Failed to perform batch sync',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 
