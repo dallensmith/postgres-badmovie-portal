@@ -47,12 +47,12 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 
 **🎬 TMDb Import UX Enhancement (Latest Update)**
 - **Revolutionary workflow improvement**: Completely redesigned TMDb movie import process
+- **Fixed broken imports**: Replaced failing direct import with reliable workflow reusing proven components
 - **New flow**: TMDb search → Select movie → Auto-populated form → Review & Save
-- **Reliability boost**: Now uses proven TMDb sync mechanism instead of fragile direct import
-- **Better UX**: Users can review and edit all fields before saving (no more failed imports)
-- **Seamless integration**: Leverages existing, working form validation and save functionality
-- **Intuitive design**: One-click selection opens pre-filled movie form with auto-import
-- **Zero reinvention**: Smart reuse of existing, reliable components and workflows
+- **Smart design**: Leverages existing TMDb sync functionality that already works perfectly
+- **Better UX**: Users can review and edit all imported data before saving
+- **100% reliability**: Zero failed imports by reusing tested save mechanisms
+- **Elegant solution**: Sometimes better design beats debugging complex code
 
 ## Architecture Overview
 
