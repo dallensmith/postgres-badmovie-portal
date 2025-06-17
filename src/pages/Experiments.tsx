@@ -1,30 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { apiService } from '../services/api';
-import { ExperimentFilters } from '../components/ExperimentFilters';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { ExperimentCard, Experiment } from '../components/ExperimentCard';
+import { SearchFilters } from '../components/SearchFilters';
 import { Pagination } from '../components/Pagination';
 import { MovieGridSkeleton } from '../components/LoadingStates';
-
-interface Experiment {
-  id: number;
-  experimentNumber: string;
-  eventDate: string;
-  eventHost: string;
-  eventLocation: string;
-  eventEncore: boolean;
-  eventNotes: string | null;
-  eventAttendees: string | null;
-  eventImage: string | null;
-  postUrl: string | null;
-  movieExperiments?: Array<{
-    isEncore?: boolean;
-    movie: {
-      id: number;
-      movieTitle: string;
-      moviePoster: string | null;
-      movieYear: string | null;
-    };
-  }>;
-}
+import { apiService } from '../services/api';
 
 interface NewExperiment {
   experimentNumber: string;
@@ -51,13 +30,13 @@ export default function Experiments() {
   const [experiments, setExperiments] = useState<Experiment[]>([]);
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 24,
+    limit: 24, // Match Movies page default
     total: 0,
     totalPages: 0,
     hasNext: false,
     hasPrev: false
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Start true like Movies page for consistency
   const [error, setError] = useState<string | null>(null);
   
   // Filters - matching movies page pattern
@@ -107,14 +86,15 @@ export default function Experiments() {
 
       const data: ExperimentsResponse = await response.json();
       setExperiments(data.experiments || []);
-      setPagination({
+      setPagination(prev => ({
+        ...prev,
         page: data.pagination.page,
         limit: data.pagination.limit,
         total: data.pagination.total,
         totalPages: data.pagination.pages,
         hasNext: data.pagination.page < data.pagination.pages,
         hasPrev: data.pagination.page > 1
-      });
+      }));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch experiments');
       console.error('Error fetching experiments:', err);
@@ -192,7 +172,7 @@ export default function Experiments() {
     setPagination(prev => ({ ...prev, limit, page: 1 }));
   };
 
-  const handleCreateExperiment = async () => {
+  const handleCreateExperiment = useCallback(async () => {
     try {
       await apiService.createExperiment(newExperiment);
       setShowCreateModal(false);
@@ -206,13 +186,13 @@ export default function Experiments() {
         eventImage: '',
         postUrl: ''
       });
-      await fetchExperiments();
+      fetchExperiments();
     } catch (error) {
       console.error('Failed to create experiment:', error);
     }
-  };
+  }, [newExperiment, fetchExperiments]);
 
-  const handleEditExperiment = async () => {
+  const handleEditExperiment = useCallback(async () => {
     if (!editingExperiment) return;
     
     try {
@@ -227,56 +207,35 @@ export default function Experiments() {
         postUrl: editingExperiment.postUrl
       });
       setEditingExperiment(null);
-      await fetchExperiments();
+      fetchExperiments();
     } catch (error) {
       console.error('Failed to update experiment:', error);
     }
-  };
+  }, [editingExperiment, fetchExperiments]);
 
-  const handleDeleteExperiment = async (id: number) => {
+  const handleDeleteExperiment = useCallback(async (id: number) => {
     if (!confirm('Are you sure you want to delete this experiment? This action cannot be undone.')) {
       return;
     }
     
     try {
       await apiService.deleteExperiment(id);
-      await fetchExperiments();
+      fetchExperiments();
     } catch (error) {
       console.error('Failed to delete experiment:', error);
     }
-  };
+  }, [fetchExperiments]);
 
-  // Stats calculations using the current page's experiments
-  const totalMoviesOnPage = experiments.reduce((sum, exp) => sum + (exp.movieExperiments?.length || 0), 0);
-  const totalEncoresOnPage = experiments.reduce((sum, exp) => 
-    sum + (exp.movieExperiments?.filter(me => me.isEncore).length || 0), 0);
+  // Memoized stats calculations to avoid recalculating on every render
+  const totalMoviesOnPage = useMemo(() => {
+    return experiments.reduce((sum, exp) => sum + (exp.movieExperiments?.length || 0), 0);
+  }, [experiments]);
 
-  const getNextExperimentNumber = () => {
+  const getNextExperimentNumber = useMemo(() => {
     if (experiments.length === 0) return '001';
     const maxNumber = Math.max(...experiments.map(exp => parseInt(exp.experimentNumber) || 0));
     return String(maxNumber + 1).padStart(3, '0');
-  };
-
-  if (loading) {
-    return <MovieGridSkeleton />;
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-96">
-        <div className="text-center">
-          <div className="text-red-400 text-lg mb-2">Error loading experiments</div>
-          <div className="text-gray-400 mb-4">{error}</div>
-          <button
-            onClick={fetchExperiments}
-            className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
+  }, [experiments]);
 
   return (
     <div className="space-y-6">
@@ -288,7 +247,7 @@ export default function Experiments() {
         </div>
         <button
           onClick={() => {
-            setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber() }));
+            setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber }));
             setShowCreateModal(true);
           }}
           className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
@@ -299,7 +258,7 @@ export default function Experiments() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-dark-800 p-4 rounded-lg">
           <div className="text-2xl font-bold text-white">{pagination.total}</div>
           <div className="text-gray-400">Total Experiments</div>
@@ -308,14 +267,10 @@ export default function Experiments() {
           <div className="text-2xl font-bold text-white">{totalMoviesOnPage}</div>
           <div className="text-gray-400">Movies on Page</div>
         </div>
-        <div className="bg-dark-800 p-4 rounded-lg">
-          <div className="text-2xl font-bold text-white">{totalEncoresOnPage}</div>
-          <div className="text-gray-400">Encores on Page</div>
-        </div>
       </div>
 
       {/* Search and Filters */}
-      <ExperimentFilters
+      <SearchFilters
         searchQuery={searchQuery}
         selectedYear={selectedYear}
         sortBy={sortBy}
@@ -328,27 +283,31 @@ export default function Experiments() {
         totalResults={pagination.total}
       />
 
-      {/* Experiments Grid */}
-      {experiments.length === 0 ? (
-        <div className="bg-dark-800 p-8 rounded-lg text-center">
-          <div className="text-gray-400 text-lg">
-            {searchQuery ? 'No experiments found matching your search.' : 'No experiments created yet.'}
-          </div>
-          {!searchQuery && (
+      {/* Error State */}
+      {error && (
+        <div className="flex items-center justify-center min-h-96">
+          <div className="text-center">
+            <div className="text-red-400 text-lg mb-2">Error loading experiments</div>
+            <div className="text-gray-400 mb-4">{error}</div>
             <button
-              onClick={() => {
-                setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber() }));
-                setShowCreateModal(true);
-              }}
-              className="mt-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
+              onClick={fetchExperiments}
+              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
-              Create Your First Experiment
+              Try Again
             </button>
-          )}
+          </div>
         </div>
-      ) : (
+      )}
+
+      {/* Loading State */}
+      {loading && !error && (
+        <MovieGridSkeleton count={pagination.limit} />
+      )}
+
+      {/* Experiments Grid */}
+      {!loading && !error && experiments.length > 0 && (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
             {experiments.map(experiment => (
               <ExperimentCard
                 key={experiment.id}
@@ -371,6 +330,26 @@ export default function Experiments() {
         </>
       )}
 
+      {/* Empty State */}
+      {!loading && !error && experiments.length === 0 && (
+        <div className="bg-dark-800 p-8 rounded-lg text-center">
+          <div className="text-gray-400 text-lg">
+            {searchQuery ? 'No experiments found matching your search.' : 'No experiments created yet.'}
+          </div>
+          {!searchQuery && (
+            <button
+              onClick={() => {
+                setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber }));
+                setShowCreateModal(true);
+              }}
+              className="mt-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              Create Your First Experiment
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Create/Edit Modal */}
       {(showCreateModal || editingExperiment) && (
         <ExperimentModal
@@ -385,108 +364,6 @@ export default function Experiments() {
           }}
         />
       )}
-    </div>
-  );
-}
-
-// Experiment Card Component
-function ExperimentCard({ 
-  experiment, 
-  onEdit, 
-  onDelete 
-}: { 
-  experiment: Experiment;
-  onEdit: (exp: Experiment) => void;
-  onDelete: (id: number) => void;
-}) {
-  return (
-    <div className="bg-dark-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      {experiment.eventImage && (
-        <div className="h-48 overflow-hidden">
-          <img 
-            src={experiment.eventImage} 
-            alt={`Experiment ${experiment.experimentNumber}`}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="text-xl font-bold text-white">#{experiment.experimentNumber}</h3>
-            <p className="text-gray-400">{new Date(experiment.eventDate).toLocaleDateString()}</p>
-          </div>
-        </div>
-
-        <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-gray-400">👤</span>
-            <span className="text-white">{experiment.eventHost}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-gray-400">📍</span>
-            <span className="text-white">{experiment.eventLocation}</span>
-          </div>
-        </div>
-
-        {experiment.eventNotes && (
-          <div className="mb-4">
-            <p className="text-gray-300 text-sm bg-dark-700 p-3 rounded">
-              {experiment.eventNotes}
-            </p>
-          </div>
-        )}
-
-        <div className="mb-4">
-          <div className="text-sm text-gray-400 mb-2">
-            Movies ({experiment.movieExperiments?.length || 0})
-          </div>
-          {experiment.movieExperiments && experiment.movieExperiments.length > 0 ? (
-            <div className="flex flex-wrap gap-1">
-              {experiment.movieExperiments.slice(0, 3).map((movieExp, index) => (
-                <div key={index} className="flex items-center gap-1">
-                  <span className="bg-dark-700 text-xs px-2 py-1 rounded text-gray-300">
-                    {movieExp.movie.movieTitle}
-                  </span>
-                  {movieExp.isEncore && (
-                    <span className="bg-yellow-500 text-black px-1.5 py-0.5 rounded text-xs font-semibold">
-                      ENCORE
-                    </span>
-                  )}
-                </div>
-              ))}
-              {experiment.movieExperiments.length > 3 && (
-                <span className="bg-dark-700 text-xs px-2 py-1 rounded text-gray-400">
-                  +{experiment.movieExperiments.length - 3} more
-                </span>
-              )}
-            </div>
-          ) : (
-            <span className="text-gray-400 text-sm">No movies linked</span>
-          )}
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={() => window.open(`/experiments/${experiment.id}`, '_blank')}
-            className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded transition-colors text-sm"
-          >
-            View Details
-          </button>
-          <button
-            onClick={() => onEdit(experiment)}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded transition-colors text-sm"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => onDelete(experiment.id)}
-            className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded transition-colors text-sm"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

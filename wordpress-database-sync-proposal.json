@@ -1,0 +1,4240 @@
+{
+  "generatedAt": "2025-06-16T18:17:42.728Z",
+  "summary": {
+    "missingMovies": 97,
+    "missingNotes": 95,
+    "imageUpdates": 196,
+    "movieCountDiscrepancies": 28,
+    "missingExperiments": 4
+  },
+  "proposals": {
+    "missingMovies": [
+      {
+        "title": "New York Ninja",
+        "year": "1984",
+        "url": "https://www.imdb.com/title/tt15358226/",
+        "rawText": "New York Ninja",
+        "isEncore": false,
+        "experimentNumber": "001",
+        "experimentTitle": "Experiment #001",
+        "experiments": [
+          "001"
+        ]
+      },
+      {
+        "title": "Ninja Terminator",
+        "year": "1986",
+        "url": "https://www.imdb.com/title/tt0199849/",
+        "rawText": "Ninja Terminator",
+        "isEncore": false,
+        "experimentNumber": "005",
+        "experimentTitle": "Experiment #005",
+        "experiments": [
+          "005"
+        ]
+      },
+      {
+        "title": "L.E.T.H.A.L. Ladies: Return to Savage Beach",
+        "year": "2006",
+        "url": "https://www.imdb.com/title/tt0127759/",
+        "rawText": "L.E.T.H.A.L. Ladies: Return to Savage Beach",
+        "isEncore": false,
+        "experimentNumber": "006",
+        "experimentTitle": "Experiment #006",
+        "experiments": [
+          "006"
+        ]
+      },
+      {
+        "title": "Twister’s Revenge!",
+        "year": "1988",
+        "url": "https://www.imdb.com/title/tt0133246/",
+        "rawText": "Twister’s Revenge!",
+        "isEncore": false,
+        "experimentNumber": "014",
+        "experimentTitle": "Experiment #014",
+        "experiments": [
+          "014"
+        ]
+      },
+      {
+        "title": "Story of Ricky",
+        "year": "1991",
+        "url": "https://www.imdb.com/title/tt0102293/",
+        "rawText": "Story of Ricky",
+        "isEncore": false,
+        "experimentNumber": "019",
+        "experimentTitle": "Experiment #019",
+        "experiments": [
+          "019"
+        ]
+      },
+      {
+        "title": "Flesh-Eating Mothers",
+        "year": "1988",
+        "url": "https://www.imdb.com/title/tt0097364/?ref_=fn_al_tt_1",
+        "rawText": "Flesh-Eating Mothers",
+        "isEncore": false,
+        "experimentNumber": "026",
+        "experimentTitle": "Experiment #026",
+        "experiments": [
+          "026"
+        ]
+      },
+      {
+        "title": "Breakin’ 2: Electric Boogaloo",
+        "year": "1984",
+        "url": "https://www.imdb.com/title/tt0086999/?ref_=fn_al_tt_3",
+        "rawText": "Breakin’ 2: Electric Boogaloo",
+        "isEncore": false,
+        "experimentNumber": "028",
+        "experimentTitle": "Experiment #028",
+        "experiments": [
+          "028"
+        ]
+      },
+      {
+        "title": "Shock ‘Em Dead",
+        "year": "1991",
+        "url": "https://www.imdb.com/title/tt0102910/?ref_=fn_al_tt_2",
+        "rawText": "Shock ‘Em Dead",
+        "isEncore": false,
+        "experimentNumber": "028",
+        "experimentTitle": "Experiment #028",
+        "experiments": [
+          "028"
+        ]
+      },
+      {
+        "title": "Pieces",
+        "year": "1982",
+        "url": "https://www.imdb.com/title/tt0082748/?ref_=fn_al_tt_1",
+        "rawText": "Pieces",
+        "isEncore": false,
+        "experimentNumber": "030",
+        "experimentTitle": "Experiment #030",
+        "experiments": [
+          "030"
+        ]
+      },
+      {
+        "title": "Microwave Massacre",
+        "year": "1979",
+        "url": "https://www.imdb.com/title/tt0085937/?ref_=fn_al_tt_1",
+        "rawText": "Microwave Massacre",
+        "isEncore": false,
+        "experimentNumber": "030",
+        "experimentTitle": "Experiment #030",
+        "experiments": [
+          "030"
+        ]
+      },
+      {
+        "title": "Champagne and Bullets",
+        "year": "1993",
+        "url": "https://www.imdb.com/title/tt0169183/?ref_=fn_al_tt_1",
+        "rawText": "Champagne and Bullets",
+        "isEncore": false,
+        "experimentNumber": "034",
+        "experimentTitle": "Experiment #034",
+        "experiments": [
+          "034"
+        ]
+      },
+      {
+        "title": "Auntie Lee’s Meat Pies",
+        "year": "1992",
+        "url": "https://www.imdb.com/title/tt0106323/?ref_=fn_al_tt_2",
+        "rawText": "Auntie Lee’s Meat Pies",
+        "isEncore": false,
+        "experimentNumber": "035",
+        "experimentTitle": "Experiment #035",
+        "experiments": [
+          "035"
+        ]
+      },
+      {
+        "title": "Rock ‘n’ Roll Nightmare",
+        "year": "1987",
+        "url": "https://www.imdb.com/title/tt0093873/?ref_=fn_al_tt_1",
+        "rawText": "Rock ‘n’ Roll Nightmare",
+        "isEncore": false,
+        "experimentNumber": "038",
+        "experimentTitle": "Experiment #038",
+        "experiments": [
+          "038"
+        ]
+      },
+      {
+        "title": "The Perils of Gwendoline in the Land of the Yik Yak",
+        "year": "1984",
+        "url": "https://www.imdb.com/title/tt0087903/?ref_=fn_al_tt_1",
+        "rawText": "The Perils of Gwendoline in the Land of the Yik Yak",
+        "isEncore": false,
+        "experimentNumber": "039",
+        "experimentTitle": "Experiment #039",
+        "experiments": [
+          "039"
+        ]
+      },
+      {
+        "title": "Ape",
+        "year": "1976",
+        "url": "https://www.imdb.com/title/tt0074148/?ref_=fn_al_tt_1",
+        "rawText": "Ape",
+        "isEncore": false,
+        "experimentNumber": "042",
+        "experimentTitle": "Experiment #042",
+        "experiments": [
+          "042"
+        ]
+      },
+      {
+        "title": "Devil’s Express",
+        "year": "1976",
+        "url": "https://www.imdb.com/title/tt0073031/?ref_=fn_al_tt_1",
+        "rawText": "Devil’s Express",
+        "isEncore": false,
+        "experimentNumber": "043",
+        "experimentTitle": "Experiment #043",
+        "experiments": [
+          "043",
+          "271"
+        ]
+      },
+      {
+        "title": "Y’ur Height Only",
+        "year": "1981",
+        "url": "https://www.imdb.com/title/tt0200642/?ref_=fn_al_tt_1",
+        "rawText": "Y’ur Height Only",
+        "isEncore": false,
+        "experimentNumber": "045",
+        "experimentTitle": "Experiment #045",
+        "experiments": [
+          "045"
+        ]
+      },
+      {
+        "title": "Zombie 3",
+        "year": "1988",
+        "url": "https://www.imdb.com/title/tt0096511/?ref_=fn_al_tt_2",
+        "rawText": "Zombie 3",
+        "isEncore": false,
+        "experimentNumber": "051",
+        "experimentTitle": "Experiment #051",
+        "experiments": [
+          "051"
+        ]
+      },
+      {
+        "title": "Ninja in the Dragon’s Den",
+        "year": "1982",
+        "url": "https://www.imdb.com/title/tt0084267/?ref_=fn_al_tt_1",
+        "rawText": "Ninja in the Dragon’s Den",
+        "isEncore": false,
+        "experimentNumber": "074",
+        "experimentTitle": "Experiment #074",
+        "experiments": [
+          "074"
+        ]
+      },
+      {
+        "title": "Night of the Kickfighters",
+        "year": "1988",
+        "url": "https://www.imdb.com/title/tt0095731/?ref_=fn_al_tt_1",
+        "rawText": "Night of the Kickfighters",
+        "isEncore": false,
+        "experimentNumber": "074",
+        "experimentTitle": "Experiment #074",
+        "experiments": [
+          "074"
+        ]
+      },
+      {
+        "title": "Russian Terminator",
+        "year": "1989",
+        "url": "https://www.imdb.com/title/tt0100531/?ref_=fn_al_tt_1",
+        "rawText": "Russian Terminator",
+        "isEncore": false,
+        "experimentNumber": "075",
+        "experimentTitle": "Experiment #075",
+        "experiments": [
+          "075"
+        ]
+      },
+      {
+        "title": "The Intruder",
+        "year": "1985",
+        "url": "https://www.imdb.com/title/tt0311340/?ref_=fn_al_tt_1",
+        "rawText": "The Intruder",
+        "isEncore": false,
+        "experimentNumber": "075",
+        "experimentTitle": "Experiment #075",
+        "experiments": [
+          "075"
+        ]
+      },
+      {
+        "title": "Ryan’s Babe",
+        "year": "2000",
+        "url": "https://www.imdb.com/title/tt0311740/?ref_=fn_al_tt_1",
+        "rawText": "Ryan’s Babe",
+        "isEncore": false,
+        "experimentNumber": "077",
+        "experimentTitle": "Experiment #077",
+        "experiments": [
+          "077"
+        ]
+      },
+      {
+        "title": "Warriors of the Wasteland",
+        "year": "1983",
+        "url": "https://www.imdb.com/title/tt0084424/?ref_=fn_tt_tt_1",
+        "rawText": "Warriors of the Wasteland",
+        "isEncore": false,
+        "experimentNumber": "077",
+        "experimentTitle": "Experiment #077",
+        "experiments": [
+          "077",
+          "135"
+        ]
+      },
+      {
+        "title": "Tian shi zhuang xie",
+        "year": "1983",
+        "url": "https://www.imdb.com/title/tt0086303/?ref_=fn_al_tt_1",
+        "rawText": "Tian shi zhuang xie",
+        "isEncore": false,
+        "experimentNumber": "083",
+        "experimentTitle": "Experiment #083",
+        "experiments": [
+          "083"
+        ]
+      },
+      {
+        "title": "Tian can di que",
+        "year": "1979",
+        "url": "https://www.imdb.com/title/tt0122029/?ref_=fn_al_tt_1",
+        "rawText": "Tian can di que",
+        "isEncore": false,
+        "experimentNumber": "088",
+        "experimentTitle": "Experiment #088",
+        "experiments": [
+          "088"
+        ]
+      },
+      {
+        "title": "The Executioner, Part II",
+        "year": "1984",
+        "url": "https://www.imdb.com/title/tt0173807/?ref_=fn_al_tt_1",
+        "rawText": "The Executioner, Part II",
+        "isEncore": false,
+        "experimentNumber": "097",
+        "experimentTitle": "Experiment #097",
+        "experiments": [
+          "097"
+        ]
+      },
+      {
+        "title": "Tiger on Beat",
+        "year": "1988",
+        "url": "https://www.imdb.com/title/tt0095491/?ref_=fn_al_tt_1",
+        "rawText": "Tiger on Beat",
+        "isEncore": false,
+        "experimentNumber": "100",
+        "experimentTitle": "Experiment #100",
+        "experiments": [
+          "100"
+        ]
+      },
+      {
+        "title": "Atlantis Interceptors",
+        "year": "1983",
+        "url": "https://www.imdb.com/title/tt0086135/?ref_=fn_al_tt_1",
+        "rawText": "Atlantis Interceptors",
+        "isEncore": false,
+        "experimentNumber": "102",
+        "experimentTitle": "Experiment #102",
+        "experiments": [
+          "102"
+        ]
+      },
+      {
+        "title": "Aphrodisiac!: The Sexual Secret of Marijuana",
+        "year": "1971",
+        "url": "https://www.imdb.com/title/tt0179083/?ref_=fn_al_tt_1",
+        "rawText": "Aphrodisiac!: The Sexual Secret of Marijuana",
+        "isEncore": false,
+        "experimentNumber": "115",
+        "experimentTitle": "Experiment #115",
+        "experiments": [
+          "115"
+        ]
+      },
+      {
+        "title": "9mm Sunrise",
+        "year": "2006",
+        "url": "https://www.imdb.com/title/tt0823151/?ref_=fn_al_tt_1",
+        "rawText": "9mm Sunrise",
+        "isEncore": false,
+        "experimentNumber": "119",
+        "experimentTitle": "Experiment #119",
+        "experiments": [
+          "119"
+        ]
+      },
+      {
+        "title": "The Pumaman",
+        "year": "1980",
+        "url": "https://www.imdb.com/title/tt0081693/?ref_=fn_al_tt_1",
+        "rawText": "The Pumaman",
+        "isEncore": false,
+        "experimentNumber": "131",
+        "experimentTitle": "Experiment #131",
+        "experiments": [
+          "131"
+        ]
+      },
+      {
+        "title": "Nine Deaths of the Ninja",
+        "year": "1985",
+        "url": "https://www.imdb.com/title/tt0089689/?ref_=fn_al_tt_1",
+        "rawText": "Nine Deaths of the Ninja",
+        "isEncore": false,
+        "experimentNumber": "134",
+        "experimentTitle": "Experiment #134",
+        "experiments": [
+          "134"
+        ]
+      },
+      {
+        "title": "Gamera, Super Monster",
+        "year": "1980",
+        "url": "https://www.imdb.com/title/tt0081675/?ref_=fn_al_tt_1",
+        "rawText": "Gamera, Super Monster",
+        "isEncore": false,
+        "experimentNumber": "135",
+        "experimentTitle": "Experiment #135",
+        "experiments": [
+          "135"
+        ]
+      },
+      {
+        "title": "The Instructor",
+        "year": "1981",
+        "url": "https://www.imdb.com/title/tt0187993/?ref_=fn_al_tt_1",
+        "rawText": "The Instructor",
+        "isEncore": false,
+        "experimentNumber": "137",
+        "experimentTitle": "Experiment #137",
+        "experiments": [
+          "137"
+        ]
+      },
+      {
+        "title": "Ninja Operation 6: Champion on Fire",
+        "year": "1987",
+        "url": "https://www.imdb.com/title/tt0199812/?ref_=fn_al_tt_2",
+        "rawText": "Ninja Operation 6: Champion on Fire",
+        "isEncore": false,
+        "experimentNumber": "139",
+        "experimentTitle": "Experiment #139",
+        "experiments": [
+          "139"
+        ]
+      },
+      {
+        "title": "Sharkansas Women’s Prison Massacre",
+        "year": "2015",
+        "url": "https://www.imdb.com/title/tt3403194/?ref_=fn_al_tt_1",
+        "rawText": "Sharkansas Women’s Prison Massacre",
+        "isEncore": false,
+        "experimentNumber": "141",
+        "experimentTitle": "Experiment #141",
+        "experiments": [
+          "141"
+        ]
+      },
+      {
+        "title": "Phantom of the Mall: Eric’s Revenge",
+        "year": "1989",
+        "url": "https://www.imdb.com/title/tt0098089/?ref_=fn_al_tt_1",
+        "rawText": "Phantom of the Mall: Eric’s Revenge",
+        "isEncore": false,
+        "experimentNumber": "146",
+        "experimentTitle": "Experiment #146",
+        "experiments": [
+          "146"
+        ]
+      },
+      {
+        "title": "Don’t Go Near the Park",
+        "year": "1979",
+        "url": "https://www.imdb.com/title/tt0082276/?ref_=fn_al_tt_2",
+        "rawText": "Don’t Go Near the Park",
+        "isEncore": false,
+        "experimentNumber": "148",
+        "experimentTitle": "Experiment #148",
+        "experiments": [
+          "148"
+        ]
+      },
+      {
+        "title": "Shatter Dead",
+        "year": "2022",
+        "url": "https://www.imdb.com/title/tt0111159/",
+        "rawText": "Shatter Dead",
+        "isEncore": false,
+        "experimentNumber": "155",
+        "experimentTitle": "Experiment #155",
+        "experiments": [
+          "155"
+        ]
+      },
+      {
+        "title": "There’s Nothing Out There",
+        "year": "1991",
+        "url": "https://www.imdb.com/title/tt0103077/",
+        "rawText": "There’s Nothing Out There",
+        "isEncore": false,
+        "experimentNumber": "158",
+        "experimentTitle": "Experiment #158",
+        "experiments": [
+          "158"
+        ]
+      },
+      {
+        "title": "Don’t Panic",
+        "year": "1989",
+        "url": "https://www.themoviedb.org/movie/84387",
+        "rawText": "Don’t Panic",
+        "isEncore": false,
+        "experimentNumber": "161",
+        "experimentTitle": "Experiment #161",
+        "experiments": [
+          "161"
+        ]
+      },
+      {
+        "title": "The Masturbating Gunman",
+        "year": "1999",
+        "url": "https://www.themoviedb.org/movie/163441",
+        "rawText": "The Masturbating Gunman",
+        "isEncore": false,
+        "experimentNumber": "170",
+        "experimentTitle": "Experiment #170",
+        "experiments": [
+          "170"
+        ]
+      },
+      {
+        "title": "Bird’s Eye View",
+        "year": "2009",
+        "url": "https://www.themoviedb.org/movie/702275",
+        "rawText": "Bird’s Eye View",
+        "isEncore": false,
+        "experimentNumber": "173",
+        "experimentTitle": "Experiment #173",
+        "experiments": [
+          "173"
+        ]
+      },
+      {
+        "title": "The Whore Church Vol. 1",
+        "year": "2012",
+        "url": "https://www.imdb.com/title/tt2961174/",
+        "rawText": "The Whore Church Vol. 1",
+        "isEncore": false,
+        "experimentNumber": "180",
+        "experimentTitle": "Experiment #180",
+        "experiments": [
+          "180",
+          "280"
+        ]
+      },
+      {
+        "title": "My Best Friend’s Birthday",
+        "year": "1986",
+        "url": "https://www.themoviedb.org/movie/10614",
+        "rawText": "My Best Friend’s Birthday",
+        "isEncore": false,
+        "experimentNumber": "181",
+        "experimentTitle": "Experiment #181",
+        "experiments": [
+          "181"
+        ]
+      },
+      {
+        "title": "Silk 2",
+        "year": "1988",
+        "url": "https://www.themoviedb.org/movie/222336",
+        "rawText": "Silk 2",
+        "isEncore": false,
+        "experimentNumber": "181",
+        "experimentTitle": "Experiment #181",
+        "experiments": [
+          "181"
+        ]
+      },
+      {
+        "title": "For Y’ur Height Only",
+        "year": "1981",
+        "url": "https://www.themoviedb.org/movie/40471",
+        "rawText": "For Y’ur Height Only",
+        "isEncore": true,
+        "experimentNumber": "200",
+        "experimentTitle": "Experiment #200",
+        "experiments": [
+          "200"
+        ]
+      },
+      {
+        "title": "Dynamite Brothers",
+        "year": "1974",
+        "url": "https://www.themoviedb.org/movie/81937",
+        "rawText": "Dynamite Brothers",
+        "isEncore": false,
+        "experimentNumber": "206",
+        "experimentTitle": "Experiment #206",
+        "experiments": [
+          "206"
+        ]
+      },
+      {
+        "title": "Don’t Answer the Phone!",
+        "year": "1980",
+        "url": "https://www.themoviedb.org/movie/40102",
+        "rawText": "Don’t Answer the Phone!",
+        "isEncore": false,
+        "experimentNumber": "212",
+        "experimentTitle": "Experiment #212",
+        "experiments": [
+          "212"
+        ]
+      },
+      {
+        "title": "I Am Here….Now",
+        "year": "2009",
+        "url": "https://www.themoviedb.org/movie/99847",
+        "rawText": "I Am Here….Now",
+        "isEncore": false,
+        "experimentNumber": "213",
+        "experimentTitle": "Experiment #213",
+        "experiments": [
+          "213"
+        ]
+      },
+      {
+        "title": "Pulsebeat",
+        "year": "1983",
+        "url": "https://www.themoviedb.org/movie/29633",
+        "rawText": "Pulsebeat",
+        "isEncore": false,
+        "experimentNumber": "215",
+        "experimentTitle": "Experiment #215",
+        "experiments": [
+          "215"
+        ]
+      },
+      {
+        "title": "Showgirls 2: Penny’s from Heaven",
+        "year": "2011",
+        "url": "https://www.themoviedb.org/movie/94042",
+        "rawText": "Showgirls 2: Penny’s from Heaven",
+        "isEncore": false,
+        "experimentNumber": "229",
+        "experimentTitle": "Experiment #229",
+        "experiments": [
+          "229"
+        ]
+      },
+      {
+        "title": "Killer Elephants",
+        "year": "1975",
+        "url": "https://www.themoviedb.org/movie/102464",
+        "rawText": "Killer Elephants",
+        "isEncore": false,
+        "experimentNumber": "240",
+        "experimentTitle": "Experiment #240",
+        "experiments": [
+          "240"
+        ]
+      },
+      {
+        "title": "Don’t Open Till Christmas",
+        "year": "1984",
+        "url": "https://www.themoviedb.org/movie/84422",
+        "rawText": "Don’t Open Till Christmas",
+        "isEncore": false,
+        "experimentNumber": "245",
+        "experimentTitle": "Experiment #245",
+        "experiments": [
+          "245"
+        ]
+      },
+      {
+        "title": "Shaolin Invincibles",
+        "year": "1976",
+        "url": "https://www.themoviedb.org/movie/269651",
+        "rawText": "Shaolin Invincibles",
+        "isEncore": false,
+        "experimentNumber": "248",
+        "experimentTitle": "Experiment #248",
+        "experiments": [
+          "248"
+        ]
+      },
+      {
+        "title": "Gary Coleman: For Safety’s Sake",
+        "year": "1985",
+        "url": "https://www.themoviedb.org/movie/161700",
+        "rawText": "Gary Coleman: For Safety’s Sake",
+        "isEncore": false,
+        "experimentNumber": "249",
+        "experimentTitle": "Experiment #249",
+        "experiments": [
+          "249"
+        ]
+      },
+      {
+        "title": "Diamond Cobra Vs. The White Fox",
+        "year": "2015",
+        "url": "https://www.themoviedb.org/movie/1147230",
+        "rawText": "Diamond Cobra Vs. The White Fox",
+        "isEncore": true,
+        "experimentNumber": "254",
+        "experimentTitle": "Experiment #254",
+        "experiments": [
+          "254"
+        ]
+      },
+      {
+        "title": "Pee-wee’s Big Adventure",
+        "year": "1985",
+        "url": "https://www.themoviedb.org/movie/5683",
+        "rawText": "Pee-wee’s Big Adventure",
+        "isEncore": false,
+        "experimentNumber": "262",
+        "experimentTitle": "Experiment #262",
+        "experiments": [
+          "262"
+        ]
+      },
+      {
+        "title": "Zombie Holocaust",
+        "year": "1980",
+        "url": "https://www.themoviedb.org/movie/7216",
+        "rawText": "Zombie Holocaust",
+        "isEncore": false,
+        "experimentNumber": "264",
+        "experimentTitle": "Experiment #264",
+        "experiments": [
+          "264"
+        ]
+      },
+      {
+        "title": "Don’t Go in the Woods",
+        "year": "1981",
+        "url": "https://www.themoviedb.org/movie/44936",
+        "rawText": "Don’t Go in the Woods",
+        "isEncore": false,
+        "experimentNumber": "266",
+        "experimentTitle": "Experiment #266",
+        "experiments": [
+          "266"
+        ]
+      },
+      {
+        "title": "Punk Vacation",
+        "year": "1990",
+        "url": "https://www.themoviedb.org/movie/207699",
+        "rawText": "Punk Vacation",
+        "isEncore": false,
+        "experimentNumber": "266",
+        "experimentTitle": "Experiment #266",
+        "experiments": [
+          "266"
+        ]
+      },
+      {
+        "title": "Cathy’s Curse",
+        "year": "1977",
+        "url": "https://www.themoviedb.org/movie/106774",
+        "rawText": "Cathy’s Curse",
+        "isEncore": false,
+        "experimentNumber": "268",
+        "experimentTitle": "Experiment #268",
+        "experiments": [
+          "268"
+        ]
+      },
+      {
+        "title": "How Can I Tell If I’m Really in Love",
+        "year": "1987",
+        "url": "https://www.themoviedb.org/movie/392631",
+        "rawText": "How Can I Tell If I’m Really in Love",
+        "isEncore": false,
+        "experimentNumber": "273",
+        "experimentTitle": "Experiment #273",
+        "experiments": [
+          "273"
+        ]
+      },
+      {
+        "title": "Truth or Dare?: A Critical Madness",
+        "year": "1986",
+        "url": "https://www.themoviedb.org/movie/83155",
+        "rawText": "Truth or Dare?: A Critical Madness",
+        "isEncore": false,
+        "experimentNumber": "277",
+        "experimentTitle": "Experiment #277",
+        "experiments": [
+          "277"
+        ]
+      },
+      {
+        "title": "Howling II: Stirba – Werewolf Bitch",
+        "year": "1985",
+        "url": "https://www.themoviedb.org/movie/29794",
+        "rawText": "Howling II: Stirba – Werewolf Bitch",
+        "isEncore": false,
+        "experimentNumber": "290",
+        "experimentTitle": "Experiment #290",
+        "experiments": [
+          "290"
+        ]
+      },
+      {
+        "title": "Man’s Best Friend",
+        "year": "1993",
+        "url": "https://www.themoviedb.org/movie/41759",
+        "rawText": "Man’s Best Friend",
+        "isEncore": false,
+        "experimentNumber": "291",
+        "experimentTitle": "Experiment #291",
+        "experiments": [
+          "291"
+        ]
+      },
+      {
+        "title": "Mad Mutilator",
+        "year": "1982",
+        "url": "https://www.themoviedb.org/movie/105907",
+        "rawText": "Mad Mutilator",
+        "isEncore": false,
+        "experimentNumber": "293",
+        "experimentTitle": "Experiment #293",
+        "experiments": [
+          "293"
+        ]
+      },
+      {
+        "title": "Clownado",
+        "year": "2019",
+        "url": "https://www.themoviedb.org/movie/560577",
+        "rawText": "Clownado",
+        "isEncore": false,
+        "experimentNumber": "299",
+        "experimentTitle": "Experiment #299",
+        "experiments": [
+          "299"
+        ]
+      },
+      {
+        "title": "They Don’t Cut the Grass Anymore",
+        "year": "1985",
+        "url": "https://www.themoviedb.org/movie/48803",
+        "rawText": "They Don’t Cut the Grass Anymore",
+        "isEncore": false,
+        "experimentNumber": "325",
+        "experimentTitle": "Experiment #325",
+        "experiments": [
+          "325"
+        ]
+      },
+      {
+        "title": "Metamorphosis: The Alien Factor",
+        "year": "1993",
+        "url": "https://www.themoviedb.org/movie/92562",
+        "rawText": "Metamorphosis: The Alien Factor",
+        "isEncore": false,
+        "experimentNumber": "327",
+        "experimentTitle": "Experiment #327",
+        "experiments": [
+          "327"
+        ]
+      },
+      {
+        "title": "Amphibious 3D",
+        "year": "2010",
+        "url": "https://www.themoviedb.org/movie/83877",
+        "rawText": "Amphibious 3D",
+        "isEncore": false,
+        "experimentNumber": "330",
+        "experimentTitle": "Experiment #330",
+        "experiments": [
+          "330"
+        ]
+      },
+      {
+        "title": "Get Street Smart: A Kid’s Guide to Stranger Dangers",
+        "year": "1994",
+        "url": "https://www.themoviedb.org/movie/463262",
+        "rawText": "Get Street Smart: A Kid’s Guide to Stranger Dangers",
+        "isEncore": false,
+        "experimentNumber": "334",
+        "experimentTitle": "Experiment #334",
+        "experiments": [
+          "334"
+        ]
+      },
+      {
+        "title": "Gnaw: Food of the Gods II",
+        "year": "1989",
+        "url": "https://www.themoviedb.org/movie/68347",
+        "rawText": "Gnaw: Food of the Gods II",
+        "isEncore": false,
+        "experimentNumber": "336",
+        "experimentTitle": "Experiment #336",
+        "experiments": [
+          "336"
+        ]
+      },
+      {
+        "title": "After Quarentine",
+        "year": "2023",
+        "url": "https://www.themoviedb.org/movie/1194375",
+        "rawText": "After Quarentine",
+        "isEncore": false,
+        "experimentNumber": "343",
+        "experimentTitle": "Experiment #343",
+        "experiments": [
+          "343"
+        ]
+      },
+      {
+        "title": "The Devil’s Sword",
+        "year": "1984",
+        "url": "https://www.themoviedb.org/movie/40104",
+        "rawText": "The Devil’s Sword",
+        "isEncore": false,
+        "experimentNumber": "349",
+        "experimentTitle": "Experiment #349",
+        "experiments": [
+          "349"
+        ]
+      },
+      {
+        "title": "Ants",
+        "year": "1977",
+        "url": "https://www.themoviedb.org/movie/67302",
+        "rawText": "Ants",
+        "isEncore": false,
+        "experimentNumber": "353",
+        "experimentTitle": "Experiment #353",
+        "experiments": [
+          "353"
+        ]
+      },
+      {
+        "title": "April Fool’s Day",
+        "year": "1986",
+        "url": "https://www.themoviedb.org/movie/24913",
+        "rawText": "April Fool’s Day",
+        "isEncore": false,
+        "experimentNumber": "354",
+        "experimentTitle": "Experiment #354",
+        "experiments": [
+          "354"
+        ]
+      },
+      {
+        "title": "Sluts & Goddesses Video Workshop",
+        "year": "1991",
+        "url": "https://www.themoviedb.org/movie/619055",
+        "rawText": "Sluts & Goddesses Video Workshop",
+        "isEncore": false,
+        "experimentNumber": "358",
+        "experimentTitle": "Experiment #358",
+        "experiments": [
+          "358"
+        ]
+      },
+      {
+        "title": "Thou Shalt Not Kill… Except",
+        "year": "1985",
+        "url": "https://www.themoviedb.org/movie/40042",
+        "rawText": "Thou Shalt Not Kill… Except",
+        "isEncore": false,
+        "experimentNumber": "361",
+        "experimentTitle": "Experiment #361",
+        "experiments": [
+          "361"
+        ]
+      },
+      {
+        "title": "Diamond Eye: T.H.O.T. Process 2",
+        "year": "2017",
+        "url": "https://www.imdb.com/title/tt7018322/",
+        "rawText": "Diamond Eye: T.H.O.T. Process 2",
+        "isEncore": false,
+        "experimentNumber": "368",
+        "experimentTitle": "Experiment #368",
+        "experiments": [
+          "368"
+        ]
+      },
+      {
+        "title": "Totally for Teens",
+        "year": "2011",
+        "url": "https://www.themoviedb.org/tv/32194",
+        "rawText": "Totally for Teens",
+        "isEncore": true,
+        "experimentNumber": "386",
+        "experimentTitle": "Experiment #386",
+        "experiments": [
+          "386"
+        ]
+      },
+      {
+        "title": "The Equinox … A Journey into the Supernatural",
+        "year": "1966",
+        "url": "https://www.themoviedb.org/movie/335185",
+        "rawText": "The Equinox … A Journey into the Supernatural",
+        "isEncore": false,
+        "experimentNumber": "392",
+        "experimentTitle": "Experiment #392",
+        "experiments": [
+          "392"
+        ]
+      },
+      {
+        "title": "G.B.H.",
+        "year": "1991",
+        "url": "https://www.themoviedb.org/tv/235",
+        "rawText": "G.B.H.",
+        "isEncore": false,
+        "experimentNumber": "395",
+        "experimentTitle": "Experiment #395",
+        "experiments": [
+          "395"
+        ]
+      },
+      {
+        "title": "Ax ‘Em",
+        "year": "1992",
+        "url": "https://www.themoviedb.org/movie/155341",
+        "rawText": "Ax ‘Em",
+        "isEncore": false,
+        "experimentNumber": "396",
+        "experimentTitle": "Experiment #396",
+        "experiments": [
+          "396"
+        ]
+      },
+      {
+        "title": "Don’t Go in the House",
+        "year": "1979",
+        "url": "https://www.themoviedb.org/movie/39867",
+        "rawText": "Don’t Go in the House",
+        "isEncore": false,
+        "experimentNumber": "405",
+        "experimentTitle": "Experiment #405",
+        "experiments": [
+          "405"
+        ]
+      },
+      {
+        "title": "Reefer Madness",
+        "year": "1938",
+        "url": "https://www.themoviedb.org/movie/37833",
+        "rawText": "Reefer Madness",
+        "isEncore": false,
+        "experimentNumber": "420",
+        "experimentTitle": "Experiment #420",
+        "experiments": [
+          "420"
+        ]
+      },
+      {
+        "title": "The Devil’s Honey",
+        "year": "1986",
+        "url": "https://www.themoviedb.org/movie/30872",
+        "rawText": "The Devil’s Honey",
+        "isEncore": false,
+        "experimentNumber": "422",
+        "experimentTitle": "Experiment #422",
+        "experiments": [
+          "422"
+        ]
+      },
+      {
+        "title": "StageFright",
+        "year": "1987",
+        "url": "https://www.themoviedb.org/movie/20465",
+        "rawText": "StageFright",
+        "isEncore": false,
+        "experimentNumber": "424",
+        "experimentTitle": "Experiment #424",
+        "experiments": [
+          "424"
+        ]
+      },
+      {
+        "title": "Blade Warrior",
+        "year": "1983",
+        "url": "https://www.themoviedb.org/movie/448125",
+        "rawText": "Blade Warrior",
+        "isEncore": false,
+        "experimentNumber": "430",
+        "experimentTitle": "Experiment #430",
+        "experiments": [
+          "430"
+        ]
+      },
+      {
+        "title": "White Cobra Diamond Fox vs The Golden Eye",
+        "year": "2024",
+        "url": "https://www.themoviedb.org/movie/1389026",
+        "rawText": "White Cobra Diamond Fox vs The Golden Eye",
+        "isEncore": false,
+        "experimentNumber": "434",
+        "experimentTitle": "Experiment #434",
+        "experiments": [
+          "434"
+        ]
+      },
+      {
+        "title": "Pinocchio’s Revenge",
+        "year": "1996",
+        "url": "https://www.themoviedb.org/movie/30926",
+        "rawText": "Pinocchio’s Revenge",
+        "isEncore": false,
+        "experimentNumber": "436",
+        "experimentTitle": "Experiment #436",
+        "experiments": [
+          "436"
+        ]
+      },
+      {
+        "title": "Edge of the Axe",
+        "year": "1980",
+        "url": "https://www.themoviedb.org/movie/30794",
+        "rawText": "Edge of the Axe",
+        "isEncore": false,
+        "experimentNumber": "450",
+        "experimentTitle": "Experiment #450",
+        "experiments": [
+          "450"
+        ]
+      },
+      {
+        "title": "New Year’s Evil",
+        "year": "1980",
+        "url": "https://www.themoviedb.org/movie/69165",
+        "rawText": "New Year’s Evil",
+        "isEncore": false,
+        "experimentNumber": "450",
+        "experimentTitle": "Experiment #450",
+        "experiments": [
+          "450"
+        ]
+      },
+      {
+        "title": "The ABC’s of Sex Education for Trainable Persons",
+        "year": "1975",
+        "url": "https://www.themoviedb.org/movie/160417",
+        "rawText": "The ABC’s of Sex Education for Trainable Persons",
+        "isEncore": false,
+        "experimentNumber": "465",
+        "experimentTitle": "Experiment #465",
+        "experiments": [
+          "465"
+        ]
+      },
+      {
+        "title": "Popeye’s Revenge",
+        "year": "2025",
+        "url": "https://www.themoviedb.org/movie/1393382",
+        "rawText": "Popeye’s Revenge",
+        "isEncore": false,
+        "experimentNumber": "471",
+        "experimentTitle": "Experiment #471",
+        "experiments": [
+          "471"
+        ]
+      },
+      {
+        "title": "Devil’s Revenge",
+        "year": "2019",
+        "url": "https://www.themoviedb.org/movie/635737",
+        "rawText": "Devil’s Revenge",
+        "isEncore": false,
+        "experimentNumber": "488",
+        "experimentTitle": "Experiment #488",
+        "experiments": [
+          "488"
+        ]
+      }
+    ],
+    "missingNotes": [
+      {
+        "experimentNumber": "001",
+        "title": "Experiment #001",
+        "notes": "(2021 – filmed in 1984)",
+        "databaseId": 1
+      },
+      {
+        "experimentNumber": "002",
+        "title": "Experiment #002",
+        "notes": "– Matinee Showing",
+        "databaseId": 2
+      },
+      {
+        "experimentNumber": "030",
+        "title": "Experiment #030",
+        "notes": "– Matinee",
+        "databaseId": 33
+      },
+      {
+        "experimentNumber": "038",
+        "title": "Experiment #038",
+        "notes": "(3D)",
+        "databaseId": 41
+      },
+      {
+        "experimentNumber": "046",
+        "title": "Experiment #046",
+        "notes": "– Encore",
+        "databaseId": 49
+      },
+      {
+        "experimentNumber": "052",
+        "title": "Experiment #052",
+        "notes": "(encore)",
+        "databaseId": 55
+      },
+      {
+        "experimentNumber": "058",
+        "title": "Experiment #058",
+        "notes": "(Matinee)",
+        "databaseId": 61
+      },
+      {
+        "experimentNumber": "075",
+        "title": "Experiment #075",
+        "notes": "aka “Pembalasan Rambu”",
+        "databaseId": 78
+      },
+      {
+        "experimentNumber": "077",
+        "title": "Experiment #077",
+        "notes": "aka “The New Barbarians”",
+        "databaseId": 80
+      },
+      {
+        "experimentNumber": "083",
+        "title": "Experiment #083",
+        "notes": "aka “Shaolin Drunkard”",
+        "databaseId": 86
+      },
+      {
+        "experimentNumber": "085",
+        "title": "Experiment #085",
+        "notes": "RiffTrax: The Game",
+        "databaseId": 88
+      },
+      {
+        "experimentNumber": "088",
+        "title": "Experiment #088",
+        "notes": "aka “The Crippled Masters”",
+        "databaseId": 91
+      },
+      {
+        "experimentNumber": "089",
+        "title": "Experiment #089",
+        "notes": "aka “Lovely But Deadly”",
+        "databaseId": 92
+      },
+      {
+        "experimentNumber": "094",
+        "title": "Experiment #094",
+        "notes": "drunken jackbox",
+        "databaseId": 97
+      },
+      {
+        "experimentNumber": "102",
+        "title": "Experiment #102",
+        "notes": "aka “The Raiders of Atlantis”",
+        "databaseId": 105
+      },
+      {
+        "experimentNumber": "110",
+        "title": "Experiment #110",
+        "notes": "(encore)",
+        "databaseId": 113
+      },
+      {
+        "experimentNumber": "123",
+        "title": "Experiment #123",
+        "notes": "(TV Short)",
+        "databaseId": 126
+      },
+      {
+        "experimentNumber": "131",
+        "title": "Experiment #131",
+        "notes": "aka “Puma Man”",
+        "databaseId": 134
+      },
+      {
+        "experimentNumber": "133",
+        "title": "Experiment #133",
+        "notes": "(encore)",
+        "databaseId": 136
+      },
+      {
+        "experimentNumber": "134",
+        "title": "Experiment #134",
+        "notes": "aka “9 Deaths of the Ninja”",
+        "databaseId": 137
+      },
+      {
+        "experimentNumber": "135",
+        "title": "Experiment #135",
+        "notes": "aka “The New Barbarians” (encore)",
+        "databaseId": 138
+      },
+      {
+        "experimentNumber": "139",
+        "title": "Experiment #139",
+        "notes": "aka “Ninja Avengers”",
+        "databaseId": 142
+      },
+      {
+        "experimentNumber": "146",
+        "title": "Experiment #146",
+        "notes": "(encore)",
+        "databaseId": 149
+      },
+      {
+        "experimentNumber": "148",
+        "title": "Experiment #148",
+        "notes": "aka “Nightstalker”",
+        "databaseId": 151
+      },
+      {
+        "experimentNumber": "151",
+        "title": "Experiment #151",
+        "notes": "(matinee)",
+        "databaseId": 154
+      },
+      {
+        "experimentNumber": "153",
+        "title": "Experiment #153",
+        "notes": "Rifftrax Winners: yimmycat, Razorback, imizzy, zasderq",
+        "databaseId": 156
+      },
+      {
+        "experimentNumber": "154",
+        "title": "Experiment #154",
+        "notes": "Quiplash Winners: zasderq, stylitesouthpaw, jeebizz",
+        "databaseId": 157
+      },
+      {
+        "experimentNumber": "155",
+        "title": "Experiment #155",
+        "notes": "Quiplash Winners: lazymoney, disco, zasderq",
+        "databaseId": 158
+      },
+      {
+        "experimentNumber": "156",
+        "title": "Experiment #156",
+        "notes": "(matinee)",
+        "databaseId": 159
+      },
+      {
+        "experimentNumber": "162",
+        "title": "Experiment #162",
+        "notes": "(encore)",
+        "databaseId": 165
+      },
+      {
+        "experimentNumber": "164",
+        "title": "Experiment #164",
+        "notes": "Quiplash Winners: tequilarawks, Jeebizz Murder Mystery Winners: Nashpreds, zasderq",
+        "databaseId": 167
+      },
+      {
+        "experimentNumber": "170",
+        "title": "Experiment #170",
+        "notes": "aka “Masked Avenger Versus Ultra-Villain in the Lair of the Naked Bikini”",
+        "databaseId": 173
+      },
+      {
+        "experimentNumber": "178",
+        "title": "Experiment #178",
+        "notes": "aka “Young Cycle Girls”",
+        "databaseId": 181
+      },
+      {
+        "experimentNumber": "191",
+        "title": "Experiment #191",
+        "notes": "aka “Korkusuz” aka “Turkish Rambo”",
+        "databaseId": 194
+      },
+      {
+        "experimentNumber": "195",
+        "title": "Experiment #195",
+        "notes": "Happy Birthday ! Bidiots winner: Mubbletraker Quiplash winner: yimmycat Murder Mystery winners: zasderq, tequilarawks",
+        "databaseId": 198
+      },
+      {
+        "experimentNumber": "196",
+        "title": "Experiment #196",
+        "notes": "Quiplash winner: Razorback Murder Mystery Winners: SciNEStist, jeeb",
+        "databaseId": 199
+      },
+      {
+        "experimentNumber": "200",
+        "title": "Experiment #200",
+        "notes": "(encore)",
+        "databaseId": 203
+      },
+      {
+        "experimentNumber": "217",
+        "title": "Experiment #217",
+        "notes": "(encore)",
+        "databaseId": 220
+      },
+      {
+        "experimentNumber": "219",
+        "title": "Experiment #219",
+        "notes": "aka Clash of the Warloards",
+        "databaseId": 222
+      },
+      {
+        "experimentNumber": "220",
+        "title": "Experiment #220",
+        "notes": "(encore)",
+        "databaseId": 223
+      },
+      {
+        "experimentNumber": "225",
+        "title": "Experiment #225",
+        "notes": "(encore)",
+        "databaseId": 228
+      },
+      {
+        "experimentNumber": "230",
+        "title": "Experiment #230",
+        "notes": "(encore) (encore)",
+        "databaseId": 233
+      },
+      {
+        "experimentNumber": "234",
+        "title": "Experiment #234",
+        "notes": "aka “Turkish Star Wars”",
+        "databaseId": 237
+      },
+      {
+        "experimentNumber": "247",
+        "title": "Experiment #247",
+        "notes": "(encore)",
+        "databaseId": 250
+      },
+      {
+        "experimentNumber": "250",
+        "title": "Experiment #250",
+        "notes": "(encore)",
+        "databaseId": 253
+      },
+      {
+        "experimentNumber": "253",
+        "title": "Experiment #253",
+        "notes": "aka Monster Shark",
+        "databaseId": 256
+      },
+      {
+        "experimentNumber": "254",
+        "title": "Experiment #254",
+        "notes": "(encore)",
+        "databaseId": 257
+      },
+      {
+        "experimentNumber": "255",
+        "title": "Experiment #255",
+        "notes": "aka Made in China",
+        "databaseId": 258
+      },
+      {
+        "experimentNumber": "261",
+        "title": "Experiment #261",
+        "notes": "(encore)",
+        "databaseId": 264
+      },
+      {
+        "experimentNumber": "262",
+        "title": "Experiment #262",
+        "notes": "R.I.P. Paul Reubens",
+        "databaseId": 265
+      },
+      {
+        "experimentNumber": "264",
+        "title": "Experiment #264",
+        "notes": "aka Zombi Holocaust",
+        "databaseId": 267
+      },
+      {
+        "experimentNumber": "267",
+        "title": "Experiment #267",
+        "notes": "(encore)",
+        "databaseId": 270
+      },
+      {
+        "experimentNumber": "269",
+        "title": "Experiment #269",
+        "notes": "aka Plankton",
+        "databaseId": 272
+      },
+      {
+        "experimentNumber": "271",
+        "title": "Experiment #271",
+        "notes": "(encore)",
+        "databaseId": 274
+      },
+      {
+        "experimentNumber": "277",
+        "title": "Experiment #277",
+        "notes": "(encore)",
+        "databaseId": 280
+      },
+      {
+        "experimentNumber": "280",
+        "title": "Experiment #280",
+        "notes": "(encore) (encore)",
+        "databaseId": 283
+      },
+      {
+        "experimentNumber": "290",
+        "title": "Experiment #290",
+        "notes": "aka Crazy Fat Ethel",
+        "databaseId": 293
+      },
+      {
+        "experimentNumber": "293",
+        "title": "Experiment #293",
+        "notes": "aka Ograff Quiplash winners: Professor Enk, Teq Murder Winners: Zas, Zas",
+        "databaseId": 296
+      },
+      {
+        "experimentNumber": "294",
+        "title": "Experiment #294",
+        "notes": "aka Crazy Fat Ethel II",
+        "databaseId": 297
+      },
+      {
+        "experimentNumber": "300",
+        "title": "Experiment #300",
+        "notes": "(short)",
+        "databaseId": 303
+      },
+      {
+        "experimentNumber": "306",
+        "title": "Experiment #306",
+        "notes": "(3D)",
+        "databaseId": 309
+      },
+      {
+        "experimentNumber": "312",
+        "title": "Experiment #312",
+        "notes": "Zas Birthday Party",
+        "databaseId": 315
+      },
+      {
+        "experimentNumber": "316",
+        "title": "Experiment #316",
+        "notes": "aka Lethal Killing Machine",
+        "databaseId": 319
+      },
+      {
+        "experimentNumber": "324",
+        "title": "Experiment #324",
+        "notes": "aka Battletruck",
+        "databaseId": 327
+      },
+      {
+        "experimentNumber": "329",
+        "title": "Experiment #329",
+        "notes": "(3D)",
+        "databaseId": 332
+      },
+      {
+        "experimentNumber": "330",
+        "title": "Experiment #330",
+        "notes": "(3D)",
+        "databaseId": 333
+      },
+      {
+        "experimentNumber": "340",
+        "title": "Experiment #340",
+        "notes": "(encore)",
+        "databaseId": 343
+      },
+      {
+        "experimentNumber": "350",
+        "title": "Experiment #350",
+        "notes": "(encore)",
+        "databaseId": 353
+      },
+      {
+        "experimentNumber": "353",
+        "title": "Experiment #353",
+        "notes": "aka X-Ray",
+        "databaseId": 356
+      },
+      {
+        "experimentNumber": "358",
+        "title": "Experiment #358",
+        "notes": "(encore)",
+        "databaseId": 361
+      },
+      {
+        "experimentNumber": "363",
+        "title": "Experiment #363",
+        "notes": "(encore)",
+        "databaseId": 366
+      },
+      {
+        "experimentNumber": "380",
+        "title": "Experiment #380",
+        "notes": "aka Commander",
+        "databaseId": 383
+      },
+      {
+        "experimentNumber": "382",
+        "title": "Experiment #382",
+        "notes": "Happy Birthday Jeeb!",
+        "databaseId": 385
+      },
+      {
+        "experimentNumber": "390",
+        "title": "Experiment #390",
+        "notes": "aka La casa 3",
+        "databaseId": 393
+      },
+      {
+        "experimentNumber": "396",
+        "title": "Experiment #396",
+        "notes": "aka Blood Feast",
+        "databaseId": 399
+      },
+      {
+        "experimentNumber": "399",
+        "title": "Experiment #399",
+        "notes": "aka Deadly Hands of Kung Fu",
+        "databaseId": 402
+      },
+      {
+        "experimentNumber": "403",
+        "title": "Experiment #403",
+        "notes": "aka Night Warning",
+        "databaseId": 406
+      },
+      {
+        "experimentNumber": "405",
+        "title": "Experiment #405",
+        "notes": "aka The Burning",
+        "databaseId": 408
+      },
+      {
+        "experimentNumber": "416",
+        "title": "Experiment #416",
+        "notes": "aka The Last Days of Planet Earth",
+        "databaseId": 419
+      },
+      {
+        "experimentNumber": "420",
+        "title": "Experiment #420",
+        "notes": "aka Tell Your Children",
+        "databaseId": 423
+      },
+      {
+        "experimentNumber": "431",
+        "title": "Experiment #431",
+        "notes": "aka The Lamp",
+        "databaseId": 434
+      },
+      {
+        "experimentNumber": "448",
+        "title": "Experiment #448",
+        "notes": "aka Alien Terror",
+        "databaseId": 451
+      },
+      {
+        "experimentNumber": "451",
+        "title": "Experiment #451",
+        "notes": "(short)",
+        "databaseId": 454
+      },
+      {
+        "experimentNumber": "460",
+        "title": "Experiment #460",
+        "notes": "aka Switch Killer",
+        "databaseId": 463
+      },
+      {
+        "experimentNumber": "466",
+        "title": "Experiment #466",
+        "notes": "(Dogville Short)",
+        "databaseId": 469
+      },
+      {
+        "experimentNumber": "467",
+        "title": "Experiment #467",
+        "notes": "(Dogville Short)",
+        "databaseId": 470
+      },
+      {
+        "experimentNumber": "468",
+        "title": "Experiment #468",
+        "notes": "(Dogville Short) (Dogville Short)",
+        "databaseId": 471
+      },
+      {
+        "experimentNumber": "472",
+        "title": "Experiment #472",
+        "notes": "(Dogville Short)",
+        "databaseId": 475
+      },
+      {
+        "experimentNumber": "473",
+        "title": "Experiment #473",
+        "notes": "(Dogville Short)",
+        "databaseId": 476
+      },
+      {
+        "experimentNumber": "476",
+        "title": "Experiment #476",
+        "notes": "aka The Falling",
+        "databaseId": 479
+      },
+      {
+        "experimentNumber": "478",
+        "title": "Experiment #478",
+        "notes": "(encore)",
+        "databaseId": 481
+      },
+      {
+        "experimentNumber": "479",
+        "title": "Experiment #479",
+        "notes": "(encore)",
+        "databaseId": 482
+      },
+      {
+        "experimentNumber": "480",
+        "title": "Experiment #480",
+        "notes": "(encore)",
+        "databaseId": 483
+      },
+      {
+        "experimentNumber": "483",
+        "title": "Experiment #483",
+        "notes": "(encore)",
+        "databaseId": 486
+      },
+      {
+        "experimentNumber": "491",
+        "title": "Experiment #491",
+        "notes": "(3D)",
+        "databaseId": 494
+      }
+    ],
+    "imageUpdates": [
+      {
+        "experimentNumber": "009",
+        "title": "Experiment #009",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2021/12/AMKvA6w1-1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2021/12/AMKvA6w1-1-1024x544.jpg",
+        "databaseId": 12
+      },
+      {
+        "experimentNumber": "026",
+        "title": "Experiment #026",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/01/IMG_21121-1-1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/01/IMG_21121-1-1-1024x630.jpg",
+        "databaseId": 29
+      },
+      {
+        "experimentNumber": "073",
+        "title": "Experiment #073",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/04/IhCHso71-1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/04/IhCHso71-1-1024x546.jpg",
+        "databaseId": 76
+      },
+      {
+        "experimentNumber": "094",
+        "title": "Experiment #094",
+        "currentImage": null,
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/06/yes_madam_header_1050_591_81_s_c11.jpg",
+        "databaseId": 97
+      },
+      {
+        "experimentNumber": "099",
+        "title": "Experiment #099",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/06/TELEMMGLPICT000267073953_trans_NvBQzQNjv4BqgsaO8O78rhmZrDxTlQBjdLdu0TL-Cg_AMOUqySXmFgU1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/06/TELEMMGLPICT000267073953_trans_NvBQzQNjv4BqgsaO8O78rhmZrDxTlQBjdLdu0TL-Cg_AMOUqySXmFgU1-1024x640.jpeg",
+        "databaseId": 102
+      },
+      {
+        "experimentNumber": "105",
+        "title": "Experiment #105",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/06/unknown1-1.png",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/06/unknown1-1-1024x444.png",
+        "databaseId": 108
+      },
+      {
+        "experimentNumber": "122",
+        "title": "Experiment #122",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/08/unknown1.png",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/08/unknown1-1024x494.png",
+        "databaseId": 125
+      },
+      {
+        "experimentNumber": "135",
+        "title": "Experiment #135",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/09/unknown1.png",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/09/unknown1-1024x648.png",
+        "databaseId": 138
+      },
+      {
+        "experimentNumber": "140",
+        "title": "Experiment #140",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/09/DHd9HBy1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/09/DHd9HBy1-1024x560.jpg",
+        "databaseId": 143
+      },
+      {
+        "experimentNumber": "158",
+        "title": "Experiment #158",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/10/Theres_Nothing_Out_There_011_2400x1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/10/Theres_Nothing_Out_There_011_2400x1-1024x576.jpg",
+        "databaseId": 161
+      },
+      {
+        "experimentNumber": "164",
+        "title": "Experiment #164",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/vgN22pP1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/vgN22pP1-1024x551.jpg",
+        "databaseId": 167
+      },
+      {
+        "experimentNumber": "166",
+        "title": "Experiment #166",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/biEJLkv1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/biEJLkv1-1024x422.jpg",
+        "databaseId": 169
+      },
+      {
+        "experimentNumber": "170",
+        "title": "Experiment #170",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/kluyy9S1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/kluyy9S1-1024x517.jpg",
+        "databaseId": 173
+      },
+      {
+        "experimentNumber": "174",
+        "title": "Experiment #174",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/Qz0FymL1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/11/Qz0FymL1-1024x564.jpg",
+        "databaseId": 177
+      },
+      {
+        "experimentNumber": "187",
+        "title": "Experiment #187",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/TTSmp6R1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/TTSmp6R1-1024x635.jpg",
+        "databaseId": 190
+      },
+      {
+        "experimentNumber": "188",
+        "title": "Experiment #188",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/btvSV8b1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/btvSV8b1-1024x561.jpg",
+        "databaseId": 191
+      },
+      {
+        "experimentNumber": "189",
+        "title": "Experiment #189",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/TE7msW61.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2022/12/TE7msW61-1024x649.jpg",
+        "databaseId": 192
+      },
+      {
+        "experimentNumber": "199",
+        "title": "Experiment #199",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/01/GRbD3CI1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/01/GRbD3CI1-1024x573.jpg",
+        "databaseId": 202
+      },
+      {
+        "experimentNumber": "205",
+        "title": "Experiment #205",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/02/PXmFRfg1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/02/PXmFRfg1-1024x539.jpg",
+        "databaseId": 208
+      },
+      {
+        "experimentNumber": "216",
+        "title": "Experiment #216",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/ggFfJ241.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/ggFfJ241-1024x576.jpg",
+        "databaseId": 219
+      },
+      {
+        "experimentNumber": "217",
+        "title": "Experiment #217",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/xXX9fRH1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/xXX9fRH1-1024x576.jpg",
+        "databaseId": 220
+      },
+      {
+        "experimentNumber": "218",
+        "title": "Experiment #218",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/mxkDbAp1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/mxkDbAp1-1024x549.jpg",
+        "databaseId": 221
+      },
+      {
+        "experimentNumber": "219",
+        "title": "Experiment #219",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/HDAKjIW1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/HDAKjIW1-1024x492.jpg",
+        "databaseId": 222
+      },
+      {
+        "experimentNumber": "221",
+        "title": "Experiment #221",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/AnudW221.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/03/AnudW221-1024x466.jpg",
+        "databaseId": 224
+      },
+      {
+        "experimentNumber": "224",
+        "title": "Experiment #224",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/cmyEtGC1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/cmyEtGC1-1024x589.jpg",
+        "databaseId": 227
+      },
+      {
+        "experimentNumber": "226",
+        "title": "Experiment #226",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/BprjjoN1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/BprjjoN1-1024x695.jpg",
+        "databaseId": 229
+      },
+      {
+        "experimentNumber": "227",
+        "title": "Experiment #227",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/YxoJPNb1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/04/YxoJPNb1-1024x576.jpg",
+        "databaseId": 230
+      },
+      {
+        "experimentNumber": "234",
+        "title": "Experiment #234",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/7ikp9wX1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/7ikp9wX1-1024x612.jpg",
+        "databaseId": 237
+      },
+      {
+        "experimentNumber": "235",
+        "title": "Experiment #235",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/gNTdOud1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/gNTdOud1-1024x576.jpg",
+        "databaseId": 238
+      },
+      {
+        "experimentNumber": "236",
+        "title": "Experiment #236",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/jHO5khR1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/jHO5khR1-1024x576.jpg",
+        "databaseId": 239
+      },
+      {
+        "experimentNumber": "237",
+        "title": "Experiment #237",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/kfnOAGU1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/kfnOAGU1-1024x576.jpg",
+        "databaseId": 240
+      },
+      {
+        "experimentNumber": "238",
+        "title": "Experiment #238",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/aX8ifh31.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/aX8ifh31-1024x576.jpg",
+        "databaseId": 241
+      },
+      {
+        "experimentNumber": "239",
+        "title": "Experiment #239",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/vrVDC2X1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/vrVDC2X1-1024x680.jpg",
+        "databaseId": 242
+      },
+      {
+        "experimentNumber": "240",
+        "title": "Experiment #240",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/5IxpjYP1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/5IxpjYP1-1024x433.jpg",
+        "databaseId": 243
+      },
+      {
+        "experimentNumber": "241",
+        "title": "Experiment #241",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/SdVjMI91.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/05/SdVjMI91-1024x434.jpg",
+        "databaseId": 244
+      },
+      {
+        "experimentNumber": "243",
+        "title": "Experiment #243",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/Yl3Uut31.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/Yl3Uut31-1024x570.jpg",
+        "databaseId": 246
+      },
+      {
+        "experimentNumber": "244",
+        "title": "Experiment #244",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/vDkYFzd1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/vDkYFzd1-1024x550.jpg",
+        "databaseId": 247
+      },
+      {
+        "experimentNumber": "245",
+        "title": "Experiment #245",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/JOZYhj61.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/JOZYhj61-1024x444.jpg",
+        "databaseId": 248
+      },
+      {
+        "experimentNumber": "247",
+        "title": "Experiment #247",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/vux1iWF1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/vux1iWF1-1024x536.jpg",
+        "databaseId": 250
+      },
+      {
+        "experimentNumber": "248",
+        "title": "Experiment #248",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/FvHxA5C1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/FvHxA5C1-1024x464.jpg",
+        "databaseId": 251
+      },
+      {
+        "experimentNumber": "251",
+        "title": "Experiment #251",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/LKuhs1F1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/LKuhs1F1-1024x621.jpg",
+        "databaseId": 254
+      },
+      {
+        "experimentNumber": "252",
+        "title": "Experiment #252",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/8NCzB091.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/06/8NCzB091-1024x547.jpg",
+        "databaseId": 255
+      },
+      {
+        "experimentNumber": "253",
+        "title": "Experiment #253",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/5SYJZK42.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/5SYJZK42-1024x570.jpg",
+        "databaseId": 256
+      },
+      {
+        "experimentNumber": "256",
+        "title": "Experiment #256",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/ctqUIak1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/ctqUIak1-1024x576.jpg",
+        "databaseId": 259
+      },
+      {
+        "experimentNumber": "257",
+        "title": "Experiment #257",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/N483k931.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/N483k931-1024x555.jpg",
+        "databaseId": 260
+      },
+      {
+        "experimentNumber": "258",
+        "title": "Experiment #258",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/k1b57Uh1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/k1b57Uh1-1024x576.jpg",
+        "databaseId": 261
+      },
+      {
+        "experimentNumber": "259",
+        "title": "Experiment #259",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/bjRvLJj1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/bjRvLJj1-1024x422.jpg",
+        "databaseId": 262
+      },
+      {
+        "experimentNumber": "261",
+        "title": "Experiment #261",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/ycHZz2R1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/07/ycHZz2R1-1024x576.jpg",
+        "databaseId": 264
+      },
+      {
+        "experimentNumber": "262",
+        "title": "Experiment #262",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/AodFJe71.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/AodFJe71-1024x579.jpg",
+        "databaseId": 265
+      },
+      {
+        "experimentNumber": "263",
+        "title": "Experiment #263",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/YMN3oQ41.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/YMN3oQ41-1024x434.jpg",
+        "databaseId": 266
+      },
+      {
+        "experimentNumber": "268",
+        "title": "Experiment #268",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/wBdM9Ei1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/wBdM9Ei1-1024x546.jpg",
+        "databaseId": 271
+      },
+      {
+        "experimentNumber": "270",
+        "title": "Experiment #270",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/yZaenVi1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/yZaenVi1-1024x574.jpg",
+        "databaseId": 273
+      },
+      {
+        "experimentNumber": "271",
+        "title": "Experiment #271",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/wZuzaUy1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/08/wZuzaUy1-1024x608.jpg",
+        "databaseId": 274
+      },
+      {
+        "experimentNumber": "274",
+        "title": "Experiment #274",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/nmAneVv1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/nmAneVv1-1024x576.jpg",
+        "databaseId": 277
+      },
+      {
+        "experimentNumber": "275",
+        "title": "Experiment #275",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/PmBaO061.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/PmBaO061-1024x576.jpg",
+        "databaseId": 278
+      },
+      {
+        "experimentNumber": "276",
+        "title": "Experiment #276",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/SPXM1QO1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/SPXM1QO1-1024x614.jpg",
+        "databaseId": 279
+      },
+      {
+        "experimentNumber": "278",
+        "title": "Experiment #278",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/Z3Uu7i11.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/Z3Uu7i11-1024x626.jpg",
+        "databaseId": 281
+      },
+      {
+        "experimentNumber": "279",
+        "title": "Experiment #279",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/964rVQk1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/964rVQk1-1024x648.jpg",
+        "databaseId": 282
+      },
+      {
+        "experimentNumber": "281",
+        "title": "Experiment #281",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/YdzpJwx1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/YdzpJwx1-1024x576.jpg",
+        "databaseId": 284
+      },
+      {
+        "experimentNumber": "283",
+        "title": "Experiment #283",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/0c4yFTa1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/0c4yFTa1-1024x505.jpg",
+        "databaseId": 286
+      },
+      {
+        "experimentNumber": "284",
+        "title": "Experiment #284",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/Qh9XXA51.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/Qh9XXA51-1024x686.jpg",
+        "databaseId": 287
+      },
+      {
+        "experimentNumber": "285",
+        "title": "Experiment #285",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/g44XbfT1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/09/g44XbfT1-1024x654.jpg",
+        "databaseId": 288
+      },
+      {
+        "experimentNumber": "288",
+        "title": "Experiment #288",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/n4JVmrk1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/n4JVmrk1-1024x562.jpg",
+        "databaseId": 291
+      },
+      {
+        "experimentNumber": "289",
+        "title": "Experiment #289",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/nMyfQtz1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/nMyfQtz1-1024x576.jpg",
+        "databaseId": 292
+      },
+      {
+        "experimentNumber": "292",
+        "title": "Experiment #292",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/XP2JdXw1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/XP2JdXw1-1024x667.jpg",
+        "databaseId": 295
+      },
+      {
+        "experimentNumber": "294",
+        "title": "Experiment #294",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/45Zqrys1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/45Zqrys1-1024x550.jpg",
+        "databaseId": 297
+      },
+      {
+        "experimentNumber": "295",
+        "title": "Experiment #295",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/7k2Pkpr1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/7k2Pkpr1-1024x603.jpg",
+        "databaseId": 298
+      },
+      {
+        "experimentNumber": "297",
+        "title": "Experiment #297",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/CwFB4x71.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/CwFB4x71-1024x553.jpg",
+        "databaseId": 300
+      },
+      {
+        "experimentNumber": "298",
+        "title": "Experiment #298",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/h0BNRBG1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/h0BNRBG1-1024x588.jpg",
+        "databaseId": 301
+      },
+      {
+        "experimentNumber": "299",
+        "title": "Experiment #299",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/w866Bpw1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/10/w866Bpw1-1024x621.jpg",
+        "databaseId": 302
+      },
+      {
+        "experimentNumber": "302",
+        "title": "Experiment #302",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/ZtHhaRT1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/ZtHhaRT1-1024x656.jpg",
+        "databaseId": 305
+      },
+      {
+        "experimentNumber": "303",
+        "title": "Experiment #303",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/WtBdNmd1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/WtBdNmd1-1024x550.jpg",
+        "databaseId": 306
+      },
+      {
+        "experimentNumber": "305",
+        "title": "Experiment #305",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/8vviDAI1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/8vviDAI1-1024x538.jpg",
+        "databaseId": 308
+      },
+      {
+        "experimentNumber": "306",
+        "title": "Experiment #306",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/qhJSdDm1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/11/qhJSdDm1-1024x644.jpg",
+        "databaseId": 309
+      },
+      {
+        "experimentNumber": "310",
+        "title": "Experiment #310",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/uwEuRTH1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/uwEuRTH1-1024x576.jpg",
+        "databaseId": 313
+      },
+      {
+        "experimentNumber": "313",
+        "title": "Experiment #313",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/OQozQ3V1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/OQozQ3V1-1024x615.jpg",
+        "databaseId": 316
+      },
+      {
+        "experimentNumber": "314",
+        "title": "Experiment #314",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/image1-6.png",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/image1-6-1024x552.png",
+        "databaseId": 317
+      },
+      {
+        "experimentNumber": "315",
+        "title": "Experiment #315",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/0ljuwFk1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/0ljuwFk1-1024x576.jpg",
+        "databaseId": 318
+      },
+      {
+        "experimentNumber": "318",
+        "title": "Experiment #318",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/31MzqVG1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/12/31MzqVG1-1024x576.jpg",
+        "databaseId": 321
+      },
+      {
+        "experimentNumber": "322",
+        "title": "Experiment #322",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/b4vrYg01.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/b4vrYg01-1024x587.jpg",
+        "databaseId": 325
+      },
+      {
+        "experimentNumber": "325",
+        "title": "Experiment #325",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/RC11Yy51.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/RC11Yy51-1024x444.jpg",
+        "databaseId": 328
+      },
+      {
+        "experimentNumber": "326",
+        "title": "Experiment #326",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/double-down1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/01/double-down1-1024x535.jpg",
+        "databaseId": 329
+      },
+      {
+        "experimentNumber": "333",
+        "title": "Experiment #333",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/69MpyQY1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/69MpyQY1-1024x576.jpg",
+        "databaseId": 336
+      },
+      {
+        "experimentNumber": "334",
+        "title": "Experiment #334",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/y80mNmo1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/y80mNmo1-1024x588.jpg",
+        "databaseId": 337
+      },
+      {
+        "experimentNumber": "335",
+        "title": "Experiment #335",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/gyBcWDH1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/gyBcWDH1-1024x576.jpg",
+        "databaseId": 338
+      },
+      {
+        "experimentNumber": "337",
+        "title": "Experiment #337",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/l6ufwcP1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/l6ufwcP1-1024x549.jpg",
+        "databaseId": 340
+      },
+      {
+        "experimentNumber": "339",
+        "title": "Experiment #339",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/jMrjCjY1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/jMrjCjY1-1024x547.jpg",
+        "databaseId": 342
+      },
+      {
+        "experimentNumber": "340",
+        "title": "Experiment #340",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/QFRszOd1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/02/QFRszOd1-1024x541.jpg",
+        "databaseId": 343
+      },
+      {
+        "experimentNumber": "341",
+        "title": "Experiment #341",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/tZnCWDZ2.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/tZnCWDZ2-1024x494.jpg",
+        "databaseId": 344
+      },
+      {
+        "experimentNumber": "344",
+        "title": "Experiment #344",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/WyrDgRp1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/WyrDgRp1-1024x576.jpg",
+        "databaseId": 347
+      },
+      {
+        "experimentNumber": "345",
+        "title": "Experiment #345",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/fRgKSNa1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/fRgKSNa1-1024x539.jpg",
+        "databaseId": 348
+      },
+      {
+        "experimentNumber": "346",
+        "title": "Experiment #346",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/Cpn2JwI1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/Cpn2JwI1-1024x552.jpg",
+        "databaseId": 349
+      },
+      {
+        "experimentNumber": "349",
+        "title": "Experiment #349",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/G5TvSPE1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/G5TvSPE1-1024x552.jpg",
+        "databaseId": 352
+      },
+      {
+        "experimentNumber": "350",
+        "title": "Experiment #350",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/mmwP8ZX1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/03/mmwP8ZX1-1024x591.jpg",
+        "databaseId": 353
+      },
+      {
+        "experimentNumber": "354",
+        "title": "Experiment #354",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/9aVaGcT2.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/9aVaGcT2-1024x576.jpg",
+        "databaseId": 357
+      },
+      {
+        "experimentNumber": "356",
+        "title": "Experiment #356",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/BtvYHoR1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/BtvYHoR1-1024x394.jpg",
+        "databaseId": 359
+      },
+      {
+        "experimentNumber": "357",
+        "title": "Experiment #357",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/nUptyae1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/nUptyae1-1024x576.jpg",
+        "databaseId": 360
+      },
+      {
+        "experimentNumber": "361",
+        "title": "Experiment #361",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/iremH7X1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/04/iremH7X1-1024x613.jpeg",
+        "databaseId": 364
+      },
+      {
+        "experimentNumber": "364",
+        "title": "Experiment #364",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/H8jwwye1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/H8jwwye1-1024x516.jpeg",
+        "databaseId": 367
+      },
+      {
+        "experimentNumber": "366",
+        "title": "Experiment #366",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/image1-7.png",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/image1-7-1024x689.png",
+        "databaseId": 369
+      },
+      {
+        "experimentNumber": "368",
+        "title": "Experiment #368",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/RSYmB7E1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/RSYmB7E1-1024x593.jpeg",
+        "databaseId": 371
+      },
+      {
+        "experimentNumber": "369",
+        "title": "Experiment #369",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/csuiECB1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/csuiECB1-1024x547.jpeg",
+        "databaseId": 372
+      },
+      {
+        "experimentNumber": "370",
+        "title": "Experiment #370",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/artngdH1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/artngdH1-1024x665.jpeg",
+        "databaseId": 373
+      },
+      {
+        "experimentNumber": "371",
+        "title": "Experiment #371",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/7ApDjKY1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/05/7ApDjKY1-1024x576.jpeg",
+        "databaseId": 374
+      },
+      {
+        "experimentNumber": "374",
+        "title": "Experiment #374",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/PTX7O6k1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/PTX7O6k1-1024x550.jpg",
+        "databaseId": 377
+      },
+      {
+        "experimentNumber": "377",
+        "title": "Experiment #377",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/9U2we6n1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/9U2we6n1-1024x552.jpeg",
+        "databaseId": 380
+      },
+      {
+        "experimentNumber": "378",
+        "title": "Experiment #378",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/nQhrtPk1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/nQhrtPk1-1024x660.jpeg",
+        "databaseId": 381
+      },
+      {
+        "experimentNumber": "380",
+        "title": "Experiment #380",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/SPpPu2H1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/SPpPu2H1-1024x661.jpeg",
+        "databaseId": 383
+      },
+      {
+        "experimentNumber": "381",
+        "title": "Experiment #381",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/OZ73SIF1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/OZ73SIF1-1024x613.jpeg",
+        "databaseId": 384
+      },
+      {
+        "experimentNumber": "382",
+        "title": "Experiment #382",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/vcNfAfI1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/vcNfAfI1-1024x699.jpeg",
+        "databaseId": 385
+      },
+      {
+        "experimentNumber": "384",
+        "title": "Experiment #384",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/7XxIgR11.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/7XxIgR11-1024x552.jpeg",
+        "databaseId": 387
+      },
+      {
+        "experimentNumber": "387",
+        "title": "Experiment #387",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/1G7K0Hq1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/06/1G7K0Hq1-1024x576.jpeg",
+        "databaseId": 390
+      },
+      {
+        "experimentNumber": "388",
+        "title": "Experiment #388",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/qzlm4471.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/qzlm4471-1024x617.jpg",
+        "databaseId": 391
+      },
+      {
+        "experimentNumber": "393",
+        "title": "Experiment #393",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/rjMs9ma1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/rjMs9ma1-1024x552.jpeg",
+        "databaseId": 396
+      },
+      {
+        "experimentNumber": "395",
+        "title": "Experiment #395",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/JLbAsx01.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/JLbAsx01-1024x552.jpeg",
+        "databaseId": 398
+      },
+      {
+        "experimentNumber": "396",
+        "title": "Experiment #396",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/CKiyop21.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/CKiyop21-1024x440.jpeg",
+        "databaseId": 399
+      },
+      {
+        "experimentNumber": "397",
+        "title": "Experiment #397",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/uQtiU131.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/uQtiU131-1024x581.jpeg",
+        "databaseId": 400
+      },
+      {
+        "experimentNumber": "399",
+        "title": "Experiment #399",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/2lhP8sI1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/07/2lhP8sI1-1024x480.jpeg",
+        "databaseId": 402
+      },
+      {
+        "experimentNumber": "400",
+        "title": "Experiment #400",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/jZvkL9h1.jpg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/jZvkL9h1-1024x432.jpg",
+        "databaseId": 403
+      },
+      {
+        "experimentNumber": "401",
+        "title": "Experiment #401",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/KCMYmFt1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/KCMYmFt1-1024x547.jpeg",
+        "databaseId": 404
+      },
+      {
+        "experimentNumber": "403",
+        "title": "Experiment #403",
+        "currentImage": null,
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/YIkN0tM1.jpeg",
+        "databaseId": 406
+      },
+      {
+        "experimentNumber": "404",
+        "title": "Experiment #404",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/EVglkXS1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/EVglkXS1-1024x505.jpeg",
+        "databaseId": 407
+      },
+      {
+        "experimentNumber": "405",
+        "title": "Experiment #405",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/LRg7RnS1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/LRg7RnS1-1024x613.jpeg",
+        "databaseId": 408
+      },
+      {
+        "experimentNumber": "406",
+        "title": "Experiment #406",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/KXXw5qP1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/08/KXXw5qP1-1024x432.jpeg",
+        "databaseId": 409
+      },
+      {
+        "experimentNumber": "407",
+        "title": "Experiment #407",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/wNcAksh1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/wNcAksh1-1024x613.jpeg",
+        "databaseId": 410
+      },
+      {
+        "experimentNumber": "409",
+        "title": "Experiment #409",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/VGWA7QF1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/VGWA7QF1-1024x576.jpeg",
+        "databaseId": 412
+      },
+      {
+        "experimentNumber": "411",
+        "title": "Experiment #411",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/4ExSR0I1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/4ExSR0I1-1024x614.jpeg",
+        "databaseId": 414
+      },
+      {
+        "experimentNumber": "412",
+        "title": "Experiment #412",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/PHdrOqT1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/PHdrOqT1-1024x576.jpeg",
+        "databaseId": 415
+      },
+      {
+        "experimentNumber": "413",
+        "title": "Experiment #413",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/z5FMuOv1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/z5FMuOv1-1024x548.jpeg",
+        "databaseId": 416
+      },
+      {
+        "experimentNumber": "415",
+        "title": "Experiment #415",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/8AzMCtw1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/09/8AzMCtw1-1024x504.jpeg",
+        "databaseId": 418
+      },
+      {
+        "experimentNumber": "418",
+        "title": "Experiment #418",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/SrwStzK1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/SrwStzK1-1024x576.jpeg",
+        "databaseId": 421
+      },
+      {
+        "experimentNumber": "421",
+        "title": "Experiment #421",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/rWzc1g81.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/rWzc1g81-1024x434.jpeg",
+        "databaseId": 424
+      },
+      {
+        "experimentNumber": "422",
+        "title": "Experiment #422",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/W6Cn4Uc1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/W6Cn4Uc1-1024x589.jpeg",
+        "databaseId": 425
+      },
+      {
+        "experimentNumber": "424",
+        "title": "Experiment #424",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/r1fcUuY1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/r1fcUuY1-1024x576.jpeg",
+        "databaseId": 427
+      },
+      {
+        "experimentNumber": "425",
+        "title": "Experiment #425",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/PEg2ikZ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/PEg2ikZ1-1024x490.jpeg",
+        "databaseId": 428
+      },
+      {
+        "experimentNumber": "427",
+        "title": "Experiment #427",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/e0yeuKE1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/10/e0yeuKE1-1024x534.jpeg",
+        "databaseId": 430
+      },
+      {
+        "experimentNumber": "429",
+        "title": "Experiment #429",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/ytE4ITP1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/ytE4ITP1-1024x550.jpeg",
+        "databaseId": 432
+      },
+      {
+        "experimentNumber": "431",
+        "title": "Experiment #431",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/SdSH9qJ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/SdSH9qJ1-1024x627.jpeg",
+        "databaseId": 434
+      },
+      {
+        "experimentNumber": "432",
+        "title": "Experiment #432",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/mVDnQF51.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/mVDnQF51-1024x647.jpeg",
+        "databaseId": 435
+      },
+      {
+        "experimentNumber": "433",
+        "title": "Experiment #433",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/q6zSIhh1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/q6zSIhh1-1024x552.jpeg",
+        "databaseId": 436
+      },
+      {
+        "experimentNumber": "434",
+        "title": "Experiment #434",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/RiNHJs31.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/RiNHJs31-1024x682.jpeg",
+        "databaseId": 437
+      },
+      {
+        "experimentNumber": "435",
+        "title": "Experiment #435",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/lfIwyk61.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/lfIwyk61-1024x575.jpeg",
+        "databaseId": 438
+      },
+      {
+        "experimentNumber": "436",
+        "title": "Experiment #436",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/wZKjniT1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/wZKjniT1-1024x576.jpeg",
+        "databaseId": 439
+      },
+      {
+        "experimentNumber": "437",
+        "title": "Experiment #437",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/YxTpOng1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/YxTpOng1-1024x576.jpeg",
+        "databaseId": 440
+      },
+      {
+        "experimentNumber": "438",
+        "title": "Experiment #438",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/UVxpRX81.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/UVxpRX81-1024x550.jpeg",
+        "databaseId": 441
+      },
+      {
+        "experimentNumber": "439",
+        "title": "Experiment #439",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/qdKYZ521.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/qdKYZ521-1024x589.jpeg",
+        "databaseId": 442
+      },
+      {
+        "experimentNumber": "440",
+        "title": "Experiment #440",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/WwgNuRE1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/11/WwgNuRE1-1024x576.jpeg",
+        "databaseId": 443
+      },
+      {
+        "experimentNumber": "442",
+        "title": "Experiment #442",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/ESCMPIG1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/ESCMPIG1-1024x576.jpeg",
+        "databaseId": 445
+      },
+      {
+        "experimentNumber": "443",
+        "title": "Experiment #443",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/dbbrnVO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/dbbrnVO1-1024x576.jpeg",
+        "databaseId": 446
+      },
+      {
+        "experimentNumber": "444",
+        "title": "Experiment #444",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/0mLuNnJ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/0mLuNnJ1-1024x628.jpeg",
+        "databaseId": 447
+      },
+      {
+        "experimentNumber": "445",
+        "title": "Experiment #445",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/1VuTYLy1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/1VuTYLy1-1024x463.jpeg",
+        "databaseId": 448
+      },
+      {
+        "experimentNumber": "446",
+        "title": "Experiment #446",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/7DqvJ111.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/7DqvJ111-1024x555.jpeg",
+        "databaseId": 449
+      },
+      {
+        "experimentNumber": "447",
+        "title": "Experiment #447",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/I8KoufZ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/I8KoufZ1-1024x466.jpeg",
+        "databaseId": 450
+      },
+      {
+        "experimentNumber": "449",
+        "title": "Experiment #449",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/LZ5QyDh1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/LZ5QyDh1-1024x564.jpeg",
+        "databaseId": 452
+      },
+      {
+        "experimentNumber": "450",
+        "title": "Experiment #450",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/sLSe5LE1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2024/12/sLSe5LE1-1024x576.jpeg",
+        "databaseId": 453
+      },
+      {
+        "experimentNumber": "451",
+        "title": "Experiment #451",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/XEK3tFg1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/XEK3tFg1-1024x435.jpeg",
+        "databaseId": 454
+      },
+      {
+        "experimentNumber": "452",
+        "title": "Experiment #452",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/ATgUbbO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/ATgUbbO1-1024x512.jpeg",
+        "databaseId": 455
+      },
+      {
+        "experimentNumber": "453",
+        "title": "Experiment #453",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/OFGBzzr1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/OFGBzzr1-1024x572.jpeg",
+        "databaseId": 456
+      },
+      {
+        "experimentNumber": "454",
+        "title": "Experiment #454",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/MHEkvBH1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/MHEkvBH1-1024x637.jpeg",
+        "databaseId": 457
+      },
+      {
+        "experimentNumber": "454",
+        "title": "Experiment #454",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/MHEkvBH1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/MHEkvBH1-1024x637.jpeg",
+        "databaseId": 457
+      },
+      {
+        "experimentNumber": "455",
+        "title": "Experiment #455",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/VhtQKqO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/VhtQKqO1-1024x553.jpeg",
+        "databaseId": 458
+      },
+      {
+        "experimentNumber": "455",
+        "title": "Experiment #455",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/VhtQKqO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/VhtQKqO1-1024x553.jpeg",
+        "databaseId": 458
+      },
+      {
+        "experimentNumber": "456",
+        "title": "Experiment #456",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/k1dHStV1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/k1dHStV1-1024x570.jpeg",
+        "databaseId": 459
+      },
+      {
+        "experimentNumber": "456",
+        "title": "Experiment #456",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/k1dHStV1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/k1dHStV1-1024x570.jpeg",
+        "databaseId": 459
+      },
+      {
+        "experimentNumber": "458",
+        "title": "Experiment #458",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/xzcoAAv1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/xzcoAAv1-1024x629.jpeg",
+        "databaseId": 461
+      },
+      {
+        "experimentNumber": "460",
+        "title": "Experiment #460",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/qorKTIf1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/qorKTIf1-1024x430.jpeg",
+        "databaseId": 463
+      },
+      {
+        "experimentNumber": "461",
+        "title": "Experiment #461",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/ZEeSvtE1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/01/ZEeSvtE1-1024x576.jpeg",
+        "databaseId": 464
+      },
+      {
+        "experimentNumber": "463",
+        "title": "Experiment #463",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/ZbAWiam1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/ZbAWiam1-1024x550.jpeg",
+        "databaseId": 466
+      },
+      {
+        "experimentNumber": "465",
+        "title": "Experiment #465",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/HPvVNLO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/HPvVNLO1-1024x437.jpeg",
+        "databaseId": 468
+      },
+      {
+        "experimentNumber": "466",
+        "title": "Experiment #466",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/xRvVMYZ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/xRvVMYZ1-1024x481.jpeg",
+        "databaseId": 469
+      },
+      {
+        "experimentNumber": "467",
+        "title": "Experiment #467",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/YfIY6881.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/YfIY6881-1024x434.jpeg",
+        "databaseId": 470
+      },
+      {
+        "experimentNumber": "468",
+        "title": "Experiment #468",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/uTblrGZ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/uTblrGZ1-1024x575.jpeg",
+        "databaseId": 471
+      },
+      {
+        "experimentNumber": "469",
+        "title": "Experiment #469",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/gFzL0pi1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/gFzL0pi1-1024x486.jpeg",
+        "databaseId": 472
+      },
+      {
+        "experimentNumber": "470",
+        "title": "Experiment #470",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/pKtICqv1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/02/pKtICqv1-1024x428.jpeg",
+        "databaseId": 473
+      },
+      {
+        "experimentNumber": "472",
+        "title": "Experiment #472",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/v4rAtbH1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/v4rAtbH1-1024x568.jpeg",
+        "databaseId": 475
+      },
+      {
+        "experimentNumber": "474",
+        "title": "Experiment #474",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/lLxTBut1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/lLxTBut1-1024x573.jpeg",
+        "databaseId": 477
+      },
+      {
+        "experimentNumber": "475",
+        "title": "Experiment #475",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/NBzEwIS1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/NBzEwIS1-1024x430.jpeg",
+        "databaseId": 478
+      },
+      {
+        "experimentNumber": "476",
+        "title": "Experiment #476",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/iHb6bc21.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/iHb6bc21-1024x553.jpeg",
+        "databaseId": 479
+      },
+      {
+        "experimentNumber": "477",
+        "title": "Experiment #477",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/xfFS9h51.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/xfFS9h51-1024x575.jpeg",
+        "databaseId": 480
+      },
+      {
+        "experimentNumber": "478",
+        "title": "Experiment #478",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/jkczwCb1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/jkczwCb1-1024x576.jpeg",
+        "databaseId": 481
+      },
+      {
+        "experimentNumber": "479",
+        "title": "Experiment #479",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/iy5TlPG1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/iy5TlPG1-1024x512.jpeg",
+        "databaseId": 482
+      },
+      {
+        "experimentNumber": "481",
+        "title": "Experiment #481",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/y851GAB1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/03/y851GAB1-1024x529.jpeg",
+        "databaseId": 484
+      },
+      {
+        "experimentNumber": "482",
+        "title": "Experiment #482",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/2aTcoue1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/2aTcoue1-1024x551.jpeg",
+        "databaseId": 485
+      },
+      {
+        "experimentNumber": "484",
+        "title": "Experiment #484",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/MZby3uO1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/MZby3uO1-1024x612.jpeg",
+        "databaseId": 487
+      },
+      {
+        "experimentNumber": "486",
+        "title": "Experiment #486",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/rmlYIaj1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/rmlYIaj1-1024x573.jpeg",
+        "databaseId": 489
+      },
+      {
+        "experimentNumber": "487",
+        "title": "Experiment #487",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/9YDEgI71.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/9YDEgI71-1024x611.jpeg",
+        "databaseId": 490
+      },
+      {
+        "experimentNumber": "489",
+        "title": "Experiment #489",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/zZJqT641.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/zZJqT641-1024x575.jpeg",
+        "databaseId": 492
+      },
+      {
+        "experimentNumber": "490",
+        "title": "Experiment #490",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/Pskj9ZQ1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/Pskj9ZQ1-1024x422.jpeg",
+        "databaseId": 493
+      },
+      {
+        "experimentNumber": "491",
+        "title": "Experiment #491",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/qwka9xw1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/04/qwka9xw1-1024x545.jpeg",
+        "databaseId": 494
+      },
+      {
+        "experimentNumber": "494",
+        "title": "Experiment #494",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/NLqNd8B1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/NLqNd8B1-1024x553.jpeg",
+        "databaseId": 497
+      },
+      {
+        "experimentNumber": "496",
+        "title": "Experiment #496",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/qSu083x1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/qSu083x1-1024x506.jpeg",
+        "databaseId": 499
+      },
+      {
+        "experimentNumber": "498",
+        "title": "Experiment #498",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/1KcvjUA1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/1KcvjUA1-1024x597.jpeg",
+        "databaseId": 501
+      },
+      {
+        "experimentNumber": "502",
+        "title": "Experiment #502",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/MmX2FIA1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/MmX2FIA1-1024x548.jpeg",
+        "databaseId": 505
+      },
+      {
+        "experimentNumber": "503",
+        "title": "Experiment #503",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/FB8Fols1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/FB8Fols1-1024x596.jpeg",
+        "databaseId": 506
+      },
+      {
+        "experimentNumber": "504",
+        "title": "Experiment #504",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/SFvh02H1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/05/SFvh02H1-1024x560.jpeg",
+        "databaseId": 507
+      },
+      {
+        "experimentNumber": "505",
+        "title": "Experiment #505",
+        "currentImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/06/GeDmrdB1.jpeg",
+        "proposedImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/06/GeDmrdB1-1024x548.jpeg",
+        "databaseId": 508
+      }
+    ],
+    "movieCountDiscrepancies": [
+      {
+        "experimentNumber": "051",
+        "title": "Experiment #051",
+        "wordpressMovies": [
+          {
+            "title": "Zombie 3",
+            "year": "1988",
+            "url": "https://www.imdb.com/title/tt0096511/?ref_=fn_al_tt_2",
+            "rawText": "Zombie 3",
+            "isEncore": false
+          },
+          {
+            "title": "Demonwarp",
+            "year": "1988",
+            "url": "https://www.imdb.com/title/tt0094998/?ref_=fn_al_tt_1",
+            "rawText": "Demonwarp",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Demonwarp",
+            "year": "1988",
+            "id": 112
+          },
+          {
+            "title": "Zombie Flesh Eaters 2",
+            "year": "1988",
+            "id": 113
+          },
+          {
+            "title": "Rape Zombie: Lust of the Dead 3",
+            "year": "2013",
+            "id": 114
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 54
+      },
+      {
+        "experimentNumber": "075",
+        "title": "Experiment #075",
+        "wordpressMovies": [
+          {
+            "title": "Russian Terminator",
+            "year": "1989",
+            "url": "https://www.imdb.com/title/tt0100531/?ref_=fn_al_tt_1",
+            "rawText": "Russian Terminator",
+            "isEncore": false
+          },
+          {
+            "title": "The Intruder",
+            "year": "1985",
+            "url": "https://www.imdb.com/title/tt0311340/?ref_=fn_al_tt_1",
+            "rawText": "The Intruder",
+            "isEncore": false
+          },
+          {
+            "title": "Vendetta",
+            "year": "1986",
+            "url": "https://www.imdb.com/title/tt0092156/?ref_=fn_tt_tt_11",
+            "rawText": "Vendetta",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "The Russian Ninja",
+            "year": "1989",
+            "id": 161
+          },
+          {
+            "title": "The Intruder",
+            "year": "2019",
+            "id": 162
+          },
+          {
+            "title": "Vendetta",
+            "year": "1986",
+            "id": 163
+          },
+          {
+            "title": "The Deadly Intruder",
+            "year": "1985",
+            "id": 164
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 4,
+        "databaseId": 78
+      },
+      {
+        "experimentNumber": "076",
+        "title": "Experiment #076",
+        "wordpressMovies": [
+          {
+            "title": "Thunder Run",
+            "year": "1985",
+            "url": "https://www.imdb.com/title/tt0090169/?ref_=fn_al_tt_1",
+            "rawText": "Thunder Run",
+            "isEncore": false
+          },
+          {
+            "title": "Cheerleader Camp",
+            "year": "1988",
+            "url": "https://www.imdb.com/title/tt0092744/?ref_=fn_al_tt_2",
+            "rawText": "Cheerleader Camp",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Thunder Run",
+            "year": "1985",
+            "id": 165
+          },
+          {
+            "title": "#1 Cheerleader Camp",
+            "year": "2010",
+            "id": 166
+          },
+          {
+            "title": "Cheerleader Camp",
+            "year": "1988",
+            "id": 167
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 79
+      },
+      {
+        "experimentNumber": "079",
+        "title": "Experiment #079",
+        "wordpressMovies": [
+          {
+            "title": "Trancers",
+            "year": "1984",
+            "url": "https://www.imdb.com/title/tt0090192/?ref_=fn_al_tt_1",
+            "rawText": "Trancers",
+            "isEncore": false
+          },
+          {
+            "title": "3 Ninjas",
+            "year": "1992",
+            "url": "https://www.imdb.com/title/tt0103596/?ref_=fn_al_tt_1",
+            "rawText": "3 Ninjas",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Trancers",
+            "year": "1984",
+            "id": 172
+          },
+          {
+            "title": "3 Ninjas",
+            "year": "1992",
+            "id": 173
+          },
+          {
+            "title": "Female Ninjas Magic Chronicles 2: Secret of the Christian Bells",
+            "year": "1992",
+            "id": 174
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 82
+      },
+      {
+        "experimentNumber": "094",
+        "title": "Experiment #094",
+        "wordpressMovies": [
+          {
+            "title": "Yes, Madam!",
+            "year": "1985",
+            "url": "https://www.imdb.com/title/tt0093229/?ref_=fn_al_tt_1",
+            "rawText": "Yes, Madam!",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [],
+        "wordpressCount": 1,
+        "databaseCount": 0,
+        "databaseId": 97
+      },
+      {
+        "experimentNumber": "119",
+        "title": "Experiment #119",
+        "wordpressMovies": [
+          {
+            "title": "Cyber Vengeance",
+            "year": "1995",
+            "url": "https://www.imdb.com/title/tt0112764/?ref_=fn_al_tt_1",
+            "rawText": "Cyber Vengeance",
+            "isEncore": false
+          },
+          {
+            "title": "9mm Sunrise",
+            "year": "2006",
+            "url": "https://www.imdb.com/title/tt0823151/?ref_=fn_al_tt_1",
+            "rawText": "9mm Sunrise",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Cyber Vengeance",
+            "year": "1995",
+            "id": 239
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 122
+      },
+      {
+        "experimentNumber": "146",
+        "title": "Experiment #146",
+        "wordpressMovies": [
+          {
+            "title": "Dangerous Men",
+            "year": "2005",
+            "url": "https://www.imdb.com/title/tt0489015/?ref_=fn_al_tt_1",
+            "rawText": "Dangerous Men",
+            "isEncore": true
+          },
+          {
+            "title": "Phantom of the Mall: Eric’s Revenge",
+            "year": "1989",
+            "url": "https://www.imdb.com/title/tt0098089/?ref_=fn_al_tt_1",
+            "rawText": "Phantom of the Mall: Eric’s Revenge",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Dangerous Men",
+            "year": "2005",
+            "id": 77
+          },
+          {
+            "title": "Phantom of the Mall: Eric's Revenge",
+            "year": "1989",
+            "id": 281
+          },
+          {
+            "title": "Satan's Revenge",
+            "year": "1988",
+            "id": 282
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 149
+      },
+      {
+        "experimentNumber": "147",
+        "title": "Experiment #147",
+        "wordpressMovies": [
+          {
+            "title": "Pterodactyl",
+            "year": "2005",
+            "url": "https://www.imdb.com/title/tt0452668/?ref_=fn_al_tt_1",
+            "rawText": "Pterodactyl",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Pterodactyl",
+            "year": "2004",
+            "id": 283
+          },
+          {
+            "title": "Inspector Gadget's Biggest Caper Ever",
+            "year": "2005",
+            "id": 284
+          }
+        ],
+        "wordpressCount": 1,
+        "databaseCount": 2,
+        "databaseId": 150
+      },
+      {
+        "experimentNumber": "161",
+        "title": "Experiment #161",
+        "wordpressMovies": [
+          {
+            "title": "Don’t Panic",
+            "year": "1989",
+            "url": "https://www.themoviedb.org/movie/84387",
+            "rawText": "Don’t Panic",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Don't Panic",
+            "year": "1989",
+            "id": 307
+          },
+          {
+            "title": "Hopper meets Venkman",
+            "year": "2014",
+            "id": 308
+          }
+        ],
+        "wordpressCount": 1,
+        "databaseCount": 2,
+        "databaseId": 164
+      },
+      {
+        "experimentNumber": "180",
+        "title": "Experiment #180",
+        "wordpressMovies": [
+          {
+            "title": "The Dentist",
+            "year": "1996",
+            "url": "https://www.themoviedb.org/movie/9568",
+            "rawText": "The Dentist",
+            "isEncore": false
+          },
+          {
+            "title": "Maniac Cop 2",
+            "year": "1990",
+            "url": "https://www.themoviedb.org/movie/28090",
+            "rawText": "Maniac Cop 2",
+            "isEncore": false
+          },
+          {
+            "title": "The Whore Church Vol. 1",
+            "year": "2012",
+            "url": "https://www.imdb.com/title/tt2961174/",
+            "rawText": "The Whore Church Vol. 1",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "The Dentist",
+            "year": "1996",
+            "id": 334
+          },
+          {
+            "title": "Maniac Cop 2",
+            "year": "1990",
+            "id": 335
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 2,
+        "databaseId": 183
+      },
+      {
+        "experimentNumber": "183",
+        "title": "Experiment #183",
+        "wordpressMovies": [
+          {
+            "title": "Christmas Bloody Christmas",
+            "year": "2022",
+            "url": "https://www.themoviedb.org/movie/1019836",
+            "rawText": "Christmas Bloody Christmas",
+            "isEncore": false
+          },
+          {
+            "title": "Naughty, Dirty, Nasty",
+            "year": "2014",
+            "url": "https://www.themoviedb.org/movie/982925",
+            "rawText": "Naughty, Dirty, Nasty",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Christmas Bloody Christmas",
+            "year": "2022",
+            "id": 342
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 186
+      },
+      {
+        "experimentNumber": "240",
+        "title": "Experiment #240",
+        "wordpressMovies": [
+          {
+            "title": "Gamera vs. Zigra",
+            "year": "1971",
+            "url": "https://www.themoviedb.org/movie/70322",
+            "rawText": "Gamera vs. Zigra",
+            "isEncore": false
+          },
+          {
+            "title": "Killer Elephants",
+            "year": "1975",
+            "url": "https://www.themoviedb.org/movie/102464",
+            "rawText": "Killer Elephants",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Gamera vs. Zigra",
+            "year": "1971",
+            "id": 439
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 243
+      },
+      {
+        "experimentNumber": "242",
+        "title": "Experiment #242",
+        "wordpressMovies": [
+          {
+            "title": "Killer Party",
+            "year": "1986",
+            "url": "https://www.themoviedb.org/movie/74225",
+            "rawText": "Killer Party",
+            "isEncore": false
+          },
+          {
+            "title": "Lethal Force",
+            "year": "2002",
+            "url": "https://www.themoviedb.org/movie/101932",
+            "rawText": "Lethal Force",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Killer Party",
+            "year": "1986",
+            "id": 442
+          },
+          {
+            "title": "Lethal Force",
+            "year": "2002",
+            "id": 444
+          },
+          {
+            "title": "Lethal Force 2000",
+            "year": "2001",
+            "id": 443
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 245
+      },
+      {
+        "experimentNumber": "249",
+        "title": "Experiment #249",
+        "wordpressMovies": [
+          {
+            "title": "Safe Crossing: An EGG-cellent Idea!",
+            "year": "1997",
+            "url": "https://www.themoviedb.org/movie/986062",
+            "rawText": "Safe Crossing: An EGG-cellent Idea!",
+            "isEncore": false
+          },
+          {
+            "title": "Gary Coleman: For Safety’s Sake",
+            "year": "1985",
+            "url": "https://www.themoviedb.org/movie/161700",
+            "rawText": "Gary Coleman: For Safety’s Sake",
+            "isEncore": false
+          },
+          {
+            "title": "No Retreat, No Surrender 2: Raging Thunder",
+            "year": "1987",
+            "url": "https://www.themoviedb.org/movie/42012",
+            "rawText": "No Retreat, No Surrender 2: Raging Thunder",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Safe Crossing: An EGG-cellent Idea!",
+            "year": "1997",
+            "id": 458
+          },
+          {
+            "title": "Gary Coleman: For Safety's Sake",
+            "year": "1985",
+            "id": 459
+          },
+          {
+            "title": "No Retreat, No Surrender 2: Raging Thunder",
+            "year": "1987",
+            "id": 457
+          },
+          {
+            "title": "Safe Crossing: An EGG-cellent Idea!",
+            "year": "1997",
+            "id": 986
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 4,
+        "databaseId": 252
+      },
+      {
+        "experimentNumber": "254",
+        "title": "Experiment #254",
+        "wordpressMovies": [
+          {
+            "title": "Diamond Cobra Vs. The White Fox",
+            "year": "2015",
+            "url": "https://www.themoviedb.org/movie/1147230",
+            "rawText": "Diamond Cobra Vs. The White Fox",
+            "isEncore": true
+          },
+          {
+            "title": "Bad Black",
+            "year": "2016",
+            "url": "https://www.themoviedb.org/movie/377729",
+            "rawText": "Bad Black",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Bad Black",
+            "year": "2016",
+            "id": 466
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 257
+      },
+      {
+        "experimentNumber": "280",
+        "title": "Experiment #280",
+        "wordpressMovies": [
+          {
+            "title": "Death Spa",
+            "year": "1988",
+            "url": "https://www.themoviedb.org/movie/28389",
+            "rawText": "Death Spa",
+            "isEncore": true
+          },
+          {
+            "title": "The Whore Church Vol. 1",
+            "year": "2012",
+            "url": "https://www.imdb.com/title/tt2961174/",
+            "rawText": "The Whore Church Vol. 1",
+            "isEncore": true
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Death Spa",
+            "year": "1988",
+            "id": 13
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 283
+      },
+      {
+        "experimentNumber": "293",
+        "title": "Experiment #293",
+        "wordpressMovies": [
+          {
+            "title": "Mad Mutilator",
+            "year": "1982",
+            "url": "https://www.themoviedb.org/movie/105907",
+            "rawText": "Mad Mutilator",
+            "isEncore": false
+          },
+          {
+            "title": "Bloody Murder",
+            "year": "2000",
+            "url": "https://www.themoviedb.org/movie/89345",
+            "rawText": "Bloody Murder",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Bloody Murder",
+            "year": "2000",
+            "id": 537
+          },
+          {
+            "title": "Ogroff",
+            "year": "1982",
+            "id": 984
+          },
+          {
+            "title": "Ogroff",
+            "year": "1982",
+            "id": 536
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 296
+      },
+      {
+        "experimentNumber": "300",
+        "title": "Experiment #300",
+        "wordpressMovies": [
+          {
+            "title": "Black Devil Doll from Hell",
+            "year": "1984",
+            "url": "https://www.themoviedb.org/movie/35120",
+            "rawText": "Black Devil Doll from Hell",
+            "isEncore": false
+          },
+          {
+            "title": "Urine Trouble",
+            "year": "2005",
+            "url": "https://www.themoviedb.org/movie/117561",
+            "rawText": "Urine Trouble",
+            "isEncore": false
+          },
+          {
+            "title": "Return of the Living Dead Part II",
+            "year": "1988",
+            "url": "https://www.themoviedb.org/movie/24929",
+            "rawText": "Return of the Living Dead Part II",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Urine Trouble",
+            "year": "2005",
+            "id": 987
+          },
+          {
+            "title": "Black Devil Doll from Hell",
+            "year": "1984",
+            "id": 551
+          },
+          {
+            "title": "Return of the Living Dead Part II",
+            "year": "1988",
+            "id": 552
+          },
+          {
+            "title": "Urine Trouble",
+            "year": "2005",
+            "id": 553
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 4,
+        "databaseId": 303
+      },
+      {
+        "experimentNumber": "343",
+        "title": "Experiment #343",
+        "wordpressMovies": [
+          {
+            "title": "After Quarentine",
+            "year": "2023",
+            "url": "https://www.themoviedb.org/movie/1194375",
+            "rawText": "After Quarentine",
+            "isEncore": false
+          },
+          {
+            "title": "Star Virgin",
+            "year": "1979",
+            "url": "https://www.themoviedb.org/movie/5699",
+            "rawText": "Star Virgin",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Star Virgin",
+            "year": "1979",
+            "id": 635
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 346
+      },
+      {
+        "experimentNumber": "353",
+        "title": "Experiment #353",
+        "wordpressMovies": [
+          {
+            "title": "Ants",
+            "year": "1977",
+            "url": "https://www.themoviedb.org/movie/67302",
+            "rawText": "Ants",
+            "isEncore": false
+          },
+          {
+            "title": "Hospital Massacre",
+            "year": "1981",
+            "url": "https://www.themoviedb.org/movie/63590",
+            "rawText": "Hospital Massacre",
+            "isEncore": false
+          },
+          {
+            "title": "Retroactive",
+            "year": "1996",
+            "url": "https://www.themoviedb.org/movie/26689",
+            "rawText": "Retroactive",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Hospital Massacre",
+            "year": "1981",
+            "id": 652
+          },
+          {
+            "title": "Empire of the Ants",
+            "year": "1977",
+            "id": 653
+          },
+          {
+            "title": "It Happened at Lakewood Manor",
+            "year": "1977",
+            "id": 654
+          },
+          {
+            "title": "Retroactive",
+            "year": "1996",
+            "id": 655
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 4,
+        "databaseId": 356
+      },
+      {
+        "experimentNumber": "368",
+        "title": "Experiment #368",
+        "wordpressMovies": [
+          {
+            "title": "Little Italy",
+            "year": "1978",
+            "url": "https://www.themoviedb.org/movie/52913",
+            "rawText": "Little Italy",
+            "isEncore": false
+          },
+          {
+            "title": "Diamond Eye: T.H.O.T. Process 2",
+            "year": "2017",
+            "url": "https://www.imdb.com/title/tt7018322/",
+            "rawText": "Diamond Eye: T.H.O.T. Process 2",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Little Italy",
+            "year": "1978",
+            "id": 688
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 371
+      },
+      {
+        "experimentNumber": "371",
+        "title": "Experiment #371",
+        "wordpressMovies": [
+          {
+            "title": "Alien Vows",
+            "year": "1995",
+            "url": "https://www.themoviedb.org/movie/526969",
+            "rawText": "Alien Vows",
+            "isEncore": false
+          },
+          {
+            "title": "Yor, the Hunter from the Future",
+            "year": "1983",
+            "url": "https://www.themoviedb.org/movie/38219",
+            "rawText": "Yor, the Hunter from the Future",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Alien Vows",
+            "year": "1995",
+            "id": 694
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 374
+      },
+      {
+        "experimentNumber": "386",
+        "title": "Experiment #386",
+        "wordpressMovies": [
+          {
+            "title": "Dinosaur From The Deep",
+            "year": "1992",
+            "url": "https://www.themoviedb.org/movie/147758",
+            "rawText": "Dinosaur From The Deep",
+            "isEncore": false
+          },
+          {
+            "title": "The Paperboy",
+            "year": "1994",
+            "url": "https://www.themoviedb.org/movie/63725",
+            "rawText": "The Paperboy",
+            "isEncore": false
+          },
+          {
+            "title": "Totally for Teens",
+            "year": "2011",
+            "url": "https://www.themoviedb.org/tv/32194",
+            "rawText": "Totally for Teens",
+            "isEncore": true
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "The Paperboy",
+            "year": "1994",
+            "id": 723
+          },
+          {
+            "title": "Dinosaur From The Deep",
+            "year": "1992",
+            "id": 722
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 2,
+        "databaseId": 389
+      },
+      {
+        "experimentNumber": "387",
+        "title": "Experiment #387",
+        "wordpressMovies": [
+          {
+            "title": "Toxic Obsession",
+            "year": "2019",
+            "url": "https://www.themoviedb.org/movie/1310217",
+            "rawText": "Toxic Obsession",
+            "isEncore": false
+          },
+          {
+            "title": "Sister Sensei",
+            "year": "1993",
+            "url": "https://www.themoviedb.org/movie/793542",
+            "rawText": "Sister Sensei",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Toxic Obsession",
+            "year": "2019",
+            "id": 724
+          },
+          {
+            "title": "Sister Sensei",
+            "year": "1993",
+            "id": 725
+          },
+          {
+            "title": "Sister Sensei",
+            "year": "1993",
+            "id": 988
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 390
+      },
+      {
+        "experimentNumber": "394",
+        "title": "Experiment #394",
+        "wordpressMovies": [
+          {
+            "title": "Coven",
+            "year": "2000",
+            "url": "https://www.themoviedb.org/movie/21714",
+            "rawText": "Coven",
+            "isEncore": false
+          },
+          {
+            "title": "BAGMAN Profession: Meurtrier",
+            "year": "2004",
+            "url": "https://www.themoviedb.org/movie/79075",
+            "rawText": "BAGMAN Profession: Meurtrier",
+            "isEncore": false
+          },
+          {
+            "title": "Alien Warrior",
+            "year": "1986",
+            "url": "https://www.themoviedb.org/movie/119525",
+            "rawText": "Alien Warrior",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Coven",
+            "year": "2000",
+            "id": 737
+          },
+          {
+            "title": "BAGMAN Profession: Meurtrier",
+            "year": "2004",
+            "id": 738
+          },
+          {
+            "title": "Alien Warrior",
+            "year": "1986",
+            "id": 739
+          },
+          {
+            "title": "Bagman",
+            "year": "2024",
+            "id": 740
+          }
+        ],
+        "wordpressCount": 3,
+        "databaseCount": 4,
+        "databaseId": 397
+      },
+      {
+        "experimentNumber": "403",
+        "title": "Experiment #403",
+        "wordpressMovies": [
+          {
+            "title": "Shotgun Boulevard",
+            "year": "1995",
+            "url": "https://www.themoviedb.org/movie/1044440",
+            "rawText": "Shotgun Boulevard",
+            "isEncore": false
+          },
+          {
+            "title": "Butcher, Baker, Nightmare Maker",
+            "year": "1981",
+            "url": "https://www.themoviedb.org/movie/67740",
+            "rawText": "Butcher, Baker, Nightmare Maker",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Shotgun Boulevard",
+            "year": "1995",
+            "id": 759
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 1,
+        "databaseId": 406
+      },
+      {
+        "experimentNumber": "423",
+        "title": "Experiment #423",
+        "wordpressMovies": [
+          {
+            "title": "Despiser",
+            "year": "2003",
+            "url": "https://www.themoviedb.org/movie/219808",
+            "rawText": "Despiser",
+            "isEncore": false
+          },
+          {
+            "title": "Iced",
+            "year": "1987",
+            "url": "https://www.themoviedb.org/movie/83283",
+            "rawText": "Iced",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Despiser",
+            "year": "2003",
+            "id": 799
+          },
+          {
+            "title": "Ice Palace",
+            "year": "1987",
+            "id": 800
+          },
+          {
+            "title": "Iced",
+            "year": "1987",
+            "id": 801
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 426
+      },
+      {
+        "experimentNumber": "498",
+        "title": "Experiment #498",
+        "wordpressMovies": [
+          {
+            "title": "Crime Killer",
+            "year": "1986",
+            "url": "https://www.themoviedb.org/movie/115106",
+            "rawText": "Crime Killer",
+            "isEncore": false
+          },
+          {
+            "title": "Joysticks",
+            "year": "1983",
+            "url": "https://www.themoviedb.org/movie/27323",
+            "rawText": "Joysticks",
+            "isEncore": false
+          }
+        ],
+        "databaseMovies": [
+          {
+            "title": "Joysticks",
+            "year": "1983",
+            "id": 961
+          },
+          {
+            "title": "Crimewave",
+            "year": "1985",
+            "id": 962
+          },
+          {
+            "title": "Crime Killer",
+            "year": "1986",
+            "id": 960
+          }
+        ],
+        "wordpressCount": 2,
+        "databaseCount": 3,
+        "databaseId": 501
+      }
+    ],
+    "missingExperiments": {
+      "missingInWordpress": [
+        {
+          "id": 511,
+          "experimentNumber": "508",
+          "eventDate": "2025-06-12T00:00:00.000Z",
+          "eventHost": "zasderq",
+          "postUrl": "https://bigscreenbadmovies.com/experiment-508/",
+          "eventEncore": true,
+          "eventLocation": "Bigscreen VR",
+          "eventImageWpId": null,
+          "eventImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/06/ApiEK9p1.jpeg",
+          "eventNotes": "",
+          "eventAttendees": "",
+          "createdAt": "2025-06-16T00:15:05.981Z",
+          "updatedAt": "2025-06-16T15:16:25.449Z"
+        },
+        {
+          "id": 196,
+          "experimentNumber": "193",
+          "eventDate": "2023-01-01T00:00:00.000Z",
+          "eventHost": "zasderq",
+          "postUrl": "https://bigscreenbadmovies.com/experiment-193/",
+          "eventEncore": false,
+          "eventLocation": "Bigscreen VR",
+          "eventImageWpId": null,
+          "eventImage": "https://bigscreenbadmovies.com/wp-content/uploads/2023/01/kjllpIp1.jpg",
+          "eventNotes": "",
+          "eventAttendees": "",
+          "createdAt": "2025-06-16T00:11:18.892Z",
+          "updatedAt": "2025-06-16T07:52:38.876Z"
+        },
+        {
+          "id": 509,
+          "experimentNumber": "506",
+          "eventDate": "2025-06-09T00:00:00.000Z",
+          "eventHost": "zasderq",
+          "postUrl": "https://bigscreenbadmovies.com/experiment-506/",
+          "eventEncore": false,
+          "eventLocation": "Bigscreen VR",
+          "eventImageWpId": null,
+          "eventImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/06/fCabCVO1.jpeg",
+          "eventNotes": "",
+          "eventAttendees": "",
+          "createdAt": "2025-06-16T00:15:04.694Z",
+          "updatedAt": "2025-06-16T07:53:11.008Z"
+        },
+        {
+          "id": 510,
+          "experimentNumber": "507",
+          "eventDate": "2025-06-10T00:00:00.000Z",
+          "eventHost": "zasderq",
+          "postUrl": "https://bigscreenbadmovies.com/bad-movies-507/",
+          "eventEncore": false,
+          "eventLocation": "Bigscreen VR",
+          "eventImageWpId": null,
+          "eventImage": "https://bigscreenbadmovies.com/wp-content/uploads/2025/06/uzb0co81.jpeg",
+          "eventNotes": "",
+          "eventAttendees": "",
+          "createdAt": "2025-06-16T00:15:05.387Z",
+          "updatedAt": "2025-06-16T07:53:11.110Z"
+        }
+      ]
+    }
+  }
+}

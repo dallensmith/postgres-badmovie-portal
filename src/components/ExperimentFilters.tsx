@@ -48,6 +48,8 @@ export const ExperimentFilters: React.FC<ExperimentFiltersProps> = ({
               placeholder="Search by number, host, location, notes, or attendees..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
+              autoComplete="off"
+              spellCheck="false"
               className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             {searchQuery && (

@@ -19,40 +19,6 @@ const createExperimentSchema = z.object({
 
 const updateExperimentSchema = createExperimentSchema.partial();
 
-// Helper function to calculate encore status for movies
-async function calculateEncoreStatus(experiments: any[]) {
-  // Get all movie-experiment relationships ordered by experiment date
-  const allMovieExperiments = await prisma.movieExperiment.findMany({
-    include: {
-      movie: true,
-      experiment: true
-    },
-    orderBy: {
-      experiment: {
-        eventDate: 'asc'
-      }
-    }
-  });
-
-  // Track first appearance of each movie
-  const movieFirstAppearance = new Map<number, string>();
-  
-  for (const me of allMovieExperiments) {
-    if (!movieFirstAppearance.has(me.movieId)) {
-      movieFirstAppearance.set(me.movieId, me.experiment.experimentNumber);
-    }
-  }
-
-  // Mark encores in the experiments
-  return experiments.map(experiment => ({
-    ...experiment,
-    movieExperiments: experiment.movieExperiments?.map((me: any) => ({
-      ...me,
-      isEncore: movieFirstAppearance.get(me.movie.id) !== experiment.experimentNumber
-    }))
-  }));
-}
-
 // GET /api/experiments - List all experiments
 router.get('/', async (req, res) => {
   try {
@@ -67,14 +33,30 @@ router.get('/', async (req, res) => {
     // Build where clause for search and filters
     const whereClause: any = {};
     
-    // Search filter - more comprehensive like movies
+    // Search filter - optimized two-step approach
     if (search) {
+      // Step 1: Find experiment IDs that have movies with matching titles (fast separate query)
+      const experimentIdsWithMatchingMovies = await prisma.movieExperiment.findMany({
+        where: {
+          movie: {
+            movieTitle: { contains: search, mode: 'insensitive' }
+          }
+        },
+        select: { experimentId: true },
+        distinct: ['experimentId']
+      });
+      
+      const matchingExperimentIds = experimentIdsWithMatchingMovies.map(me => me.experimentId);
+
+      // Step 2: Main search includes both direct fields and matching experiment IDs
       whereClause.OR = [
         { experimentNumber: { contains: search, mode: 'insensitive' } },
         { eventHost: { contains: search, mode: 'insensitive' } },
         { eventLocation: { contains: search, mode: 'insensitive' } },
         { eventNotes: { contains: search, mode: 'insensitive' } },
-        { eventAttendees: { contains: search, mode: 'insensitive' } }
+        { eventAttendees: { contains: search, mode: 'insensitive' } },
+        // Include experiments that have matching movies (much faster than nested join)
+        ...(matchingExperimentIds.length > 0 ? [{ id: { in: matchingExperimentIds } }] : [])
       ];
     }
     
@@ -109,11 +91,9 @@ router.get('/', async (req, res) => {
       prisma.experiment.count({ where: whereClause })
     ]);
 
-    // Calculate encore status for movies
-    const experimentsWithEncores = await calculateEncoreStatus(experiments);
-    
+    // Return experiments without expensive encore calculation for now
     res.json({
-      experiments: experimentsWithEncores,
+      experiments,
       pagination: {
         page,
         limit,
@@ -195,10 +175,8 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Experiment not found' });
     }
 
-    // Calculate encore status for this experiment
-    const experimentWithEncores = await calculateEncoreStatus([experiment]);
-    
-    res.json(experimentWithEncores[0]);
+    // Return experiment without expensive encore calculation
+    res.json(experiment);
   } catch (error) {
     console.error('Error fetching experiment:', error);
     res.status(500).json({ error: 'Failed to fetch experiment' });

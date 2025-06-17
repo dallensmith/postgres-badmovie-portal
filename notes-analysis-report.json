@@ -1,0 +1,814 @@
+{
+  "generatedAt": "2025-06-16T19:43:50.971Z",
+  "totalNotes": 95,
+  "categories": {
+    "movie_3d": 5,
+    "birthday_notes": 3,
+    "game_winners": 5,
+    "meaningful_notes": 16,
+    "ignored": 66
+  },
+  "detailed_categories": {
+    "ignore_aka": [
+      {
+        "experimentNumber": "075",
+        "title": "Experiment #075",
+        "notes": "aka “Pembalasan Rambu”",
+        "databaseId": 78,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "077",
+        "title": "Experiment #077",
+        "notes": "aka “The New Barbarians”",
+        "databaseId": 80,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "083",
+        "title": "Experiment #083",
+        "notes": "aka “Shaolin Drunkard”",
+        "databaseId": 86,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "088",
+        "title": "Experiment #088",
+        "notes": "aka “The Crippled Masters”",
+        "databaseId": 91,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "089",
+        "title": "Experiment #089",
+        "notes": "aka “Lovely But Deadly”",
+        "databaseId": 92,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "102",
+        "title": "Experiment #102",
+        "notes": "aka “The Raiders of Atlantis”",
+        "databaseId": 105,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "131",
+        "title": "Experiment #131",
+        "notes": "aka “Puma Man”",
+        "databaseId": 134,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "134",
+        "title": "Experiment #134",
+        "notes": "aka “9 Deaths of the Ninja”",
+        "databaseId": 137,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "135",
+        "title": "Experiment #135",
+        "notes": "aka “The New Barbarians” (encore)",
+        "databaseId": 138,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "139",
+        "title": "Experiment #139",
+        "notes": "aka “Ninja Avengers”",
+        "databaseId": 142,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "148",
+        "title": "Experiment #148",
+        "notes": "aka “Nightstalker”",
+        "databaseId": 151,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "170",
+        "title": "Experiment #170",
+        "notes": "aka “Masked Avenger Versus Ultra-Villain in the Lair of the Naked Bikini”",
+        "databaseId": 173,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "178",
+        "title": "Experiment #178",
+        "notes": "aka “Young Cycle Girls”",
+        "databaseId": 181,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "191",
+        "title": "Experiment #191",
+        "notes": "aka “Korkusuz” aka “Turkish Rambo”",
+        "databaseId": 194,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "219",
+        "title": "Experiment #219",
+        "notes": "aka Clash of the Warloards",
+        "databaseId": 222,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "234",
+        "title": "Experiment #234",
+        "notes": "aka “Turkish Star Wars”",
+        "databaseId": 237,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "253",
+        "title": "Experiment #253",
+        "notes": "aka Monster Shark",
+        "databaseId": 256,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "255",
+        "title": "Experiment #255",
+        "notes": "aka Made in China",
+        "databaseId": 258,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "264",
+        "title": "Experiment #264",
+        "notes": "aka Zombi Holocaust",
+        "databaseId": 267,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "269",
+        "title": "Experiment #269",
+        "notes": "aka Plankton",
+        "databaseId": 272,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "290",
+        "title": "Experiment #290",
+        "notes": "aka Crazy Fat Ethel",
+        "databaseId": 293,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "293",
+        "title": "Experiment #293",
+        "notes": "aka Ograff Quiplash winners: Professor Enk, Teq Murder Winners: Zas, Zas",
+        "databaseId": 296,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "294",
+        "title": "Experiment #294",
+        "notes": "aka Crazy Fat Ethel II",
+        "databaseId": 297,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "316",
+        "title": "Experiment #316",
+        "notes": "aka Lethal Killing Machine",
+        "databaseId": 319,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "324",
+        "title": "Experiment #324",
+        "notes": "aka Battletruck",
+        "databaseId": 327,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "353",
+        "title": "Experiment #353",
+        "notes": "aka X-Ray",
+        "databaseId": 356,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "380",
+        "title": "Experiment #380",
+        "notes": "aka Commander",
+        "databaseId": 383,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "390",
+        "title": "Experiment #390",
+        "notes": "aka La casa 3",
+        "databaseId": 393,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "396",
+        "title": "Experiment #396",
+        "notes": "aka Blood Feast",
+        "databaseId": 399,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "399",
+        "title": "Experiment #399",
+        "notes": "aka Deadly Hands of Kung Fu",
+        "databaseId": 402,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "403",
+        "title": "Experiment #403",
+        "notes": "aka Night Warning",
+        "databaseId": 406,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "405",
+        "title": "Experiment #405",
+        "notes": "aka The Burning",
+        "databaseId": 408,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "416",
+        "title": "Experiment #416",
+        "notes": "aka The Last Days of Planet Earth",
+        "databaseId": 419,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "420",
+        "title": "Experiment #420",
+        "notes": "aka Tell Your Children",
+        "databaseId": 423,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "431",
+        "title": "Experiment #431",
+        "notes": "aka The Lamp",
+        "databaseId": 434,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "448",
+        "title": "Experiment #448",
+        "notes": "aka Alien Terror",
+        "databaseId": 451,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "460",
+        "title": "Experiment #460",
+        "notes": "aka Switch Killer",
+        "databaseId": 463,
+        "reason": "Alternate movie name"
+      },
+      {
+        "experimentNumber": "476",
+        "title": "Experiment #476",
+        "notes": "aka The Falling",
+        "databaseId": 479,
+        "reason": "Alternate movie name"
+      }
+    ],
+    "ignore_encore": [
+      {
+        "experimentNumber": "046",
+        "title": "Experiment #046",
+        "notes": "– Encore",
+        "databaseId": 49,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "052",
+        "title": "Experiment #052",
+        "notes": "(encore)",
+        "databaseId": 55,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "110",
+        "title": "Experiment #110",
+        "notes": "(encore)",
+        "databaseId": 113,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "133",
+        "title": "Experiment #133",
+        "notes": "(encore)",
+        "databaseId": 136,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "146",
+        "title": "Experiment #146",
+        "notes": "(encore)",
+        "databaseId": 149,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "162",
+        "title": "Experiment #162",
+        "notes": "(encore)",
+        "databaseId": 165,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "200",
+        "title": "Experiment #200",
+        "notes": "(encore)",
+        "databaseId": 203,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "217",
+        "title": "Experiment #217",
+        "notes": "(encore)",
+        "databaseId": 220,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "220",
+        "title": "Experiment #220",
+        "notes": "(encore)",
+        "databaseId": 223,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "225",
+        "title": "Experiment #225",
+        "notes": "(encore)",
+        "databaseId": 228,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "230",
+        "title": "Experiment #230",
+        "notes": "(encore) (encore)",
+        "databaseId": 233,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "247",
+        "title": "Experiment #247",
+        "notes": "(encore)",
+        "databaseId": 250,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "250",
+        "title": "Experiment #250",
+        "notes": "(encore)",
+        "databaseId": 253,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "254",
+        "title": "Experiment #254",
+        "notes": "(encore)",
+        "databaseId": 257,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "261",
+        "title": "Experiment #261",
+        "notes": "(encore)",
+        "databaseId": 264,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "267",
+        "title": "Experiment #267",
+        "notes": "(encore)",
+        "databaseId": 270,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "271",
+        "title": "Experiment #271",
+        "notes": "(encore)",
+        "databaseId": 274,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "277",
+        "title": "Experiment #277",
+        "notes": "(encore)",
+        "databaseId": 280,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "280",
+        "title": "Experiment #280",
+        "notes": "(encore) (encore)",
+        "databaseId": 283,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "340",
+        "title": "Experiment #340",
+        "notes": "(encore)",
+        "databaseId": 343,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "350",
+        "title": "Experiment #350",
+        "notes": "(encore)",
+        "databaseId": 353,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "358",
+        "title": "Experiment #358",
+        "notes": "(encore)",
+        "databaseId": 361,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "363",
+        "title": "Experiment #363",
+        "notes": "(encore)",
+        "databaseId": 366,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "478",
+        "title": "Experiment #478",
+        "notes": "(encore)",
+        "databaseId": 481,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "479",
+        "title": "Experiment #479",
+        "notes": "(encore)",
+        "databaseId": 482,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "480",
+        "title": "Experiment #480",
+        "notes": "(encore)",
+        "databaseId": 483,
+        "reason": "Encore already handled in database"
+      },
+      {
+        "experimentNumber": "483",
+        "title": "Experiment #483",
+        "notes": "(encore)",
+        "databaseId": 486,
+        "reason": "Encore already handled in database"
+      }
+    ],
+    "movie_3d": [
+      {
+        "experimentNumber": "038",
+        "title": "Experiment #038",
+        "notes": "(3D)",
+        "databaseId": 41,
+        "reason": "Movie shown in 3D"
+      },
+      {
+        "experimentNumber": "306",
+        "title": "Experiment #306",
+        "notes": "(3D)",
+        "databaseId": 309,
+        "reason": "Movie shown in 3D"
+      },
+      {
+        "experimentNumber": "329",
+        "title": "Experiment #329",
+        "notes": "(3D)",
+        "databaseId": 332,
+        "reason": "Movie shown in 3D"
+      },
+      {
+        "experimentNumber": "330",
+        "title": "Experiment #330",
+        "notes": "(3D)",
+        "databaseId": 333,
+        "reason": "Movie shown in 3D"
+      },
+      {
+        "experimentNumber": "491",
+        "title": "Experiment #491",
+        "notes": "(3D)",
+        "databaseId": 494,
+        "reason": "Movie shown in 3D"
+      }
+    ],
+    "birthday_notes": [
+      {
+        "experimentNumber": "195",
+        "title": "Experiment #195",
+        "notes": "Happy Birthday ! Bidiots winner: Mubbletraker Quiplash winner: yimmycat Murder Mystery winners: zasderq, tequilarawks",
+        "databaseId": 198,
+        "reason": "Birthday celebration"
+      },
+      {
+        "experimentNumber": "312",
+        "title": "Experiment #312",
+        "notes": "Zas Birthday Party",
+        "databaseId": 315,
+        "reason": "Birthday celebration"
+      },
+      {
+        "experimentNumber": "382",
+        "title": "Experiment #382",
+        "notes": "Happy Birthday Jeeb!",
+        "databaseId": 385,
+        "reason": "Birthday celebration"
+      }
+    ],
+    "game_winners": [
+      {
+        "experimentNumber": "153",
+        "title": "Experiment #153",
+        "notes": "Rifftrax Winners: yimmycat, Razorback, imizzy, zasderq",
+        "databaseId": 156,
+        "reason": "Game winners"
+      },
+      {
+        "experimentNumber": "154",
+        "title": "Experiment #154",
+        "notes": "Quiplash Winners: zasderq, stylitesouthpaw, jeebizz",
+        "databaseId": 157,
+        "reason": "Game winners"
+      },
+      {
+        "experimentNumber": "155",
+        "title": "Experiment #155",
+        "notes": "Quiplash Winners: lazymoney, disco, zasderq",
+        "databaseId": 158,
+        "reason": "Game winners"
+      },
+      {
+        "experimentNumber": "164",
+        "title": "Experiment #164",
+        "notes": "Quiplash Winners: tequilarawks, Jeebizz Murder Mystery Winners: Nashpreds, zasderq",
+        "databaseId": 167,
+        "reason": "Game winners"
+      },
+      {
+        "experimentNumber": "196",
+        "title": "Experiment #196",
+        "notes": "Quiplash winner: Razorback Murder Mystery Winners: SciNEStist, jeeb",
+        "databaseId": 199,
+        "reason": "Game winners"
+      }
+    ],
+    "meaningful_notes": [
+      {
+        "experimentNumber": "002",
+        "title": "Experiment #002",
+        "notes": "– Matinee Showing",
+        "databaseId": 2,
+        "reason": "Matinee showing info"
+      },
+      {
+        "experimentNumber": "030",
+        "title": "Experiment #030",
+        "notes": "– Matinee",
+        "databaseId": 33,
+        "reason": "Matinee showing info"
+      },
+      {
+        "experimentNumber": "058",
+        "title": "Experiment #058",
+        "notes": "(Matinee)",
+        "databaseId": 61,
+        "reason": "Matinee showing info"
+      },
+      {
+        "experimentNumber": "085",
+        "title": "Experiment #085",
+        "notes": "RiffTrax: The Game",
+        "databaseId": 88,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "094",
+        "title": "Experiment #094",
+        "notes": "drunken jackbox",
+        "databaseId": 97,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "123",
+        "title": "Experiment #123",
+        "notes": "(TV Short)",
+        "databaseId": 126,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "151",
+        "title": "Experiment #151",
+        "notes": "(matinee)",
+        "databaseId": 154,
+        "reason": "Matinee showing info"
+      },
+      {
+        "experimentNumber": "156",
+        "title": "Experiment #156",
+        "notes": "(matinee)",
+        "databaseId": 159,
+        "reason": "Matinee showing info"
+      },
+      {
+        "experimentNumber": "262",
+        "title": "Experiment #262",
+        "notes": "R.I.P. Paul Reubens",
+        "databaseId": 265,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "300",
+        "title": "Experiment #300",
+        "notes": "(short)",
+        "databaseId": 303,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "451",
+        "title": "Experiment #451",
+        "notes": "(short)",
+        "databaseId": 454,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "466",
+        "title": "Experiment #466",
+        "notes": "(Dogville Short)",
+        "databaseId": 469,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "467",
+        "title": "Experiment #467",
+        "notes": "(Dogville Short)",
+        "databaseId": 470,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "468",
+        "title": "Experiment #468",
+        "notes": "(Dogville Short) (Dogville Short)",
+        "databaseId": 471,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "472",
+        "title": "Experiment #472",
+        "notes": "(Dogville Short)",
+        "databaseId": 475,
+        "reason": "Other meaningful note"
+      },
+      {
+        "experimentNumber": "473",
+        "title": "Experiment #473",
+        "notes": "(Dogville Short)",
+        "databaseId": 476,
+        "reason": "Other meaningful note"
+      }
+    ],
+    "ignore_other": [
+      {
+        "experimentNumber": "001",
+        "title": "Experiment #001",
+        "notes": "(2021 – filmed in 1984)",
+        "databaseId": 1,
+        "reason": "Generic/unclear note"
+      }
+    ]
+  },
+  "update_results": [
+    {
+      "experimentNumber": "195",
+      "status": "success",
+      "notes": "Happy Birthday ! Bidiots winner: Mubbletraker Quiplash winner: yimmycat Murder Mystery winners: zasderq, tequilarawks"
+    },
+    {
+      "experimentNumber": "312",
+      "status": "success",
+      "notes": "Zas Birthday Party"
+    },
+    {
+      "experimentNumber": "382",
+      "status": "success",
+      "notes": "Happy Birthday Jeeb!"
+    },
+    {
+      "experimentNumber": "153",
+      "status": "success",
+      "notes": "Rifftrax Winners: yimmycat, Razorback, imizzy, zasderq"
+    },
+    {
+      "experimentNumber": "154",
+      "status": "success",
+      "notes": "Quiplash Winners: zasderq, stylitesouthpaw, jeebizz"
+    },
+    {
+      "experimentNumber": "155",
+      "status": "success",
+      "notes": "Quiplash Winners: lazymoney, disco, zasderq"
+    },
+    {
+      "experimentNumber": "164",
+      "status": "success",
+      "notes": "Quiplash Winners: tequilarawks, Jeebizz Murder Mystery Winners: Nashpreds, zasderq"
+    },
+    {
+      "experimentNumber": "196",
+      "status": "success",
+      "notes": "Quiplash winner: Razorback Murder Mystery Winners: SciNEStist, jeeb"
+    },
+    {
+      "experimentNumber": "002",
+      "status": "success",
+      "notes": "– Matinee Showing"
+    },
+    {
+      "experimentNumber": "030",
+      "status": "success",
+      "notes": "– Matinee"
+    },
+    {
+      "experimentNumber": "058",
+      "status": "success",
+      "notes": "(Matinee)"
+    },
+    {
+      "experimentNumber": "085",
+      "status": "success",
+      "notes": "RiffTrax: The Game"
+    },
+    {
+      "experimentNumber": "094",
+      "status": "success",
+      "notes": "drunken jackbox"
+    },
+    {
+      "experimentNumber": "123",
+      "status": "success",
+      "notes": "(TV Short)"
+    },
+    {
+      "experimentNumber": "151",
+      "status": "success",
+      "notes": "(matinee)"
+    },
+    {
+      "experimentNumber": "156",
+      "status": "success",
+      "notes": "(matinee)"
+    },
+    {
+      "experimentNumber": "262",
+      "status": "success",
+      "notes": "R.I.P. Paul Reubens"
+    },
+    {
+      "experimentNumber": "300",
+      "status": "success",
+      "notes": "(short)"
+    },
+    {
+      "experimentNumber": "451",
+      "status": "success",
+      "notes": "(short)"
+    },
+    {
+      "experimentNumber": "466",
+      "status": "success",
+      "notes": "(Dogville Short)"
+    },
+    {
+      "experimentNumber": "467",
+      "status": "success",
+      "notes": "(Dogville Short)"
+    },
+    {
+      "experimentNumber": "468",
+      "status": "success",
+      "notes": "(Dogville Short) (Dogville Short)"
+    },
+    {
+      "experimentNumber": "472",
+      "status": "success",
+      "notes": "(Dogville Short)"
+    },
+    {
+      "experimentNumber": "473",
+      "status": "success",
+      "notes": "(Dogville Short)"
+    }
+  ]
+}
