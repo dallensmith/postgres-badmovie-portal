@@ -68,6 +68,22 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **Rate-limited processing**: Respects OMDb API limits with intelligent batch processing
 - **Comprehensive coverage**: Enhanced plot summaries, director info, writer credits, and box office data
 
+**🎛️ Movie Edit Modal UX Overhaul (Latest Update)**
+- **Revolutionary modal restructuring**: Complete redesign of movie edit interface for optimal user experience
+- **Strategic tab reorganization**: 
+  - **Basic Info**: Core movie data + all ratings/awards in logical grouping (TMDb, IMDb Enhanced, Rotten Tomatoes, Metacritic, Awards)
+  - **Details**: Extended metadata + external links consolidated at bottom
+  - **Cast & Crew**: People management (unchanged)
+  - **Experiments**: Experiment linking (unchanged)
+  - **Admin**: Technical controls (API IDs, sync functions, admin toggles)
+  - **Affiliate Links**: Revenue generation tools (Amazon + future programs)
+- **Space optimization**: Side-by-side layout for Poster URL + Overview saves significant vertical space
+- **Enhanced width**: Expanded to max-w-7xl for better field visibility and reduced scrolling
+- **Improved field organization**: Ratings and votes properly grouped by source with color-coded badges
+- **Eliminated redundancy**: Removed duplicate fields (boxOfficeEnhanced, plotEnhanced, dvdRelease) that caused database conflicts
+- **Future-proof structure**: Clean separation enables easy addition of new features and affiliate programs
+- **Admin-focused design**: Technical features isolated in Admin tab, keeping user interface clean
+
 ## Architecture Overview
 
 **🚀 EVOLUTION: From WordPress Integration to Unified React Ecosystem**

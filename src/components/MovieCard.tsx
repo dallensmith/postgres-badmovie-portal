@@ -56,6 +56,7 @@ export interface Movie {
   wordpressId: number | null;
   syncStatus: string;
   excludeFromTmdbSync: boolean;
+  shown3D: boolean;
   movieExperiments?: MovieExperiment[];
   createdAt: string;
   
@@ -144,6 +145,15 @@ export const MovieCard: React.FC<MovieCardProps> = ({
             <span className="bg-purple-600 text-white px-2 py-1 rounded text-sm font-semibold">
               #{movie.movieExperiments[0].experiment.experimentNumber}
               {movie.movieExperiments.length > 1 && ` +${movie.movieExperiments.length - 1}`}
+            </span>
+          </div>
+        )}
+        
+        {/* 3D indicator - bottom left */}
+        {movie.shown3D && (
+          <div className="absolute bottom-2 left-2">
+            <span className="bg-cyan-500 text-black px-2 py-1 rounded text-sm font-semibold shadow-lg animate-pulse">
+              3D
             </span>
           </div>
         )}

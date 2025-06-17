@@ -31,6 +31,7 @@ export interface MovieFormData {
   movieStudios?: string[];
   movieAmazonLink?: string;
   excludeFromTmdbSync?: boolean;
+  shown3D?: boolean;
   
   // 🚀 Enhanced fields from OMDb dual-API enrichment
   rottenTomatoesRating?: string;
@@ -39,10 +40,7 @@ export interface MovieFormData {
   imdbVotes?: string;
   metacriticRating?: string;
   awards?: string;
-  dvdRelease?: string;
   websiteUrl?: string;
-  boxOfficeEnhanced?: string;
-  plotEnhanced?: string;
 }
 
 export interface MovieFormModalProps {
@@ -120,6 +118,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieStudios: movie.movieStudios ?? [],
         movieAmazonLink: String(movie.movieAmazonLink ?? ''),
         excludeFromTmdbSync: movie.excludeFromTmdbSync ?? false,
+        shown3D: movie.shown3D ?? false,
         
         // OMDb fields - initialize from existing movie data
         rottenTomatoesRating: String(movie.rottenTomatoesRating ?? ''),
@@ -128,10 +127,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         imdbVotes: String(movie.imdbVotes ?? ''),
         metacriticRating: String(movie.metacriticRating ?? ''),
         awards: String(movie.awards ?? ''),
-        dvdRelease: String(movie.dvdRelease ?? ''),
-        websiteUrl: String(movie.websiteUrl ?? ''),
-        boxOfficeEnhanced: String(movie.boxOfficeEnhanced ?? ''),
-        plotEnhanced: String(movie.plotEnhanced ?? '')
+        websiteUrl: String(movie.websiteUrl ?? '')
       };
     } else {
       return {
@@ -163,6 +159,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieStudios: [],
         movieAmazonLink: '',
         excludeFromTmdbSync: false,
+        shown3D: false,
         
         // OMDb fields - initialize as empty for new movies
         rottenTomatoesRating: '',
@@ -171,10 +168,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         imdbVotes: '',
         metacriticRating: '',
         awards: '',
-        dvdRelease: '',
-        websiteUrl: '',
-        boxOfficeEnhanced: '',
-        plotEnhanced: ''
+        websiteUrl: ''
       };
     }
   };
@@ -269,10 +263,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
             imdbVotes: tmdbData.imdbVotes || prev.imdbVotes,
             metacriticRating: tmdbData.metacriticRating || prev.metacriticRating,
             awards: tmdbData.awards || prev.awards,
-            dvdRelease: tmdbData.dvdRelease || prev.dvdRelease,
             websiteUrl: tmdbData.websiteUrl || prev.websiteUrl,
-            boxOfficeEnhanced: tmdbData.boxOfficeEnhanced || prev.boxOfficeEnhanced,
-            plotEnhanced: tmdbData.plotEnhanced || prev.plotEnhanced,
           }));
         } catch (err) {
           console.error('Failed to auto-sync with TMDb:', err);
@@ -361,10 +352,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         imdbVotes: tmdbData.imdbVotes || prev.imdbVotes,
         metacriticRating: tmdbData.metacriticRating || prev.metacriticRating,
         awards: tmdbData.awards || prev.awards,
-        dvdRelease: tmdbData.dvdRelease || prev.dvdRelease,
         websiteUrl: tmdbData.websiteUrl || prev.websiteUrl,
-        boxOfficeEnhanced: tmdbData.boxOfficeEnhanced || prev.boxOfficeEnhanced,
-        plotEnhanced: tmdbData.plotEnhanced || prev.plotEnhanced,
       }));
 
       // Clear any TMDb sync errors
@@ -430,10 +418,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         imdbVotes: omdbData.imdbVotes || prev.imdbVotes,
         metacriticRating: omdbData.metacriticRating || prev.metacriticRating,
         awards: omdbData.awards || prev.awards,
-        dvdRelease: omdbData.dvdRelease || prev.dvdRelease,
         websiteUrl: omdbData.websiteUrl || prev.websiteUrl,
-        boxOfficeEnhanced: omdbData.boxOffice || prev.boxOfficeEnhanced,
-        plotEnhanced: omdbData.plot || prev.plotEnhanced,
         
         // Box office (prefer OMDb if available)
         movieBoxOffice: omdbData.boxOffice || prev.movieBoxOffice,
@@ -510,10 +495,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         imdbVotes: isEmpty(prev.imdbVotes) && omdbData.imdbVotes ? omdbData.imdbVotes : prev.imdbVotes,
         metacriticRating: isEmpty(prev.metacriticRating) && omdbData.metacriticRating ? omdbData.metacriticRating : prev.metacriticRating,
         awards: isEmpty(prev.awards) && omdbData.awards ? omdbData.awards : prev.awards,
-        dvdRelease: isEmpty(prev.dvdRelease) && omdbData.dvdRelease ? omdbData.dvdRelease : prev.dvdRelease,
         websiteUrl: isEmpty(prev.websiteUrl) && omdbData.websiteUrl ? omdbData.websiteUrl : prev.websiteUrl,
-        boxOfficeEnhanced: isEmpty(prev.boxOfficeEnhanced) && omdbData.boxOffice ? omdbData.boxOffice : prev.boxOfficeEnhanced,
-        plotEnhanced: isEmpty(prev.plotEnhanced) && omdbData.plot ? omdbData.plot : prev.plotEnhanced,
         
         // Box office - only fill if empty
         movieBoxOffice: isEmpty(prev.movieBoxOffice) && omdbData.boxOffice ? omdbData.boxOffice : prev.movieBoxOffice,
@@ -718,12 +700,13 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
     { id: 'details', label: 'Details', icon: '📊' },
     { id: 'people', label: 'Cast & Crew', icon: '👥' },
     { id: 'experiments', label: 'Experiments', icon: '🧪' },
-    { id: 'external', label: 'External Links', icon: '🔗' }
+    { id: 'admin', label: 'Admin', icon: '⚙️' },
+    { id: 'affiliate', label: 'Affiliate Links', icon: '🔗' }
   ];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-dark-800 rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-dark-800 rounded-lg shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-dark-600">
           <h2 className="text-2xl font-bold text-white">{modalTitle}</h2>
@@ -871,44 +854,174 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                   </div>
                 </div>
 
-                {/* Poster URL */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Poster URL
-                  </label>
-                  <input
-                    type="url"
-                    value={String(formData.moviePoster || '')}
-                    onChange={(e) => handleInputChange('moviePoster', e.target.value)}
-                    className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    placeholder="https://image.tmdb.org/t/p/w500/..."
-                  />
-                  {formData.moviePoster && (
-                    <div className="mt-2">
-                      <img
-                        src={formData.moviePoster}
-                        alt="Poster preview"
-                        className="w-24 h-36 object-cover rounded"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Poster URL */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Poster URL
+                    </label>
+                    <input
+                      type="url"
+                      value={String(formData.moviePoster || '')}
+                      onChange={(e) => handleInputChange('moviePoster', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="https://image.tmdb.org/t/p/w500/..."
+                    />
+                    {formData.moviePoster && (
+                      <div className="mt-2">
+                        <img
+                          src={formData.moviePoster}
+                          alt="Poster preview"
+                          className="w-24 h-36 object-cover rounded"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Overview */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Overview
+                    </label>
+                    <textarea
+                      value={String(formData.movieOverview || '')}
+                      onChange={(e) => handleInputChange('movieOverview', e.target.value)}
+                      rows={4}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="Movie plot summary..."
+                    />
+                  </div>
                 </div>
 
-                {/* Overview */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Overview
-                  </label>
-                  <textarea
-                    value={String(formData.movieOverview || '')}
-                    onChange={(e) => handleInputChange('movieOverview', e.target.value)}
-                    rows={4}
-                    className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    placeholder="Movie plot summary..."
-                  />
+                {/* OMDb Enhanced Ratings Section */}
+                <div className="pt-6 border-t border-dark-600">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    📊 Enhanced Ratings & Awards
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* TMDb Rating */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          TMDb Rating
+                          <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">TMDb</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.movieTmdbRating || '')}
+                        onChange={(e) => handleInputChange('movieTmdbRating', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="7.5"
+                      />
+                    </div>
+
+                    {/* TMDb Votes */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          TMDb Votes
+                          <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">TMDb</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.movieTmdbVotes || '')}
+                        onChange={(e) => handleInputChange('movieTmdbVotes', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="1500"
+                      />
+                    </div>
+
+                    {/* Enhanced IMDb Rating (from OMDb) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          IMDb Rating
+                          <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">Enhanced</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.imdbRating || '')}
+                        onChange={(e) => handleInputChange('imdbRating', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="8.1"
+                      />
+                    </div>
+
+                    {/* IMDb Votes (Enhanced) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          IMDb Votes
+                          <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">Enhanced</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.imdbVotes || '')}
+                        onChange={(e) => handleInputChange('imdbVotes', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="150,000"
+                      />
+                    </div>
+
+                    {/* Rotten Tomatoes Rating (from OMDb) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          🍅 Rotten Tomatoes Rating
+                          <span className="text-xs bg-red-600 text-white px-2 py-1 rounded">OMDb</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.rottenTomatoesRating || '')}
+                        onChange={(e) => handleInputChange('rottenTomatoesRating', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="75%"
+                      />
+                    </div>
+
+                    {/* Metacritic Rating (from OMDb) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          📊 Metacritic Rating
+                          <span className="text-xs bg-yellow-600 text-white px-2 py-1 rounded">OMDb</span>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={String(formData.metacriticRating || '')}
+                        onChange={(e) => handleInputChange('metacriticRating', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="68/100"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Awards (from OMDb) - Full width */}
+                  <div className="mt-6">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        🏆 Awards
+                        <span className="text-xs bg-purple-600 text-white px-2 py-1 rounded">OMDb</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={String(formData.awards || '')}
+                      onChange={(e) => handleInputChange('awards', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="Won 3 Oscars. Another 15 wins & 20 nominations."
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -1014,6 +1127,88 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Universal Pictures, Warner Bros (comma-separated)"
                   />
+                </div>
+
+                {/* External Links Section */}
+                <div className="pt-6 border-t border-dark-600">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    🔗 External Links
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 gap-6">
+                    {/* TMDb URL */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        TMDb URL
+                      </label>
+                      <input
+                        type="url"
+                        value={String(formData.movieTmdbUrl || '')}
+                        onChange={(e) => handleInputChange('movieTmdbUrl', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="https://www.themoviedb.org/movie/123456"
+                      />
+                    </div>
+
+                    {/* IMDb URL */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        IMDb URL
+                      </label>
+                      <input
+                        type="url"
+                        value={String(formData.movieImdbUrl || '')}
+                        onChange={(e) => handleInputChange('movieImdbUrl', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="https://www.imdb.com/title/tt1234567"
+                      />
+                    </div>
+
+                    {/* Rotten Tomatoes URL */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        🍅 Rotten Tomatoes URL
+                      </label>
+                      <input
+                        type="url"
+                        value={String(formData.rottenTomatoesUrl || '')}
+                        onChange={(e) => handleInputChange('rottenTomatoesUrl', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="https://www.rottentomatoes.com/m/movie_title"
+                      />
+                    </div>
+
+                    {/* Website URL (from OMDb) */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <span className="flex items-center gap-2">
+                          🌐 Official Website
+                          <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">OMDb</span>
+                        </span>
+                      </label>
+                      <input
+                        type="url"
+                        value={String(formData.websiteUrl || '')}
+                        onChange={(e) => handleInputChange('websiteUrl', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="https://www.moviewebsite.com"
+                      />
+                    </div>
+
+                    {/* Trailer URL */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Trailer URL
+                      </label>
+                      <input
+                        type="url"
+                        value={String(formData.movieTrailer || '')}
+                        onChange={(e) => handleInputChange('movieTrailer', e.target.value)}
+                        className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="https://youtube.com/watch?v=..."
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -1250,254 +1445,119 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
               </div>
             )}
 
-            {/* External Links Tab */}
-            {activeTab === 'external' && (
+            {/* Admin Tab */}
+            {activeTab === 'admin' && (
               <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* TMDb ID */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      TMDb ID
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={String(formData.movieTmdbId || '')}
-                        onChange={(e) => handleInputChange('movieTmdbId', e.target.value)}
-                        className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="123456"
-                      />
-                      {formData.movieTmdbId && (
-                        <button
-                          type="button"
-                          onClick={handleSyncWithTMDb}
-                          disabled={loading || syncing}
-                          className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
-                          title="Sync with TMDb"
-                        >
-                          {syncing ? (
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          ) : (
-                            <span>🔄</span>
-                          )}
-                        </button>
+                {/* API IDs and Sync */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">API Integration</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* TMDb ID */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        TMDb ID
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={String(formData.movieTmdbId || '')}
+                          onChange={(e) => handleInputChange('movieTmdbId', e.target.value)}
+                          className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                          placeholder="123456"
+                        />
+                        {formData.movieTmdbId && (
+                          <button
+                            type="button"
+                            onClick={handleSyncWithTMDb}
+                            disabled={loading || syncing}
+                            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
+                            title="Sync with TMDb"
+                          >
+                            {syncing ? (
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                            ) : (
+                              <span>🔄</span>
+                            )}
+                          </button>
+                        )}
+                      </div>
+                      {errors.movieTmdbId && (
+                        <p className="text-red-400 text-sm mt-1">{errors.movieTmdbId}</p>
                       )}
                     </div>
-                    {errors.movieTmdbId && (
-                      <p className="text-red-400 text-sm mt-1">{errors.movieTmdbId}</p>
-                    )}
-                  </div>
 
-                  {/* TMDb Rating */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      TMDb Rating
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.movieTmdbRating || '')}
-                      onChange={(e) => handleInputChange('movieTmdbRating', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="7.5"
-                    />
-                  </div>
-
-                  {/* Selective OMDb Sync - Full width section */}
-                  <div className="md:col-span-2">
-                    <div className="bg-dark-800 p-4 rounded-lg border border-dark-600">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="text-white font-medium mb-1">Fill Missing Data with OMDb</h4>
-                          <p className="text-gray-400 text-sm">Only fills empty fields with OMDb data - won't overwrite existing content</p>
-                        </div>
+                    {/* IMDb ID */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        IMDb ID
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={String(formData.movieImdbId || '')}
+                          onChange={(e) => handleInputChange('movieImdbId', e.target.value)}
+                          className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                          placeholder="tt1234567"
+                        />
                         {formData.movieImdbId && (
                           <button
                             type="button"
-                            onClick={handleSelectiveOMDbSync}
-                            disabled={loading || syncingOmdbSelective || syncing || syncingOmdb}
-                            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-colors flex items-center gap-2"
-                            title="Fill missing fields with OMDb data (requires IMDb ID)"
+                            onClick={handleSyncWithOMDb}
+                            disabled={loading || syncingOmdb}
+                            className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
+                            title="Sync with OMDb (Rotten Tomatoes, Awards, etc.)"
                           >
-                            {syncingOmdbSelective ? (
+                            {syncingOmdb ? (
                               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                             ) : (
-                              <span>🔍</span>
+                              <span>🍅</span>
                             )}
-                            <span className="text-sm">Fill Missing</span>
                           </button>
                         )}
-                        {!formData.movieImdbId && (
-                          <div className="text-gray-500 text-sm italic">
-                            Requires IMDb ID below
-                          </div>
-                        )}
                       </div>
-                    </div>
-                  </div>
-
-                  {/* IMDb ID */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      IMDb ID
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={String(formData.movieImdbId || '')}
-                        onChange={(e) => handleInputChange('movieImdbId', e.target.value)}
-                        className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="tt1234567"
-                      />
-                      {formData.movieImdbId && (
-                        <button
-                          type="button"
-                          onClick={handleSyncWithOMDb}
-                          disabled={loading || syncingOmdb}
-                          className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
-                          title="Sync with OMDb (Rotten Tomatoes, Awards, etc.)"
-                        >
-                          {syncingOmdb ? (
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          ) : (
-                            <span>🍅</span>
-                          )}
-                        </button>
+                      {errors.movieImdbId && (
+                        <p className="text-red-400 text-sm mt-1">{errors.movieImdbId}</p>
                       )}
                     </div>
-                    {errors.movieImdbId && (
-                      <p className="text-red-400 text-sm mt-1">{errors.movieImdbId}</p>
-                    )}
-                  </div>
-
-                  {/* TMDb Votes */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      TMDb Votes
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.movieTmdbVotes || '')}
-                      onChange={(e) => handleInputChange('movieTmdbVotes', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="1500"
-                    />
-                  </div>
-
-                  {/* 🚀 Enhanced IMDb Rating (from OMDb) */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      <span className="flex items-center gap-2">
-                        IMDb Rating
-                        <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">Enhanced</span>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.imdbRating || '')}
-                      onChange={(e) => handleInputChange('imdbRating', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="8.1"
-                    />
-                  </div>
-
-                  {/* 🍅 Rotten Tomatoes Rating (from OMDb) */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      <span className="flex items-center gap-2">
-                        🍅 Rotten Tomatoes Rating
-                        <span className="text-xs bg-red-600 text-white px-2 py-1 rounded">OMDb</span>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.rottenTomatoesRating || '')}
-                      onChange={(e) => handleInputChange('rottenTomatoesRating', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="75%"
-                    />
-                  </div>
-
-                  {/* 📊 Metacritic Rating (from OMDb) */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      <span className="flex items-center gap-2">
-                        📊 Metacritic Rating
-                        <span className="text-xs bg-yellow-600 text-white px-2 py-1 rounded">OMDb</span>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.metacriticRating || '')}
-                      onChange={(e) => handleInputChange('metacriticRating', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="68/100"
-                    />
-                  </div>
-
-                  {/* 🏆 Awards (from OMDb) */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      <span className="flex items-center gap-2">
-                        🏆 Awards
-                        <span className="text-xs bg-purple-600 text-white px-2 py-1 rounded">OMDb</span>
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      value={String(formData.awards || '')}
-                      onChange={(e) => handleInputChange('awards', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="Won 3 Oscars. Another 15 wins & 20 nominations."
-                    />
                   </div>
                 </div>
 
-                {/* URLs */}
-                <div className="grid grid-cols-1 gap-6">
-                  {/* Rotten Tomatoes URL */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      🍅 Rotten Tomatoes URL
-                    </label>
-                    <input
-                      type="url"
-                      value={String(formData.rottenTomatoesUrl || '')}
-                      onChange={(e) => handleInputChange('rottenTomatoesUrl', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://www.rottentomatoes.com/m/movie_title"
-                    />
+                {/* OMDb Sync Section */}
+                <div className="bg-dark-800 p-4 rounded-lg border border-dark-600">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-white font-medium mb-1">Fill Missing Data with OMDb</h4>
+                      <p className="text-gray-400 text-sm">Only fills empty fields with OMDb data - won't overwrite existing content</p>
+                    </div>
+                    {formData.movieImdbId && (
+                      <button
+                        type="button"
+                        onClick={handleSelectiveOMDbSync}
+                        disabled={loading || syncingOmdbSelective || syncing || syncingOmdb}
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-colors flex items-center gap-2"
+                        title="Fill missing fields with OMDb data (requires IMDb ID)"
+                      >
+                        {syncingOmdbSelective ? (
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        ) : (
+                          <span>🔍</span>
+                        )}
+                        <span className="text-sm">Fill Missing</span>
+                      </button>
+                    )}
+                    {!formData.movieImdbId && (
+                      <div className="text-gray-500 text-sm italic">
+                        Requires IMDb ID above
+                      </div>
+                    )}
                   </div>
+                </div>
 
-                  {/* Website URL (from OMDb) */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      <span className="flex items-center gap-2">
-                        🌐 Official Website
-                        <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">OMDb</span>
-                      </span>
-                    </label>
-                    <input
-                      type="url"
-                      value={String(formData.websiteUrl || '')}
-                      onChange={(e) => handleInputChange('websiteUrl', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://www.moviewebsite.com"
-                    />
-                  </div>
-                  {/* TMDb URL */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      TMDb URL
-                    </label>
-                    <input
-                      type="url"
-                      value={String(formData.movieTmdbUrl || '')}
-                      onChange={(e) => handleInputChange('movieTmdbUrl', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://www.themoviedb.org/movie/123456"
-                    />
-                  </div>
-
+                {/* Admin Settings */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">Admin Settings</h3>
+                  
                   {/* Exclude from TMDb Sync */}
                   <div className="bg-dark-600 p-4 rounded-lg border border-orange-500">
                     <label className="flex items-center gap-3">
@@ -1521,51 +1581,71 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     )}
                   </div>
 
-                  {/* IMDb URL */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      IMDb URL
+                  {/* 3D Movie Toggle */}
+                  <div className="bg-dark-600 p-4 rounded-lg border border-cyan-500">
+                    <label className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={formData.shown3D || false}
+                        onChange={(e) => handleInputChange('shown3D', e.target.checked)}
+                        className="w-4 h-4 text-cyan-500 bg-dark-700 border-dark-600 rounded focus:ring-cyan-500 focus:ring-2"
+                      />
+                      <div>
+                        <span className="text-sm font-medium text-cyan-300">
+                          3D Movie
+                        </span>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Mark this movie as being shown in 3D format. This will display a glowing 3D indicator on the movie card.
+                        </p>
+                      </div>
                     </label>
-                    <input
-                      type="url"
-                      value={String(formData.movieImdbUrl || '')}
-                      onChange={(e) => handleInputChange('movieImdbUrl', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://www.imdb.com/title/tt1234567"
-                    />
-                  </div>
-
-                  {/* Amazon Link */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Amazon Affiliate Link
-                    </label>
-                    <input
-                      type="url"
-                      value={String(formData.movieAmazonLink || '')}
-                      onChange={(e) => handleInputChange('movieAmazonLink', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://amazon.com/..."
-                    />
-                  </div>
-
-                  {/* Trailer URL */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Trailer URL
-                    </label>
-                    <input
-                      type="url"
-                      value={String(formData.movieTrailer || '')}
-                      onChange={(e) => handleInputChange('movieTrailer', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="https://youtube.com/watch?v=..."
-                    />
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Affiliate Links Tab */}
+            {activeTab === 'affiliate' && (
+              <div className="space-y-6">
+                {/* Amazon Affiliate Link */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <span className="flex items-center gap-2">
+                      🛒 Amazon Affiliate Link
+                      <span className="text-xs bg-yellow-600 text-white px-2 py-1 rounded">Revenue</span>
+                    </span>
+                  </label>
+                  <input
+                    type="url"
+                    value={String(formData.movieAmazonLink || '')}
+                    onChange={(e) => handleInputChange('movieAmazonLink', e.target.value)}
+                    className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="https://amazon.com/..."
+                  />
+                  <p className="text-gray-400 text-sm mt-2">
+                    Add your Amazon affiliate link here. This will generate commission for purchases made through this link.
+                  </p>
+                </div>
+
+                {/* Future Affiliate Links */}
+                <div className="bg-dark-800 p-4 rounded-lg border border-dark-600">
+                  <h4 className="text-white font-medium mb-2">Future Affiliate Programs</h4>
+                  <p className="text-gray-400 text-sm mb-3">
+                    Additional affiliate link options will be added here as the portal grows:
+                  </p>
+                  <ul className="text-gray-400 text-sm space-y-1">
+                    <li>• iTunes/Apple TV affiliate links</li>
+                    <li>• Google Play Movies affiliate links</li>
+                    <li>• Vudu affiliate links</li>
+                    <li>• Target/Best Buy physical media links</li>
+                    <li>• Streaming service referral links</li>
+                  </ul>
+                  <p className="text-gray-500 text-xs mt-3 italic">
+                    These features will be implemented as the portal scales and additional revenue streams are established.
+                  </p>
+                </div>
+              </div>
+            )}
             {/* Submit Error */}
             {errors.submit && (
               <div className="bg-red-900 border border-red-700 text-red-100 px-4 py-3 rounded-lg">
