@@ -39,6 +39,7 @@ export interface MovieFormModalProps {
   onClose: () => void;
   onSave: (data: MovieFormData) => Promise<void>;
   title?: string;
+  tmdbId?: number | null; // For auto-importing from TMDb search
 }
 
 export const MovieFormModal: React.FC<MovieFormModalProps> = ({
@@ -46,7 +47,8 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
   isOpen,
   onClose,
   onSave,
-  title
+  title,
+  tmdbId
 }) => {
   const isEditMode = !!movie;
   const modalTitle = title || (isEditMode ? 'Edit Movie' : 'Add New Movie');
@@ -120,7 +122,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         moviePoster: '',
         movieBackdrop: '',
         movieTrailer: '',
-        movieTmdbId: '',
+        movieTmdbId: tmdbId ? tmdbId.toString() : '', // Pre-fill TMDb ID if provided
         movieTmdbUrl: '',
         movieTmdbRating: '',
         movieTmdbVotes: '',
@@ -175,6 +177,61 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
       loadExperiments();
     }
   }, [isOpen]);
+
+  // Auto-sync with TMDb when tmdbId is provided (from TMDb search modal)
+  useEffect(() => {
+    if (isOpen && tmdbId && !movie && formData.movieTmdbId) {
+      // Only auto-sync for new movies with tmdbId, not when editing existing movies
+      const autoSync = async () => {
+        if (!formData.movieTmdbId) return;
+
+        try {
+          // Get fresh data from TMDb
+          const tmdbResponse = await fetch(`/api/tmdb/movie/${formData.movieTmdbId}`);
+          if (!tmdbResponse.ok) {
+            console.error('Failed to fetch data from TMDb');
+            return;
+          }
+
+          const tmdbData = await tmdbResponse.json();
+
+          // Update form data with TMDb data
+          setFormData(prev => ({
+            ...prev,
+            movieTitle: tmdbData.title || prev.movieTitle,
+            movieOriginalTitle: tmdbData.originalTitle || prev.movieOriginalTitle,
+            movieYear: tmdbData.year || prev.movieYear,
+            movieReleaseDate: tmdbData.releaseDate ? tmdbData.releaseDate.split('T')[0] : prev.movieReleaseDate,
+            movieRuntime: tmdbData.runtime || prev.movieRuntime,
+            movieTagline: tmdbData.tagline || prev.movieTagline,
+            movieOverview: tmdbData.overview || prev.movieOverview,
+            movieBudget: tmdbData.budget?.toString() || prev.movieBudget,
+            movieBoxOffice: tmdbData.boxOffice?.toString() || prev.movieBoxOffice,
+            moviePoster: tmdbData.poster || prev.moviePoster,
+            movieBackdrop: tmdbData.backdrop || prev.movieBackdrop,
+            movieTrailer: tmdbData.trailer || prev.movieTrailer,
+            movieTmdbUrl: tmdbData.tmdbUrl || prev.movieTmdbUrl,
+            movieTmdbRating: tmdbData.rating?.toString() || prev.movieTmdbRating,
+            movieTmdbVotes: tmdbData.voteCount?.toString() || prev.movieTmdbVotes,
+            movieImdbId: tmdbData.imdbId || prev.movieImdbId,
+            movieImdbUrl: tmdbData.imdbUrl || prev.movieImdbUrl,
+            movieActors: tmdbData.cast || prev.movieActors,
+            movieDirectors: tmdbData.directors || prev.movieDirectors,
+            movieWriters: tmdbData.writers || prev.movieWriters,
+            movieGenres: tmdbData.genres || prev.movieGenres,
+            movieCountries: tmdbData.productionCountries || prev.movieCountries,
+            movieLanguages: tmdbData.spokenLanguages || prev.movieLanguages,
+            movieStudios: tmdbData.productionCompanies || prev.movieStudios,
+          }));
+        } catch (err) {
+          console.error('Failed to auto-sync with TMDb:', err);
+        }
+      };
+      
+      // Small delay to ensure form is ready
+      setTimeout(autoSync, 200);
+    }
+  }, [isOpen, tmdbId, movie, formData.movieTmdbId]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};

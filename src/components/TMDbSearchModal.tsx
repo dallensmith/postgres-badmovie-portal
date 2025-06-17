@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { MovieFormData } from './MovieFormModal';
 
 export interface TMDbMovie {
   tmdbId: number;
@@ -39,18 +38,17 @@ export interface TMDbMovieDetail extends TMDbMovie {
 export interface TMDbSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onImport: (movieData: MovieFormData) => Promise<void>;
+  onSelectMovie: (tmdbId: number) => void; // Changed from onImport to onSelectMovie
 }
 
 export const TMDbSearchModal: React.FC<TMDbSearchModalProps> = ({
   isOpen,
   onClose,
-  onImport
+  onSelectMovie
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<TMDbMovie[]>([]);
   const [loading, setLoading] = useState(false);
-  const [importing, setImporting] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -103,59 +101,10 @@ export const TMDbSearchModal: React.FC<TMDbSearchModalProps> = ({
     }
   };
 
-  const handleImport = async (tmdbMovie: TMDbMovie) => {
-    setImporting(tmdbMovie.tmdbId);
-    setError(null);
-
-    try {
-      // First get detailed movie information
-      const response = await fetch(`/api/tmdb/movie/${tmdbMovie.tmdbId}`);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch movie details: ${response.statusText}`);
-      }
-
-      const detailedMovie: TMDbMovieDetail = await response.json();
-
-      // Transform TMDb data to our movie form format
-      const movieData: MovieFormData = {
-        movieTitle: detailedMovie.title,
-        movieOriginalTitle: detailedMovie.originalTitle || '',
-        movieYear: detailedMovie.year || '',
-        movieReleaseDate: detailedMovie.releaseDate || '',
-        movieRuntime: detailedMovie.runtime || undefined,
-        movieTagline: detailedMovie.tagline || '',
-        movieOverview: detailedMovie.overview || '',
-        movieContentRating: '', // TMDb doesn't provide this, user can fill manually
-        movieBudget: detailedMovie.budget || '',
-        movieBoxOffice: detailedMovie.boxOffice || '',
-        moviePoster: detailedMovie.poster || '',
-        movieBackdrop: detailedMovie.backdrop || '',
-        movieTrailer: detailedMovie.trailer || '',
-        movieTmdbId: detailedMovie.tmdbId.toString(),
-        movieTmdbUrl: detailedMovie.tmdbUrl || '',
-        movieTmdbRating: detailedMovie.rating?.toString() || '',
-        movieTmdbVotes: detailedMovie.voteCount?.toString() || '',
-        movieImdbId: detailedMovie.imdbId || '',
-        movieImdbUrl: detailedMovie.imdbUrl || '',
-        movieActors: detailedMovie.cast || [],
-        movieDirectors: detailedMovie.directors || [],
-        movieWriters: detailedMovie.writers || [],
-        movieGenres: detailedMovie.genres || [],
-        movieCountries: detailedMovie.productionCountries || [],
-        movieLanguages: detailedMovie.spokenLanguages || [],
-        movieStudios: detailedMovie.productionCompanies || [],
-        movieAmazonLink: '', // User can add manually
-        excludeFromTmdbSync: false // Default to false for imported movies
-      };
-
-      await onImport(movieData);
-      onClose();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to import movie');
-    } finally {
-      setImporting(null);
-    }
+  const handleSelectMovie = async (tmdbMovie: TMDbMovie) => {
+    // Simply pass the TMDb ID to the parent component
+    onSelectMovie(tmdbMovie.tmdbId);
+    onClose(); // Close the modal
   };
 
   const handlePageChange = (page: number) => {
@@ -287,20 +236,12 @@ export const TMDbSearchModal: React.FC<TMDbSearchModalProps> = ({
                         </p>
                       )}
 
-                      {/* Import Button */}
+                      {/* Add Movie Button */}
                       <button
-                        onClick={() => handleImport(movie)}
-                        disabled={importing === movie.tmdbId}
-                        className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-2 px-4 rounded transition-colors"
+                        onClick={() => handleSelectMovie(movie)}
+                        className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded transition-colors"
                       >
-                        {importing === movie.tmdbId ? (
-                          <span className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            Importing...
-                          </span>
-                        ) : (
-                          'Import Movie'
-                        )}
+                        Add Movie
                       </button>
 
                       {/* TMDb Link */}

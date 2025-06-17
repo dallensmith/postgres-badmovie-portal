@@ -61,6 +61,7 @@ export default function Movies() {
 
   const [tmdbModal, setTmdbModal] = useState(false);
   const [batchSyncing, setBatchSyncing] = useState(false);
+  const [selectedTmdbId, setSelectedTmdbId] = useState<number | null>(null);
 
   // Fetch movies with current filters
   const fetchMovies = useCallback(async () => {
@@ -212,10 +213,14 @@ export default function Movies() {
     setTmdbModal(true);
   };
 
-  const handleTmdbMovieImport = async (movieData: MovieFormData) => {
-    // Use the same save handler as manual movie creation
-    await handleMovieSave(movieData);
+  const handleTmdbMovieSelect = (tmdbId: number) => {
+    // Close TMDb modal and open movie form with TMDb ID pre-filled
     setTmdbModal(false);
+    setFormModal({ isOpen: true, movie: null });
+    
+    // We need to pre-fill the TMDb ID and trigger sync
+    // This will be handled by passing the tmdbId to the form modal
+    setSelectedTmdbId(tmdbId);
   };
 
   const handleBatchTmdbSync = async () => {
@@ -502,15 +507,19 @@ export default function Movies() {
         key={formModal.movie?.id || 'new'}
         movie={formModal.movie}
         isOpen={formModal.isOpen}
-        onClose={() => setFormModal({ isOpen: false, movie: null })}
+        onClose={() => {
+          setFormModal({ isOpen: false, movie: null });
+          setSelectedTmdbId(null); // Clear selected TMDb ID when closing
+        }}
         onSave={handleMovieSave}
+        tmdbId={selectedTmdbId}
       />
 
       {/* TMDb Search Modal */}
       <TMDbSearchModal
         isOpen={tmdbModal}
         onClose={() => setTmdbModal(false)}
-        onImport={handleTmdbMovieImport}
+        onSelectMovie={handleTmdbMovieSelect}
       />
     </div>
   );
