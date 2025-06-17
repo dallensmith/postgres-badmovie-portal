@@ -85,9 +85,39 @@ export const MovieCard: React.FC<MovieCardProps> = ({
   onDelete, 
   onView 
 }) => {
+  const formatContentRating = (rating: string | null) => {
+    if (!rating) return null;
+    
+    // Normalize the rating
+    const normalizedRating = rating.toUpperCase().trim();
+    
+    // Handle common variations
+    if (normalizedRating === 'NOT RATED' || normalizedRating === 'UNRATED' || normalizedRating === 'NR') {
+      return { text: 'N/R', color: 'bg-gray-600 text-white' };
+    }
+    
+    switch (normalizedRating) {
+      case 'G':
+        return { text: 'G', color: 'bg-green-400 text-black' };
+      case 'PG':
+        return { text: 'PG', color: 'bg-green-600 text-white' };
+      case 'PG-13':
+        return { text: 'PG-13', color: 'bg-blue-600 text-white' };
+      case 'R':
+        return { text: 'R', color: 'bg-red-600 text-white' };
+      case 'NC-17':
+        return { text: 'NC-17', color: 'bg-red-800 text-white' };
+      case 'X':
+        return { text: 'X', color: 'bg-purple-600 text-white' };
+      default:
+        return { text: rating, color: 'bg-gray-600 text-white' };
+    }
+  };
+
   const posterUrl = movie.moviePoster || '/placeholder-movie.svg';
   const rating = movie.movieTmdbRating ? parseFloat(movie.movieTmdbRating).toFixed(1) : 'N/A';
   const runtime = movie.movieRuntime ? `${movie.movieRuntime} min` : 'Unknown';
+  const contentRating = formatContentRating(movie.movieContentRating);
 
   return (
     <div className="bg-dark-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
@@ -101,11 +131,22 @@ export const MovieCard: React.FC<MovieCardProps> = ({
             (e.target as HTMLImageElement).src = '/placeholder-movie.svg';
           }}
         />
+        {/* Rating overlay - top right */}
         <div className="absolute top-2 right-2">
           <span className="bg-yellow-500 text-black px-2 py-1 rounded text-sm font-semibold">
             ★ {rating}
           </span>
         </div>
+        
+        {/* Experiment number overlay - top left */}
+        {movie.movieExperiments && movie.movieExperiments.length > 0 && (
+          <div className="absolute top-2 left-2">
+            <span className="bg-purple-600 text-white px-2 py-1 rounded text-sm font-semibold">
+              #{movie.movieExperiments[0].experiment.experimentNumber}
+              {movie.movieExperiments.length > 1 && ` +${movie.movieExperiments.length - 1}`}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Movie Info - Flex grow to push buttons to bottom */}
@@ -116,15 +157,9 @@ export const MovieCard: React.FC<MovieCardProps> = ({
             {movie.movieTitle || 'Untitled Movie'}
           </h3>
           <div className="flex items-center gap-1 ml-2">
-            {movie.movieContentRating && (
-              <span className="bg-gray-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                {movie.movieContentRating}
-              </span>
-            )}
-            {movie.movieExperiments && movie.movieExperiments.length > 0 && (
-              <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs font-semibold">
-                Exp {movie.movieExperiments[0].experiment.experimentNumber}
-                {movie.movieExperiments.length > 1 && ` +${movie.movieExperiments.length - 1}`}
+            {contentRating && (
+              <span className={`px-2 py-1 rounded text-xs font-semibold ${contentRating.color}`}>
+                {contentRating.text}
               </span>
             )}
           </div>

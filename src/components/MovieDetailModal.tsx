@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Movie, MovieExperiment } from './MovieCard';
 
+// Utility function to format currency values
+const formatCurrency = (value: string | null): string => {
+  if (!value) return '';
+  
+  // Remove any existing currency symbols and non-numeric characters except periods
+  const cleanValue = value.toString().replace(/[^0-9.]/g, '');
+  
+  // Parse as number
+  const numericValue = parseFloat(cleanValue);
+  
+  // Return formatted currency if valid number, otherwise return original value
+  if (!isNaN(numericValue) && numericValue > 0) {
+    return `$${numericValue.toLocaleString()}`;
+  }
+  
+  // If it's not a pure number, return the original value (might already be formatted)
+  return value;
+};
+
 export interface MovieDetailModalProps {
   movie: Movie | null;
   isOpen: boolean;
@@ -374,14 +393,14 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                   {displayMovie.movieBudget && (
                     <div>
                       <h4 className="text-md font-semibold text-white mb-2">Budget</h4>
-                      <p className="text-gray-300">{displayMovie.movieBudget}</p>
+                      <p className="text-gray-300">{formatCurrency(displayMovie.movieBudget)}</p>
                     </div>
                   )}
 
                   {displayMovie.movieBoxOffice && (
                     <div>
                       <h4 className="text-md font-semibold text-white mb-2">Box Office</h4>
-                      <p className="text-gray-300">{displayMovie.movieBoxOffice}</p>
+                      <p className="text-gray-300">{formatCurrency(displayMovie.movieBoxOffice)}</p>
                     </div>
                   )}
                 </div>
