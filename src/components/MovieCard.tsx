@@ -58,6 +58,18 @@ export interface Movie {
   excludeFromTmdbSync: boolean;
   movieExperiments?: MovieExperiment[];
   createdAt: string;
+  
+  // OMDb enhanced fields
+  rottenTomatoesRating?: string | null;
+  rottenTomatoesUrl?: string | null;
+  imdbRating?: string | null;
+  imdbVotes?: string | null;
+  metacriticRating?: string | null;
+  awards?: string | null;
+  dvdRelease?: string | null;
+  websiteUrl?: string | null;
+  boxOfficeEnhanced?: string | null;
+  plotEnhanced?: string | null;
 }
 
 export interface MovieCardProps {

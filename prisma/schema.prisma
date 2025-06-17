@@ -47,7 +47,20 @@ model Movie {
   lastTmdbFetch       DateTime?         @map("last_tmdb_fetch")
   createdAt           DateTime          @default(now()) @map("created_at")
   updatedAt           DateTime          @updatedAt @map("updated_at")
-  movieExperiments    MovieExperiment[]
+  
+  // OMDb-specific fields for enhanced metadata
+  rottenTomatoesRating String?          @map("rotten_tomatoes_rating") @db.VarChar(50)
+  rottenTomatoesUrl    String?          @map("rotten_tomatoes_url")
+  imdbRating           String?          @map("imdb_rating") @db.VarChar(50)
+  imdbVotes            String?          @map("imdb_votes") @db.VarChar(50)
+  metacriticRating     String?          @map("metacritic_rating") @db.VarChar(50)
+  awards               String?          @map("awards")
+  dvdRelease           String?          @map("dvd_release") @db.VarChar(50)
+  websiteUrl           String?          @map("website_url")
+  boxOfficeEnhanced    String?          @map("box_office_enhanced")
+  plotEnhanced         String?          @map("plot_enhanced")
+  
+  movieExperiments     MovieExperiment[]
 
   @@map("movies")
 }

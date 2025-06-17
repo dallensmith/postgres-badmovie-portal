@@ -456,4 +456,272 @@ router.post('/batch-sync-tmdb', async (_req, res) => {
   }
 });
 
+// POST /api/movies/batch-omdb-sync - Fill missing movie data with OMDb
+router.post('/batch-omdb-sync', async (_req, res) => {
+  try {
+    // Get all movies that have IMDb IDs
+    const movies = await prisma.movie.findMany({
+      where: {
+        movieImdbId: {
+          not: null
+        },
+        NOT: {
+          movieImdbId: ''
+        }
+      },
+      select: {
+        id: true,
+        movieImdbId: true,
+        movieTitle: true,
+        // Select current values to check what's missing
+        movieOriginalTitle: true,
+        movieYear: true,
+        movieReleaseDate: true,
+        movieRuntime: true,
+        movieTagline: true,
+        movieOverview: true,
+        movieContentRating: true,
+        movieBudget: true,
+        movieBoxOffice: true,
+        moviePoster: true,
+        movieBackdrop: true,
+        movieActors: true,
+        movieDirectors: true,
+        movieWriters: true,
+        movieGenres: true,
+        movieCountries: true,
+        movieLanguages: true,
+        movieStudios: true,
+        rottenTomatoesRating: true,
+        rottenTomatoesUrl: true,
+        imdbRating: true,
+        imdbVotes: true,
+        metacriticRating: true,
+        awards: true,
+        dvdRelease: true,
+        websiteUrl: true,
+        boxOfficeEnhanced: true,
+        plotEnhanced: true
+      }
+    });
+
+    if (movies.length === 0) {
+      return res.json({ 
+        message: 'No movies with IMDb IDs found to sync',
+        updated: 0,
+        failed: 0,
+        skipped: 0,
+        results: []
+      });
+    }
+
+    interface SyncResult {
+      id: number;
+      title: string;
+      status: 'success' | 'error' | 'skipped';
+      message: string;
+    }
+
+    const results: SyncResult[] = [];
+    let updated = 0;
+    let failed = 0;
+    let skipped = 0;
+
+    // Helper function to check if a field is missing/empty
+    const isEmpty = (value: any): boolean => {
+      return value === null || value === undefined || value === '' || 
+             (Array.isArray(value) && value.length === 0);
+    };
+
+    // Helper function to get OMDb data
+    const getOMDbData = async (imdbId: string) => {
+      const response = await fetch(`http://localhost:3007/api/tmdb/omdb/movie/${imdbId}`);
+      if (!response.ok) {
+        throw new Error(`OMDb API error: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    };
+
+    // Process movies in batches to avoid overwhelming the API
+    const BATCH_SIZE = 3; // Smaller batches for OMDb to respect rate limits
+    const DELAY_MS = 1000; // Longer delay between batches
+
+    for (let i = 0; i < movies.length; i += BATCH_SIZE) {
+      const batch = movies.slice(i, i + BATCH_SIZE);
+      
+      await Promise.all(
+        batch.map(async (movie) => {
+          try {
+            // Get OMDb data
+            const omdbData = await getOMDbData(movie.movieImdbId!);
+
+            // Build update object with only missing fields
+            const updateData: any = {};
+            let hasUpdates = false;
+
+            // Only fill missing basic info
+            if (isEmpty(movie.movieTitle) && omdbData.title) {
+              updateData.movieTitle = omdbData.title;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieYear) && omdbData.year) {
+              updateData.movieYear = omdbData.year;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieReleaseDate) && omdbData.releaseDate) {
+              updateData.movieReleaseDate = new Date(omdbData.releaseDate);
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieRuntime) && omdbData.runtime) {
+              updateData.movieRuntime = omdbData.runtime;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieOverview) && omdbData.plot) {
+              updateData.movieOverview = omdbData.plot;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieContentRating) && omdbData.contentRating) {
+              updateData.movieContentRating = omdbData.contentRating;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.moviePoster) && omdbData.poster) {
+              updateData.moviePoster = omdbData.poster;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieBoxOffice) && omdbData.boxOffice) {
+              updateData.movieBoxOffice = omdbData.boxOffice;
+              hasUpdates = true;
+            }
+
+            // Only fill missing cast/crew
+            if (isEmpty(movie.movieActors) && omdbData.actors) {
+              updateData.movieActors = omdbData.actors;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieDirectors) && omdbData.directors) {
+              updateData.movieDirectors = omdbData.directors;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieWriters) && omdbData.writers) {
+              updateData.movieWriters = omdbData.writers;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieGenres) && omdbData.genres) {
+              updateData.movieGenres = omdbData.genres;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieCountries) && omdbData.countries) {
+              updateData.movieCountries = omdbData.countries;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.movieLanguages) && omdbData.languages) {
+              updateData.movieLanguages = omdbData.languages;
+              hasUpdates = true;
+            }
+
+            // Only fill missing OMDb-specific fields
+            if (isEmpty(movie.rottenTomatoesRating) && omdbData.rottenTomatoesRating) {
+              updateData.rottenTomatoesRating = omdbData.rottenTomatoesRating;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.rottenTomatoesUrl) && omdbData.rottenTomatoesUrl) {
+              updateData.rottenTomatoesUrl = omdbData.rottenTomatoesUrl;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.imdbRating) && omdbData.imdbRating) {
+              updateData.imdbRating = omdbData.imdbRating;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.imdbVotes) && omdbData.imdbVotes) {
+              updateData.imdbVotes = omdbData.imdbVotes;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.metacriticRating) && omdbData.metacriticRating) {
+              updateData.metacriticRating = omdbData.metacriticRating;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.awards) && omdbData.awards) {
+              updateData.awards = omdbData.awards;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.dvdRelease) && omdbData.dvdRelease) {
+              updateData.dvdRelease = omdbData.dvdRelease;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.websiteUrl) && omdbData.websiteUrl) {
+              updateData.websiteUrl = omdbData.websiteUrl;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.boxOfficeEnhanced) && omdbData.boxOfficeEnhanced) {
+              updateData.boxOfficeEnhanced = omdbData.boxOfficeEnhanced;
+              hasUpdates = true;
+            }
+            if (isEmpty(movie.plotEnhanced) && omdbData.plotEnhanced) {
+              updateData.plotEnhanced = omdbData.plotEnhanced;
+              hasUpdates = true;
+            }
+
+            if (!hasUpdates) {
+              results.push({
+                id: movie.id,
+                title: movie.movieTitle || 'Unknown Title',
+                status: 'skipped',
+                message: 'No missing fields to fill'
+              });
+              skipped++;
+              return;
+            }
+
+            // Update the movie in database with only missing fields
+            await prisma.movie.update({
+              where: { id: movie.id },
+              data: updateData
+            });
+
+            const updatedFields = Object.keys(updateData);
+            results.push({
+              id: movie.id,
+              title: movie.movieTitle || 'Unknown Title',
+              status: 'success',
+              message: `Filled ${updatedFields.length} missing fields: ${updatedFields.join(', ')}`
+            });
+            updated++;
+
+          } catch (error) {
+            console.error(`Error syncing movie ${movie.id} (${movie.movieTitle}):`, error);
+            results.push({
+              id: movie.id,
+              title: movie.movieTitle || 'Unknown Title',
+              status: 'error',
+              message: error instanceof Error ? error.message : 'Unknown error'
+            });
+            failed++;
+          }
+        })
+      );
+
+      // Add delay between batches (except for the last batch)
+      if (i + BATCH_SIZE < movies.length) {
+        await new Promise(resolve => setTimeout(resolve, DELAY_MS));
+      }
+    }
+
+    res.json({
+      message: `Batch OMDb sync completed. Updated: ${updated}, Skipped: ${skipped}, Failed: ${failed}`,
+      updated,
+      failed,
+      skipped,
+      total: movies.length,
+      results
+    });
+
+  } catch (error: any) {
+    console.error('Batch OMDb sync error:', error);
+    res.status(500).json({ 
+      error: 'Failed to perform batch OMDb sync',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 export default router;

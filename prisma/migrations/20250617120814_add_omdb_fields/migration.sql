@@ -1,0 +1,11 @@
+-- Add OMDb-specific fields to movies table
+ALTER TABLE "movies" ADD COLUMN "rotten_tomatoes_rating" VARCHAR(10);
+ALTER TABLE "movies" ADD COLUMN "rotten_tomatoes_url" TEXT;
+ALTER TABLE "movies" ADD COLUMN "imdb_rating" VARCHAR(10);
+ALTER TABLE "movies" ADD COLUMN "imdb_votes" VARCHAR(20);
+ALTER TABLE "movies" ADD COLUMN "metacritic_rating" VARCHAR(10);
+ALTER TABLE "movies" ADD COLUMN "awards" TEXT;
+ALTER TABLE "movies" ADD COLUMN "dvd_release" VARCHAR(50);
+ALTER TABLE "movies" ADD COLUMN "website_url" TEXT;
+ALTER TABLE "movies" ADD COLUMN "box_office_enhanced" TEXT;
+ALTER TABLE "movies" ADD COLUMN "plot_enhanced" TEXT;

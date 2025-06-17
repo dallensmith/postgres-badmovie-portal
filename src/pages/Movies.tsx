@@ -61,6 +61,7 @@ export default function Movies() {
 
   const [tmdbModal, setTmdbModal] = useState(false);
   const [batchSyncing, setBatchSyncing] = useState(false);
+  const [batchOmdbSyncing, setBatchOmdbSyncing] = useState(false);
   const [selectedTmdbId, setSelectedTmdbId] = useState<number | null>(null);
 
   // Fetch movies with current filters
@@ -285,6 +286,70 @@ export default function Movies() {
     }
   };
 
+  const handleBatchOmdbSync = async () => {
+    if (!window.confirm(
+      'This will fill in missing data for ALL movies using OMDb (ratings, awards, etc.). ' +
+      'Only empty fields will be updated. This process may take several minutes. Continue?'
+    )) {
+      return;
+    }
+
+    setBatchOmdbSyncing(true);
+    try {
+      const response = await fetch('/api/movies/batch-omdb-sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to start batch OMDb sync');
+      }
+
+      const result = await response.json();
+      
+      // Show detailed results
+      const failedCount = result.failed || 0;
+      const updatedCount = result.updated || 0;
+      const skippedCount = result.skipped || 0;
+      const totalCount = result.total || 0;
+
+      let message = `Batch OMDb sync completed!\n\n`;
+      message += `Total movies processed: ${totalCount}\n`;
+      message += `Successfully updated: ${updatedCount}\n`;
+      message += `Skipped (no IMDb ID): ${skippedCount}\n`;
+      message += `Failed: ${failedCount}`;
+
+      if (failedCount > 0 && result.results) {
+        const failedMovies = result.results
+          .filter((r: any) => r.status === 'error')
+          .slice(0, 5)
+          .map((r: any) => `• ${r.title}: ${r.message}`)
+          .join('\n');
+        
+        if (failedMovies) {
+          message += `\n\nFirst few failures:\n${failedMovies}`;
+          if (failedCount > 5) {
+            message += `\n... and ${failedCount - 5} more`;
+          }
+        }
+      }
+
+      alert(message);
+
+      // Refresh the movie list to show updated data
+      fetchMovies();
+      fetchStats();
+
+    } catch (error) {
+      console.error('Batch OMDb sync error:', error);
+      alert('Failed to perform batch OMDb sync: ' + (error instanceof Error ? error.message : 'Unknown error'));
+    } finally {
+      setBatchOmdbSyncing(false);
+    }
+  };
+
   const handleMovieDelete = async (movieId: number) => {
     if (!window.confirm('Are you sure you want to delete this movie?')) {
       return;
@@ -365,7 +430,7 @@ export default function Movies() {
           </button>
           <button 
             onClick={handleBatchTmdbSync}
-            disabled={batchSyncing || loading}
+            disabled={batchSyncing || batchOmdbSyncing || loading}
             className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
           >
             {batchSyncing ? (
@@ -375,6 +440,22 @@ export default function Movies() {
               </>
             ) : (
               'Sync All with TMDb'
+            )}
+          </button>
+          <button 
+            onClick={handleBatchOmdbSync}
+            disabled={batchSyncing || batchOmdbSyncing || loading}
+            className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
+          >
+            {batchOmdbSyncing ? (
+              <>
+                <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                Filling...
+              </>
+            ) : (
+              <>
+                🍅 Fill Missing with OMDb
+              </>
             )}
           </button>
         </div>

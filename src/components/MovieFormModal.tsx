@@ -31,6 +31,18 @@ export interface MovieFormData {
   movieStudios?: string[];
   movieAmazonLink?: string;
   excludeFromTmdbSync?: boolean;
+  
+  // 🚀 Enhanced fields from OMDb dual-API enrichment
+  rottenTomatoesRating?: string;
+  rottenTomatoesUrl?: string;
+  imdbRating?: string;
+  imdbVotes?: string;
+  metacriticRating?: string;
+  awards?: string;
+  dvdRelease?: string;
+  websiteUrl?: string;
+  boxOfficeEnhanced?: string;
+  plotEnhanced?: string;
 }
 
 export interface MovieFormModalProps {
@@ -57,6 +69,8 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState('basic');
   const [syncing, setSyncing] = useState(false);
+  const [syncingOmdb, setSyncingOmdb] = useState(false); // New state for OMDb syncing
+  const [syncingOmdbSelective, setSyncingOmdbSelective] = useState(false); // State for selective OMDb sync
 
   // Experiment-related state
   const [availableExperiments, setAvailableExperiments] = useState<Experiment[]>([]);
@@ -105,7 +119,19 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieLanguages: movie.movieLanguages ?? [],
         movieStudios: movie.movieStudios ?? [],
         movieAmazonLink: String(movie.movieAmazonLink ?? ''),
-        excludeFromTmdbSync: movie.excludeFromTmdbSync ?? false
+        excludeFromTmdbSync: movie.excludeFromTmdbSync ?? false,
+        
+        // OMDb fields - initialize from existing movie data
+        rottenTomatoesRating: String(movie.rottenTomatoesRating ?? ''),
+        rottenTomatoesUrl: String(movie.rottenTomatoesUrl ?? ''),
+        imdbRating: String(movie.imdbRating ?? ''),
+        imdbVotes: String(movie.imdbVotes ?? ''),
+        metacriticRating: String(movie.metacriticRating ?? ''),
+        awards: String(movie.awards ?? ''),
+        dvdRelease: String(movie.dvdRelease ?? ''),
+        websiteUrl: String(movie.websiteUrl ?? ''),
+        boxOfficeEnhanced: String(movie.boxOfficeEnhanced ?? ''),
+        plotEnhanced: String(movie.plotEnhanced ?? '')
       };
     } else {
       return {
@@ -136,7 +162,19 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieLanguages: [],
         movieStudios: [],
         movieAmazonLink: '',
-        excludeFromTmdbSync: false
+        excludeFromTmdbSync: false,
+        
+        // OMDb fields - initialize as empty for new movies
+        rottenTomatoesRating: '',
+        rottenTomatoesUrl: '',
+        imdbRating: '',
+        imdbVotes: '',
+        metacriticRating: '',
+        awards: '',
+        dvdRelease: '',
+        websiteUrl: '',
+        boxOfficeEnhanced: '',
+        plotEnhanced: ''
       };
     }
   };
@@ -195,7 +233,7 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
 
           const tmdbData = await tmdbResponse.json();
 
-          // Update form data with TMDb data
+          // Update form data with TMDb data (now includes OMDb enrichment!)
           setFormData(prev => ({
             ...prev,
             movieTitle: tmdbData.title || prev.movieTitle,
@@ -205,8 +243,9 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
             movieRuntime: tmdbData.runtime || prev.movieRuntime,
             movieTagline: tmdbData.tagline || prev.movieTagline,
             movieOverview: tmdbData.overview || prev.movieOverview,
+            movieContentRating: tmdbData.contentRating || prev.movieContentRating, // Enhanced from OMDb
             movieBudget: tmdbData.budget?.toString() || prev.movieBudget,
-            movieBoxOffice: tmdbData.boxOffice?.toString() || prev.movieBoxOffice,
+            movieBoxOffice: tmdbData.boxOfficeEnhanced || tmdbData.boxOffice?.toString() || prev.movieBoxOffice,
             moviePoster: tmdbData.poster || prev.moviePoster,
             movieBackdrop: tmdbData.backdrop || prev.movieBackdrop,
             movieTrailer: tmdbData.trailer || prev.movieTrailer,
@@ -222,6 +261,18 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
             movieCountries: tmdbData.productionCountries || prev.movieCountries,
             movieLanguages: tmdbData.spokenLanguages || prev.movieLanguages,
             movieStudios: tmdbData.productionCompanies || prev.movieStudios,
+            
+            // 🚀 NEW: Enhanced data from OMDb dual-API enrichment
+            rottenTomatoesRating: tmdbData.rottenTomatoesRating || prev.rottenTomatoesRating,
+            rottenTomatoesUrl: tmdbData.rottenTomatoesUrl || prev.rottenTomatoesUrl,
+            imdbRating: tmdbData.imdbRating || prev.imdbRating,
+            imdbVotes: tmdbData.imdbVotes || prev.imdbVotes,
+            metacriticRating: tmdbData.metacriticRating || prev.metacriticRating,
+            awards: tmdbData.awards || prev.awards,
+            dvdRelease: tmdbData.dvdRelease || prev.dvdRelease,
+            websiteUrl: tmdbData.websiteUrl || prev.websiteUrl,
+            boxOfficeEnhanced: tmdbData.boxOfficeEnhanced || prev.boxOfficeEnhanced,
+            plotEnhanced: tmdbData.plotEnhanced || prev.plotEnhanced,
           }));
         } catch (err) {
           console.error('Failed to auto-sync with TMDb:', err);
@@ -301,6 +352,19 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
         movieCountries: tmdbData.productionCountries || prev.movieCountries,
         movieLanguages: tmdbData.spokenLanguages || prev.movieLanguages,
         movieStudios: tmdbData.productionCompanies || prev.movieStudios,
+        
+        // 🚀 NEW: Enhanced data from OMDb dual-API enrichment
+        movieContentRating: tmdbData.contentRating || prev.movieContentRating,
+        rottenTomatoesRating: tmdbData.rottenTomatoesRating || prev.rottenTomatoesRating,
+        rottenTomatoesUrl: tmdbData.rottenTomatoesUrl || prev.rottenTomatoesUrl,
+        imdbRating: tmdbData.imdbRating || prev.imdbRating,
+        imdbVotes: tmdbData.imdbVotes || prev.imdbVotes,
+        metacriticRating: tmdbData.metacriticRating || prev.metacriticRating,
+        awards: tmdbData.awards || prev.awards,
+        dvdRelease: tmdbData.dvdRelease || prev.dvdRelease,
+        websiteUrl: tmdbData.websiteUrl || prev.websiteUrl,
+        boxOfficeEnhanced: tmdbData.boxOfficeEnhanced || prev.boxOfficeEnhanced,
+        plotEnhanced: tmdbData.plotEnhanced || prev.plotEnhanced,
       }));
 
       // Clear any TMDb sync errors
@@ -316,6 +380,159 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
       setErrors({ movieTmdbId: 'Failed to sync with TMDb: ' + (error instanceof Error ? error.message : 'Unknown error') });
     } finally {
       setSyncing(false);
+    }
+  };
+
+  // OMDb sync function for IMDb ID
+  const handleSyncWithOMDb = async () => {
+    if (!formData.movieImdbId) {
+      setErrors({ movieImdbId: 'IMDb ID is required for OMDb syncing' });
+      return;
+    }
+
+    setSyncingOmdb(true);
+    try {
+      // Get data from OMDb using IMDb ID
+      const response = await fetch(`/api/tmdb/omdb/movie/${formData.movieImdbId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data from OMDb');
+      }
+
+      const omdbData = await response.json();
+
+      // Update form data with OMDb data, keeping existing data for empty fields
+      setFormData(prev => ({
+        ...prev,
+        // Basic info (prefer OMDb if available)
+        movieTitle: omdbData.title || prev.movieTitle,
+        movieYear: omdbData.year || prev.movieYear,
+        movieReleaseDate: omdbData.releaseDate || prev.movieReleaseDate,
+        movieRuntime: omdbData.runtime || prev.movieRuntime,
+        movieOverview: omdbData.plot || prev.movieOverview,
+        movieContentRating: omdbData.contentRating || prev.movieContentRating,
+        moviePoster: omdbData.poster || prev.moviePoster,
+        
+        // Cast and crew (merge arrays, preferring OMDb data)
+        movieDirectors: omdbData.directors && omdbData.directors.length > 0 ? omdbData.directors : prev.movieDirectors,
+        movieWriters: omdbData.writers && omdbData.writers.length > 0 ? omdbData.writers : prev.movieWriters,
+        movieActors: omdbData.actors && omdbData.actors.length > 0 ? omdbData.actors : prev.movieActors,
+        
+        // Categories (merge arrays, preferring OMDb data)
+        movieGenres: omdbData.genres && omdbData.genres.length > 0 ? omdbData.genres : prev.movieGenres,
+        movieCountries: omdbData.countries && omdbData.countries.length > 0 ? omdbData.countries : prev.movieCountries,
+        movieLanguages: omdbData.languages && omdbData.languages.length > 0 ? omdbData.languages : prev.movieLanguages,
+        movieStudios: omdbData.studios && omdbData.studios.length > 0 ? omdbData.studios : prev.movieStudios,
+        
+        // Enhanced OMDb-specific data
+        rottenTomatoesRating: omdbData.rottenTomatoesRating || prev.rottenTomatoesRating,
+        rottenTomatoesUrl: omdbData.rottenTomatoesUrl || prev.rottenTomatoesUrl,
+        imdbRating: omdbData.imdbRating || prev.imdbRating,
+        imdbVotes: omdbData.imdbVotes || prev.imdbVotes,
+        metacriticRating: omdbData.metacriticRating || prev.metacriticRating,
+        awards: omdbData.awards || prev.awards,
+        dvdRelease: omdbData.dvdRelease || prev.dvdRelease,
+        websiteUrl: omdbData.websiteUrl || prev.websiteUrl,
+        boxOfficeEnhanced: omdbData.boxOffice || prev.boxOfficeEnhanced,
+        plotEnhanced: omdbData.plot || prev.plotEnhanced,
+        
+        // Box office (prefer OMDb if available)
+        movieBoxOffice: omdbData.boxOffice || prev.movieBoxOffice,
+      }));
+
+      // Clear any OMDb sync errors
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.movieImdbId;
+        return newErrors;
+      });
+
+      console.log('✅ OMDb sync completed successfully');
+
+    } catch (error) {
+      console.error('OMDb sync error:', error);
+      setErrors({ movieImdbId: 'Failed to sync with OMDb: ' + (error instanceof Error ? error.message : 'Unknown error') });
+    } finally {
+      setSyncingOmdb(false);
+    }
+  };
+
+  // Selective OMDb sync function - only fills missing fields
+  const handleSelectiveOMDbSync = async () => {
+    if (!formData.movieImdbId) {
+      setErrors({ movieImdbId: 'IMDb ID is required for OMDb syncing' });
+      return;
+    }
+
+    setSyncingOmdbSelective(true);
+    try {
+      // Get data from OMDb using IMDb ID
+      const response = await fetch(`/api/tmdb/omdb/movie/${formData.movieImdbId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data from OMDb');
+      }
+
+      const omdbData = await response.json();
+
+      // Helper function to check if a field is empty/missing
+      const isEmpty = (value: any): boolean => {
+        if (value === null || value === undefined || value === '') return true;
+        if (Array.isArray(value) && value.length === 0) return true;
+        return false;
+      };
+
+      // Update form data - ONLY fill fields that are currently empty
+      setFormData(prev => ({
+        ...prev,
+        // Basic info - only fill if empty
+        movieTitle: isEmpty(prev.movieTitle) && omdbData.title ? omdbData.title : prev.movieTitle,
+        movieYear: isEmpty(prev.movieYear) && omdbData.year ? omdbData.year : prev.movieYear,
+        movieReleaseDate: isEmpty(prev.movieReleaseDate) && omdbData.releaseDate ? omdbData.releaseDate : prev.movieReleaseDate,
+        movieRuntime: isEmpty(prev.movieRuntime) && omdbData.runtime ? omdbData.runtime : prev.movieRuntime,
+        movieOverview: isEmpty(prev.movieOverview) && omdbData.plot ? omdbData.plot : prev.movieOverview,
+        movieContentRating: isEmpty(prev.movieContentRating) && omdbData.contentRating ? omdbData.contentRating : prev.movieContentRating,
+        moviePoster: isEmpty(prev.moviePoster) && omdbData.poster ? omdbData.poster : prev.moviePoster,
+        
+        // Cast and crew - only fill if empty
+        movieDirectors: isEmpty(prev.movieDirectors) && omdbData.directors ? omdbData.directors : prev.movieDirectors,
+        movieWriters: isEmpty(prev.movieWriters) && omdbData.writers ? omdbData.writers : prev.movieWriters,
+        movieActors: isEmpty(prev.movieActors) && omdbData.actors ? omdbData.actors : prev.movieActors,
+        
+        // Categories - only fill if empty
+        movieGenres: isEmpty(prev.movieGenres) && omdbData.genres ? omdbData.genres : prev.movieGenres,
+        movieCountries: isEmpty(prev.movieCountries) && omdbData.countries ? omdbData.countries : prev.movieCountries,
+        movieLanguages: isEmpty(prev.movieLanguages) && omdbData.languages ? omdbData.languages : prev.movieLanguages,
+        movieStudios: isEmpty(prev.movieStudios) && omdbData.studios ? omdbData.studios : prev.movieStudios,
+        
+        // Enhanced OMDb-specific data - only fill if empty
+        rottenTomatoesRating: isEmpty(prev.rottenTomatoesRating) && omdbData.rottenTomatoesRating ? omdbData.rottenTomatoesRating : prev.rottenTomatoesRating,
+        rottenTomatoesUrl: isEmpty(prev.rottenTomatoesUrl) && omdbData.rottenTomatoesUrl ? omdbData.rottenTomatoesUrl : prev.rottenTomatoesUrl,
+        imdbRating: isEmpty(prev.imdbRating) && omdbData.imdbRating ? omdbData.imdbRating : prev.imdbRating,
+        imdbVotes: isEmpty(prev.imdbVotes) && omdbData.imdbVotes ? omdbData.imdbVotes : prev.imdbVotes,
+        metacriticRating: isEmpty(prev.metacriticRating) && omdbData.metacriticRating ? omdbData.metacriticRating : prev.metacriticRating,
+        awards: isEmpty(prev.awards) && omdbData.awards ? omdbData.awards : prev.awards,
+        dvdRelease: isEmpty(prev.dvdRelease) && omdbData.dvdRelease ? omdbData.dvdRelease : prev.dvdRelease,
+        websiteUrl: isEmpty(prev.websiteUrl) && omdbData.websiteUrl ? omdbData.websiteUrl : prev.websiteUrl,
+        boxOfficeEnhanced: isEmpty(prev.boxOfficeEnhanced) && omdbData.boxOffice ? omdbData.boxOffice : prev.boxOfficeEnhanced,
+        plotEnhanced: isEmpty(prev.plotEnhanced) && omdbData.plot ? omdbData.plot : prev.plotEnhanced,
+        
+        // Box office - only fill if empty
+        movieBoxOffice: isEmpty(prev.movieBoxOffice) && omdbData.boxOffice ? omdbData.boxOffice : prev.movieBoxOffice,
+      }));
+
+      // Clear any OMDb sync errors
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.movieImdbId;
+        return newErrors;
+      });
+
+      console.log('✅ Selective OMDb sync completed - only filled missing fields');
+
+    } catch (error) {
+      console.error('Selective OMDb sync error:', error);
+      setErrors({ movieImdbId: 'Failed to sync with OMDb: ' + (error instanceof Error ? error.message : 'Unknown error') });
+    } finally {
+      setSyncingOmdbSelective(false);
     }
   };
 
@@ -1085,18 +1302,71 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                     />
                   </div>
 
+                  {/* Selective OMDb Sync - Full width section */}
+                  <div className="md:col-span-2">
+                    <div className="bg-dark-800 p-4 rounded-lg border border-dark-600">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h4 className="text-white font-medium mb-1">Fill Missing Data with OMDb</h4>
+                          <p className="text-gray-400 text-sm">Only fills empty fields with OMDb data - won't overwrite existing content</p>
+                        </div>
+                        {formData.movieImdbId && (
+                          <button
+                            type="button"
+                            onClick={handleSelectiveOMDbSync}
+                            disabled={loading || syncingOmdbSelective || syncing || syncingOmdb}
+                            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded transition-colors flex items-center gap-2"
+                            title="Fill missing fields with OMDb data (requires IMDb ID)"
+                          >
+                            {syncingOmdbSelective ? (
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                            ) : (
+                              <span>🔍</span>
+                            )}
+                            <span className="text-sm">Fill Missing</span>
+                          </button>
+                        )}
+                        {!formData.movieImdbId && (
+                          <div className="text-gray-500 text-sm italic">
+                            Requires IMDb ID below
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
                   {/* IMDb ID */}
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       IMDb ID
                     </label>
-                    <input
-                      type="text"
-                      value={String(formData.movieImdbId || '')}
-                      onChange={(e) => handleInputChange('movieImdbId', e.target.value)}
-                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      placeholder="tt1234567"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={String(formData.movieImdbId || '')}
+                        onChange={(e) => handleInputChange('movieImdbId', e.target.value)}
+                        className="flex-1 bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        placeholder="tt1234567"
+                      />
+                      {formData.movieImdbId && (
+                        <button
+                          type="button"
+                          onClick={handleSyncWithOMDb}
+                          disabled={loading || syncingOmdb}
+                          className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
+                          title="Sync with OMDb (Rotten Tomatoes, Awards, etc.)"
+                        >
+                          {syncingOmdb ? (
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          ) : (
+                            <span>🍅</span>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    {errors.movieImdbId && (
+                      <p className="text-red-400 text-sm mt-1">{errors.movieImdbId}</p>
+                    )}
                   </div>
 
                   {/* TMDb Votes */}
@@ -1112,10 +1382,108 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
                       placeholder="1500"
                     />
                   </div>
+
+                  {/* 🚀 Enhanced IMDb Rating (from OMDb) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        IMDb Rating
+                        <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">Enhanced</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={String(formData.imdbRating || '')}
+                      onChange={(e) => handleInputChange('imdbRating', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="8.1"
+                    />
+                  </div>
+
+                  {/* 🍅 Rotten Tomatoes Rating (from OMDb) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        🍅 Rotten Tomatoes Rating
+                        <span className="text-xs bg-red-600 text-white px-2 py-1 rounded">OMDb</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={String(formData.rottenTomatoesRating || '')}
+                      onChange={(e) => handleInputChange('rottenTomatoesRating', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="75%"
+                    />
+                  </div>
+
+                  {/* 📊 Metacritic Rating (from OMDb) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        📊 Metacritic Rating
+                        <span className="text-xs bg-yellow-600 text-white px-2 py-1 rounded">OMDb</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={String(formData.metacriticRating || '')}
+                      onChange={(e) => handleInputChange('metacriticRating', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="68/100"
+                    />
+                  </div>
+
+                  {/* 🏆 Awards (from OMDb) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        🏆 Awards
+                        <span className="text-xs bg-purple-600 text-white px-2 py-1 rounded">OMDb</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      value={String(formData.awards || '')}
+                      onChange={(e) => handleInputChange('awards', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="Won 3 Oscars. Another 15 wins & 20 nominations."
+                    />
+                  </div>
                 </div>
 
                 {/* URLs */}
                 <div className="grid grid-cols-1 gap-6">
+                  {/* Rotten Tomatoes URL */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      🍅 Rotten Tomatoes URL
+                    </label>
+                    <input
+                      type="url"
+                      value={String(formData.rottenTomatoesUrl || '')}
+                      onChange={(e) => handleInputChange('rottenTomatoesUrl', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="https://www.rottentomatoes.com/m/movie_title"
+                    />
+                  </div>
+
+                  {/* Website URL (from OMDb) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <span className="flex items-center gap-2">
+                        🌐 Official Website
+                        <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">OMDb</span>
+                      </span>
+                    </label>
+                    <input
+                      type="url"
+                      value={String(formData.websiteUrl || '')}
+                      onChange={(e) => handleInputChange('websiteUrl', e.target.value)}
+                      className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      placeholder="https://www.moviewebsite.com"
+                    />
+                  </div>
                   {/* TMDb URL */}
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">

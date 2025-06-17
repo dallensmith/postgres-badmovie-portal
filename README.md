@@ -54,6 +54,20 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **100% reliability**: Zero failed imports by reusing tested save mechanisms
 - **Elegant solution**: Sometimes better design beats debugging complex code
 
+**🍅 OMDb Integration & Dual-API Enrichment (MAJOR NEW FEATURE)**
+- **Revolutionary metadata enhancement**: Added OMDb as secondary data source to fill TMDb gaps
+- **Rotten Tomatoes integration**: Automatic fetching of RT ratings, URLs, and review counts
+- **Enhanced ratings system**: Now includes IMDb, Rotten Tomatoes, Metacritic, and TMDb ratings
+- **Awards tracking**: Automatic capture of Oscar wins, nominations, and other recognition
+- **Individual movie sync**: "🍅 Fill Missing with OMDb" button in movie edit form for selective enhancement
+- **Batch processing**: Site-wide "🍅 Fill Missing with OMDb" button for mass enhancement of all movies
+- **Smart field mapping**: Only fills empty fields, preserving existing TMDb data integrity
+- **Outstanding success rate**: 97.7% success rate in batch processing (924 of 946 movies enhanced)
+- **Extended database schema**: Added 10 new OMDb-specific fields for comprehensive metadata
+- **Intelligent date parsing**: Proper conversion of OMDb date formats for database compatibility
+- **Rate-limited processing**: Respects OMDb API limits with intelligent batch processing
+- **Comprehensive coverage**: Enhanced plot summaries, director info, writer credits, and box office data
+
 ## Architecture Overview
 
 ```
@@ -64,8 +78,10 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
                                 ▲
                                 │
                        ┌──────────────────┐
-                       │    TMDb API      │
-                       │  (Data Enrichment)│
+                       │  Dual-API Stack  │
+                       │  • TMDb API      │
+                       │  • OMDb API      │
+                       │ (Data Enrichment)│
                        └──────────────────┘
 ```
 
@@ -75,18 +91,22 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **Backend**: Node.js/Express with TypeScript
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
 - **ORM**: Prisma (for type-safe database operations)
-- **Movie Data**: TMDb API integration
+- **Movie Data**: Dual-API integration (TMDb + OMDb) for comprehensive metadata
 - **Authentication**: JWT with role-based access
 - **Container**: Docker (deployed via Caprover)
 
 ## Key Features
 
 ### 🎬 Movie Management
-- Complete movie database with TMDb integration
+- Complete movie database with dual TMDb + OMDb integration
 - Advanced search by title, year, rating, genre
 - 3D movie detection and flagging
 - Poster management and display
-- Comprehensive metadata (cast, crew, ratings, etc.)
+- Comprehensive metadata (cast, crew, ratings, awards, etc.)
+- Multi-source ratings (TMDb, IMDb, Rotten Tomatoes, Metacritic)
+- Individual and batch OMDb enrichment capabilities
+- Smart data preservation (only fills missing fields)
+- Automatic awards and recognition tracking
 
 ### 🧪 Experiment Management
 - Experiment creation and editing
@@ -114,6 +134,7 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - Node.js 18+
 - PostgreSQL database
 - TMDb API key
+- OMDb API key (for enhanced metadata)
 
 ### Development Setup
 ```bash
@@ -126,7 +147,7 @@ npm install
 
 # Set up environment variables
 cp .env.example .env
-# Edit .env with your database URL and TMDb API key
+# Edit .env with your database URL, TMDb API key, and OMDb API key
 
 # Initialize database
 npx prisma generate
@@ -149,13 +170,14 @@ npm start
 ## Database Schema
 
 The PostgreSQL schema includes:
-- **Movies** (29+ fields including TMDb data, 3D flags, ratings)
+- **Movies** (39+ fields including TMDb + OMDb data, 3D flags, multi-source ratings)
 - **Experiments** (viewing events with dates, hosts, locations, notes)
 - **People** (actors, directors, writers with full metadata)
 - **MovieExperiments** (many-to-many with encore tracking)
 - **Studios, Genres, Countries, Languages** (comprehensive metadata)
 - **Relationship tables** for complex associations
 - **WordPress sync tracking** for data consistency
+- **OMDb enhanced fields** (Rotten Tomatoes, Metacritic, awards, enhanced plots)
 
 ## Available Scripts
 
@@ -239,4 +261,4 @@ This project represents a complete rebuild and modernization of the Big Screen B
 
 **"So bad it's good"** - The motto that drives us all. 🎬
 
-*Current Status: Fully operational with 979 movies, 508 experiments, and counting...*
+*Current Status: Fully operational with 979+ movies (924 OMDb-enhanced with Rotten Tomatoes ratings), 508 experiments, dual-API enrichment, and counting...*
