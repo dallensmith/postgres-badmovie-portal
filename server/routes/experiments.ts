@@ -17,6 +17,8 @@ const createExperimentSchema = z.object({
     }
     return new Date(str);
   }),
+  eventTime: z.string().regex(/^\d{2}:\d{2}$/).default("22:00"), // HH:MM format
+  eventTimezone: z.string().default("America/New_York"),
   eventLocation: z.string().max(255),
   eventHost: z.string().max(255),
   eventNotes: z.string().optional().nullable(),

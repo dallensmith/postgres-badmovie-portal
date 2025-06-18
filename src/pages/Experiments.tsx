@@ -8,6 +8,8 @@ import { apiService } from '../services/api';
 interface NewExperiment {
   experimentNumber: string;
   eventDate: string;
+  eventTime: string;
+  eventTimezone: string;
   eventHost: string;
   eventLocation: string;
   eventEncore: boolean;
@@ -54,7 +56,14 @@ export default function Experiments() {
 
   const [newExperiment, setNewExperiment] = useState<NewExperiment>({
     experimentNumber: '',
-    eventDate: '',
+    eventDate: (() => {
+      // Get today's date in EST timezone
+      const today = new Date();
+      const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
+      return estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+    })(),
+    eventTime: '22:00',
+    eventTimezone: 'America/New_York',
     eventHost: '',
     eventLocation: '',
     eventEncore: false,
@@ -173,12 +182,36 @@ export default function Experiments() {
   };
 
   const handleCreateExperiment = useCallback(async () => {
+    console.log('Create button clicked!');
+    console.log('New experiment data:', JSON.stringify(newExperiment, null, 2));
+    
+    // Check for required fields
+    if (!newExperiment.experimentNumber || !newExperiment.eventDate || !newExperiment.eventHost || !newExperiment.eventLocation) {
+      console.error('Missing required fields:', {
+        experimentNumber: newExperiment.experimentNumber,
+        eventDate: newExperiment.eventDate,
+        eventHost: newExperiment.eventHost,
+        eventLocation: newExperiment.eventLocation
+      });
+      alert('Please fill in all required fields');
+      return;
+    }
+    
     try {
-      await apiService.createExperiment(newExperiment);
+      console.log('Sending create request...');
+      const result = await apiService.createExperiment(newExperiment);
+      console.log('Create result:', result);
       setShowCreateModal(false);
       setNewExperiment({
         experimentNumber: '',
-        eventDate: '',
+        eventDate: (() => {
+          // Get today's date in EST timezone
+          const today = new Date();
+          const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
+          return estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+        })(),
+        eventTime: '22:00',
+        eventTimezone: 'America/New_York',
         eventHost: '',
         eventLocation: '',
         eventEncore: false,
@@ -189,6 +222,7 @@ export default function Experiments() {
       fetchExperiments();
     } catch (error) {
       console.error('Failed to create experiment:', error);
+      alert('Failed to create experiment: ' + (error instanceof Error ? error.message : 'Unknown error'));
     }
   }, [newExperiment, fetchExperiments]);
 
@@ -199,6 +233,8 @@ export default function Experiments() {
       await apiService.updateExperiment(editingExperiment.id, {
         experimentNumber: editingExperiment.experimentNumber,
         eventDate: editingExperiment.eventDate,
+        eventTime: editingExperiment.eventTime,
+        eventTimezone: editingExperiment.eventTimezone,
         eventHost: editingExperiment.eventHost,
         eventLocation: editingExperiment.eventLocation,
         eventEncore: editingExperiment.eventEncore,
@@ -220,9 +256,16 @@ export default function Experiments() {
     
     try {
       await apiService.deleteExperiment(id);
-      fetchExperiments();
+      // Immediately remove from local state for instant UI feedback
+      setExperiments(prev => prev.filter(exp => exp.id !== id));
+      // Update pagination total
+      setPagination(prev => ({ ...prev, total: prev.total - 1 }));
+      // Then refresh from server to ensure consistency
+      await fetchExperiments();
     } catch (error) {
       console.error('Failed to delete experiment:', error);
+      // If delete failed, refresh to restore correct state
+      await fetchExperiments();
     }
   }, [fetchExperiments]);
 
@@ -247,7 +290,23 @@ export default function Experiments() {
         </div>
         <button
           onClick={() => {
-            setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber }));
+            // Reset to fresh state with today's date when opening modal
+            const today = new Date();
+            const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
+            const todayDate = estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+            
+            setNewExperiment({
+              experimentNumber: getNextExperimentNumber,
+              eventDate: todayDate,
+              eventTime: '22:00',
+              eventTimezone: 'America/New_York',
+              eventHost: '',
+              eventLocation: '',
+              eventEncore: false,
+              eventNotes: '',
+              eventImage: '',
+              postUrl: ''
+            });
             setShowCreateModal(true);
           }}
           className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
@@ -339,7 +398,23 @@ export default function Experiments() {
           {!searchQuery && (
             <button
               onClick={() => {
-                setNewExperiment(prev => ({ ...prev, experimentNumber: getNextExperimentNumber }));
+                // Reset to fresh state with today's date when opening modal
+                const today = new Date();
+                const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
+                const todayDate = estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
+                
+                setNewExperiment({
+                  experimentNumber: getNextExperimentNumber,
+                  eventDate: todayDate,
+                  eventTime: '22:00',
+                  eventTimezone: 'America/New_York',
+                  eventHost: '',
+                  eventLocation: '',
+                  eventEncore: false,
+                  eventNotes: '',
+                  eventImage: '',
+                  postUrl: ''
+                });
                 setShowCreateModal(true);
               }}
               className="mt-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -431,18 +506,43 @@ function ExperimentModal({
               </label>
               <input
                 type="date"
-                value={formData.eventDate ? (() => {
-                  // Extract date properly for form input - use UTC components to avoid timezone shifts
-                  const date = new Date(formData.eventDate);
-                  const year = date.getUTCFullYear();
-                  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-                  const day = String(date.getUTCDate()).padStart(2, '0');
-                  return `${year}-${month}-${day}`;
-                })() : ''}
+                value={formData.eventDate || ''}
                 onChange={(e) => handleInputChange('eventDate', e.target.value)}
                 className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 required
               />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Event Time *
+              </label>
+              <input
+                type="time"
+                value={formData.eventTime || '22:00'}
+                onChange={(e) => handleInputChange('eventTime', e.target.value)}
+                className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Timezone *
+              </label>
+              <select
+                value={formData.eventTimezone || 'America/New_York'}
+                onChange={(e) => handleInputChange('eventTimezone', e.target.value)}
+                className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                required
+              >
+                <option value="America/New_York">EST (Eastern)</option>
+                <option value="America/Chicago">CST (Central)</option>
+                <option value="America/Denver">MST (Mountain)</option>
+                <option value="America/Los_Angeles">PST (Pacific)</option>
+                <option value="UTC">UTC</option>
+              </select>
             </div>
           </div>
 

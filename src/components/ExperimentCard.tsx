@@ -4,6 +4,8 @@ export interface Experiment {
   id: number;
   experimentNumber: string;
   eventDate: string;
+  eventTime: string;
+  eventTimezone: string;
   eventHost: string;
   eventLocation: string;
   eventEncore: boolean;

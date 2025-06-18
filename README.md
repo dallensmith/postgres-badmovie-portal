@@ -59,6 +59,16 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **Rotten Tomatoes integration**: Automatic fetching of RT ratings, URLs, and review counts
 - **Enhanced ratings system**: Now includes IMDb, Rotten Tomatoes, Metacritic, and TMDb ratings
 
+**⏰ Experiment Time & Timezone System ✅ COMPLETE**
+- **Comprehensive scheduling**: Added dedicated time and timezone fields for experiments
+- **Default to 22:00 EST**: All experiments default to 10 PM Eastern Time for consistency
+- **Timezone flexibility**: Selectable timezones (EST, CST, MST, PST, UTC) with EST default
+- **Fixed storage**: Times stored in stone - no fluid timezone conversions that change based on variables
+- **Enhanced database schema**: Added `eventTime` and `eventTimezone` columns with safe migration
+- **Auto-refresh dates**: Experiment creation modal always defaults to today's date
+- **Real-time UI updates**: Experiment deletion immediately updates the page without refresh
+- **Production verified**: End-to-end tested and working in production environment
+
 **📊 Dashboard Data Accuracy Fix (Latest Minor Update)**
 - **Fixed Recent Experiments display**: Corrected data transformation to show actual movie titles
 - **Accurate movie counts**: Recent experiments now display correct number of assigned movies
