@@ -97,8 +97,69 @@ ALTER TABLE experiments ADD COLUMN event_timezone VARCHAR(50) DEFAULT 'America/N
 
 **Result**:
 - ✅ Recent Experiments now show actual movie titles (e.g., "Bruce Lee Versus Gay Power, See No Evil")
-- ✅ Accurate movie counts displayed (e.g., "2 movies" instead of "0 movies")
 - ✅ Dashboard fully functional with proper experiment data visualization
+
+### 🎬 Experiment Creation & Editing UX Revolution ✅ (Latest Major Update)
+**COMPLETE WORKFLOW REDESIGN**: Revolutionary overhaul of experiment creation and editing interface with modern two-panel design, enhanced duplicate detection, and streamlined user experience.
+
+**Strategic Vision**:
+- **Modal-to-Page Evolution**: Replaced cramped modal with spacious dedicated page interface
+- **Two-Panel Design**: Clean separation of experiment details (left) and movie management (right)
+- **Intelligent Duplicate Prevention**: Backend-driven movie deduplication by IMDB/TMDb ID
+- **Unified Create/Edit Experience**: Single page handles both new experiments and editing existing ones
+
+**Key Improvements Implemented**:
+
+**🏗️ Interface Architecture**:
+- **Dedicated Pages**: `/experiments/new` and `/experiments/:id/edit` with full-screen real estate
+- **Responsive Two-Panel Layout**: 
+  - Left Panel: Experiment form fields (number, date, time, location, host, notes, images)
+  - Right Panel: Movie management tools and selected movies list
+- **Consistent Navigation**: Header with back button, title, and action buttons (Cancel/Save)
+- **Rounded Design Language**: Header styled to match content panels with consistent width and corners
+
+**🎭 Movie Management Revolution**:
+- **Streamlined Controls**: Two prominent buttons - "Add New Movie" and "Import from TMDb"  
+- **Selected Movies List**: Positioned directly under action buttons for immediate feedback
+- **Clean Presentation**: Movie cards show poster, title, year, overview with remove functionality
+- **Real-time Updates**: Instant visual feedback when movies are added or removed
+
+**🚫 Duplicate Prevention System**:
+- **Backend Intelligence**: Enhanced `/api/movies` endpoint checks IMDB ID and TMDb ID before creating
+- **Priority Logic**: IMDB ID checked first (most reliable), TMDb ID as fallback
+- **Smart Returns**: Status 200 for existing movies, 201 for new creations
+- **User Notifications**: Toast messages explain whether movie was found/created/linked
+- **Selection Protection**: Prevents same movie from being added twice to current experiment
+
+**🔧 Technical Implementation**:
+```typescript
+// Backend Duplicate Detection
+if (movieData.movieImdbId) {
+  existingMovie = await prisma.movie.findFirst({
+    where: { movieImdbId: movieData.movieImdbId }
+  });
+}
+if (movieData.movieTmdbId && !existingMovie) {
+  existingMovie = await prisma.movie.findFirst({
+    where: { movieTmdbId: movieData.movieTmdbId }
+  });
+}
+```
+
+**🎨 User Experience Enhancements**:
+- **Toast Notification System**: Color-coded feedback (success, info, warning, error)
+- **Auto-Increment Logic**: Experiment numbers automatically increment from latest
+- **Edit Mode Support**: Full data loading and updating for existing experiments
+- **Encore Field Removal**: Cleaned up unused form fields for better focus
+- **Consistent Routing**: Standard RESTful patterns for create/edit workflows
+
+**🎯 Results Achieved**:
+- ✅ **Eliminated duplicate movies** in database through intelligent backend detection
+- ✅ **Improved user experience** with spacious interface and clear workflow
+- ✅ **Enhanced data integrity** through reliable ID-based matching
+- ✅ **Streamlined movie selection** with immediate visual feedback
+- ✅ **Unified create/edit experience** reducing development complexity
+- ✅ **Professional polish** with consistent design language and smooth interactions
 
 ### ⏰ Experiment Time & Timezone System ✅ COMPLETE
 **COMPREHENSIVE SCHEDULING SYSTEM**: Added dedicated time and timezone management for experiments to ensure consistent event scheduling across different locations.

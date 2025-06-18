@@ -47,6 +47,22 @@ export default function Movies() {
   // Available years for filtering
   const [availableYears, setAvailableYears] = useState<string[]>([]);
   const [stats, setStats] = useState<MovieStats | null>(null);
+  
+  // Notification state
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: 'success' | 'info' | 'warning' | 'error';
+  } | null>(null);
+
+  // Auto-hide notification after 4 seconds
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => {
+        setNotification(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
   // Modal states
   const [detailModal, setDetailModal] = useState<{
@@ -396,6 +412,27 @@ export default function Movies() {
       throw new Error(`Failed to ${isEdit ? 'update' : 'create'} movie: ${errorData}`);
     }
 
+    // Show notification based on operation and response
+    if (isEdit) {
+      setNotification({
+        message: `Movie "${data.movieTitle}" updated successfully`,
+        type: 'success'
+      });
+    } else {
+      const isExistingMovie = response.status === 200; // 200 = existing movie, 201 = new movie
+      if (isExistingMovie) {
+        setNotification({
+          message: `Movie "${data.movieTitle}" already exists - no duplicate created`,
+          type: 'info'
+        });
+      } else {
+        setNotification({
+          message: `New movie "${data.movieTitle}" created successfully`,
+          type: 'success'
+        });
+      }
+    }
+
     // Refresh the movie list and stats
     fetchMovies();
     fetchStats();
@@ -406,6 +443,26 @@ export default function Movies() {
 
   return (
     <div className="space-y-6">
+      {/* Notification Toast */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 max-w-md p-4 rounded-lg shadow-lg transition-all duration-300 ${
+          notification.type === 'success' ? 'bg-green-600' :
+          notification.type === 'info' ? 'bg-blue-600' :
+          notification.type === 'warning' ? 'bg-yellow-600' :
+          'bg-red-600'
+        }`}>
+          <div className="flex items-center justify-between">
+            <p className="text-white text-sm">{notification.message}</p>
+            <button
+              onClick={() => setNotification(null)}
+              className="text-white hover:text-gray-200 ml-4"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExperimentCard, Experiment } from '../components/ExperimentCard';
 import { SearchFilters } from '../components/SearchFilters';
 import { Pagination } from '../components/Pagination';
@@ -29,6 +30,7 @@ interface ExperimentsResponse {
 }
 
 export default function Experiments() {
+  const navigate = useNavigate();
   const [experiments, setExperiments] = useState<Experiment[]>([]);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -289,26 +291,7 @@ export default function Experiments() {
           <p className="text-gray-400 mt-1">Manage movie viewing experiments and events</p>
         </div>
         <button
-          onClick={() => {
-            // Reset to fresh state with today's date when opening modal
-            const today = new Date();
-            const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
-            const todayDate = estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
-            
-            setNewExperiment({
-              experimentNumber: getNextExperimentNumber,
-              eventDate: todayDate,
-              eventTime: '22:00',
-              eventTimezone: 'America/New_York',
-              eventHost: '',
-              eventLocation: '',
-              eventEncore: false,
-              eventNotes: '',
-              eventImage: '',
-              postUrl: ''
-            });
-            setShowCreateModal(true);
-          }}
+          onClick={() => navigate('/experiments/new')}
           className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
         >
           <span>➕</span>
@@ -371,7 +354,7 @@ export default function Experiments() {
               <ExperimentCard
                 key={experiment.id}
                 experiment={experiment}
-                onEdit={setEditingExperiment}
+                onEdit={(experiment) => navigate(`/experiments/${experiment.id}/edit`)}
                 onDelete={handleDeleteExperiment}
               />
             ))}
@@ -397,26 +380,7 @@ export default function Experiments() {
           </div>
           {!searchQuery && (
             <button
-              onClick={() => {
-                // Reset to fresh state with today's date when opening modal
-                const today = new Date();
-                const estDate = new Date(today.toLocaleString("en-US", {timeZone: "America/New_York"}));
-                const todayDate = estDate.toISOString().split('T')[0]; // YYYY-MM-DD format
-                
-                setNewExperiment({
-                  experimentNumber: getNextExperimentNumber,
-                  eventDate: todayDate,
-                  eventTime: '22:00',
-                  eventTimezone: 'America/New_York',
-                  eventHost: '',
-                  eventLocation: '',
-                  eventEncore: false,
-                  eventNotes: '',
-                  eventImage: '',
-                  postUrl: ''
-                });
-                setShowCreateModal(true);
-              }}
+              onClick={() => navigate('/experiments/new')}
               className="mt-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Create Your First Experiment

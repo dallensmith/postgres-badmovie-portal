@@ -73,6 +73,18 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **Fixed Recent Experiments display**: Corrected data transformation to show actual movie titles
 - **Accurate movie counts**: Recent experiments now display correct number of assigned movies
 - **Server-side data mapping**: Proper transformation of Prisma relationship data for frontend consumption
+
+**🎬 Experiment Creation & Editing UX Revolution (Latest Major Update)**
+- **Complete interface overhaul**: Replaced modal with dedicated full-page create/edit interface
+- **Two-panel design**: Clean separation of experiment details (left) and movie management (right)  
+- **Intelligent duplicate prevention**: Backend automatically detects existing movies by IMDB/TMDb ID
+- **Unified workflow**: Single page design handles both creating new experiments and editing existing ones
+- **Enhanced movie selection**: Streamlined tools with immediate visual feedback in selected movies list
+- **Smart notifications**: Toast messages inform users when movies already exist vs. new creations
+- **Auto-increment experiment numbers**: Automatically calculates next experiment number
+- **Professional polish**: Consistent rounded design language and smooth user interactions
+- **Data integrity**: Eliminates duplicate movie entries through reliable ID-based matching
+- **100% compatibility**: Works seamlessly with existing movie database and experiment system
 - **Awards tracking**: Automatic capture of Oscar wins, nominations, and other recognition
 - **Individual movie sync**: "🍅 Fill Missing with OMDb" button in movie edit form for selective enhancement
 - **Batch processing**: Site-wide "🍅 Fill Missing with OMDb" button for mass enhancement of all movies

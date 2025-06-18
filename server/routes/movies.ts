@@ -188,7 +188,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/movies - Create a new movie
+// POST /api/movies - Create a new movie (or return existing if duplicate)
 router.post('/', async (req, res) => {
   try {
     const movieData = req.body;
@@ -198,15 +198,47 @@ router.post('/', async (req, res) => {
     console.log('Request body keys:', Object.keys(movieData));
     console.log('Movie title:', movieData.movieTitle);
     console.log('Movie year:', movieData.movieYear);
+    console.log('IMDB ID:', movieData.movieImdbId);
+    console.log('TMDB ID:', movieData.movieTmdbId);
+    
+    // Check for existing movie by IMDB ID or TMDB ID
+    let existingMovie = null;
+    
+    if (movieData.movieImdbId) {
+      existingMovie = await prisma.movie.findFirst({
+        where: { movieImdbId: movieData.movieImdbId }
+      });
+      if (existingMovie) {
+        console.log('🔍 Found existing movie by IMDB ID:', existingMovie.id, existingMovie.movieTitle);
+        return res.status(200).json(existingMovie);
+      }
+    }
+    
+    if (movieData.movieTmdbId && !existingMovie) {
+      existingMovie = await prisma.movie.findFirst({
+        where: { movieTmdbId: movieData.movieTmdbId }
+      });
+      if (existingMovie) {
+        console.log('🔍 Found existing movie by TMDB ID:', existingMovie.id, existingMovie.movieTitle);
+        return res.status(200).json(existingMovie);
+      }
+    }
+    
+    // No duplicate found, create new movie
+    console.log('✨ No existing movie found, creating new entry');
     
     // Handle date conversion for movieReleaseDate
     const processedData = { ...movieData };
     console.log('MovieReleaseDate received:', processedData.movieReleaseDate);
     
-    // The frontend already converts dates to ISO format, so we just need to handle nulls
+    // Convert string date to proper DateTime for Prisma
     if (!processedData.movieReleaseDate || processedData.movieReleaseDate === '') {
       processedData.movieReleaseDate = null;
       console.log('Set movieReleaseDate to null');
+    } else if (typeof processedData.movieReleaseDate === 'string') {
+      // Convert YYYY-MM-DD string to Date object for Prisma DateTime field
+      processedData.movieReleaseDate = new Date(processedData.movieReleaseDate + 'T00:00:00.000Z');
+      console.log('Converted movieReleaseDate to DateTime:', processedData.movieReleaseDate);
     } else {
       console.log('Using movieReleaseDate as provided:', processedData.movieReleaseDate);
     }
@@ -361,7 +393,7 @@ router.post('/batch-sync-tmdb', async (_req, res) => {
               movieTitle: tmdbData.title,
               movieOriginalTitle: tmdbData.original_title || '',
               movieYear: tmdbData.release_date ? new Date(tmdbData.release_date).getFullYear().toString() : '',
-              movieReleaseDate: tmdbData.release_date ? new Date(tmdbData.release_date) : null,
+              movieReleaseDate: tmdbData.release_date ? new Date(tmdbData.release_date + 'T00:00:00.000Z') : null, // Convert to DateTime
               movieRuntime: tmdbData.runtime ? tmdbData.runtime : null,
               movieTagline: tmdbData.tagline || '',
               movieOverview: tmdbData.overview || '',
@@ -569,7 +601,7 @@ router.post('/batch-omdb-sync', async (_req, res) => {
               hasUpdates = true;
             }
             if (isEmpty(movie.movieReleaseDate) && omdbData.releaseDate) {
-              updateData.movieReleaseDate = new Date(omdbData.releaseDate);
+              updateData.movieReleaseDate = new Date(omdbData.releaseDate + 'T00:00:00.000Z'); // Convert to DateTime
               hasUpdates = true;
             }
             if (isEmpty(movie.movieRuntime) && omdbData.runtime) {

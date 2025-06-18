@@ -98,7 +98,7 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
         movieTitle: tmdbData.title,
         movieOriginalTitle: tmdbData.originalTitle || '',
         movieYear: tmdbData.year || '',
-        movieReleaseDate: tmdbData.releaseDate ? new Date(tmdbData.releaseDate) : null,
+        movieReleaseDate: tmdbData.releaseDate || null, // Keep as YYYY-MM-DD string
         movieRuntime: tmdbData.runtime || null,
         movieTagline: tmdbData.tagline || '',
         movieOverview: tmdbData.overview || '',
@@ -278,7 +278,16 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                     <div className="flex items-center justify-between">
                       <span className="text-gray-400">Release:</span>
                       <span className="text-white">
-                        {new Date(displayMovie.movieReleaseDate).toLocaleDateString()}
+                        {displayMovie.movieReleaseDate 
+                          ? (() => {
+                              const dateStr = typeof displayMovie.movieReleaseDate === 'string' 
+                                ? displayMovie.movieReleaseDate.split('T')[0] 
+                                : new Date(displayMovie.movieReleaseDate).toISOString().split('T')[0];
+                              const [year, month, day] = dateStr.split('-');
+                              return `${month}/${day}/${year}`;
+                            })()
+                          : 'Unknown'
+                        }
                       </span>
                     </div>
                   )}
@@ -455,7 +464,16 @@ export const MovieDetailModal: React.FC<MovieDetailModalProps> = ({
                                     Experiment {experiment.experimentNumber || 'Unknown'}
                                   </span>
                                   <span className="text-gray-300 text-sm">
-                                    {experiment.eventDate ? new Date(experiment.eventDate).toLocaleDateString() : 'Unknown Date'}
+                                    {experiment.eventDate 
+                                      ? (() => {
+                                          const dateStr = typeof experiment.eventDate === 'string' 
+                                            ? experiment.eventDate.split('T')[0] 
+                                            : new Date(experiment.eventDate).toISOString().split('T')[0];
+                                          const [year, month, day] = dateStr.split('-');
+                                          return `${month}/${day}/${year}`;
+                                        })()
+                                      : 'Unknown Date'
+                                    }
                                   </span>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">

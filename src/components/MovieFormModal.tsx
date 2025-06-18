@@ -584,13 +584,11 @@ export const MovieFormModal: React.FC<MovieFormModalProps> = ({
 
       console.log('🐛 DEBUG: Final clean data being sent to API:', cleanData);
 
-      // Handle date field - convert to proper DateTime format
+      // Handle date field - keep as pure date string without timezone conversion
       if (cleanData.movieReleaseDate === '') {
         (cleanData as any).movieReleaseDate = null;
-      } else if (cleanData.movieReleaseDate) {
-        // Convert date string to ISO DateTime
-        (cleanData as any).movieReleaseDate = new Date(cleanData.movieReleaseDate + 'T00:00:00.000Z').toISOString();
       }
+      // Keep the date string as-is to avoid timezone conversion issues
 
       await onSave(cleanData);
       

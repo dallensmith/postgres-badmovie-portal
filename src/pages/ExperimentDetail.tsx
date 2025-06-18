@@ -138,12 +138,13 @@ export default function ExperimentDetail() {
               <div>
                 <div className="text-gray-400 text-sm">Date</div>
                 <div className="text-white">
-                  {new Date(experiment.eventDate).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {(() => {
+                    const dateStr = typeof experiment.eventDate === 'string' 
+                      ? experiment.eventDate.split('T')[0] 
+                      : new Date(experiment.eventDate).toISOString().split('T')[0];
+                    const [year, month, day] = dateStr.split('-');
+                    return `${month}/${day}/${year}`;
+                  })()}
                 </div>
               </div>
 
