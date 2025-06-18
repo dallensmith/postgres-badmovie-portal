@@ -68,7 +68,7 @@ router.get('/stats', async (_req, res) => {
     });
 
     // Get recent experiments with their movies
-    const recentExperiments = await prisma.experiment.findMany({
+    const rawRecentExperiments = await prisma.experiment.findMany({
       orderBy: { createdAt: 'desc' },
       take: 5,
       select: {
@@ -77,6 +77,7 @@ router.get('/stats', async (_req, res) => {
         eventDate: true,
         eventHost: true,
         eventLocation: true,
+        eventImage: true,
         createdAt: true,
         movieExperiments: {
           select: {
@@ -92,6 +93,16 @@ router.get('/stats', async (_req, res) => {
         }
       }
     });
+
+    // Transform experiments to match frontend expectations
+    const recentExperiments = rawRecentExperiments.map(experiment => ({
+      id: experiment.id,
+      experimentNumber: experiment.experimentNumber,
+      eventDate: experiment.eventDate,
+      eventImage: experiment.eventImage,
+      createdAt: experiment.createdAt,
+      experimentMovies: experiment.movieExperiments.map(me => me.movie.movieTitle)
+    }));
 
     res.json({
       stats: {

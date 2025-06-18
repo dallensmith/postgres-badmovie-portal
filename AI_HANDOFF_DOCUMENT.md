@@ -75,7 +75,25 @@ ALTER TABLE movies ADD COLUMN website_url TEXT;
 - **Future Extensibility**: Clean architecture for adding new features
 - **Revenue Integration**: Dedicated space for monetization without cluttering core interface
 
-## 📊 Current Database Stateject Overview
+### 📊 Dashboard Data Accuracy Fix ✅ (Latest Minor Update)
+**ISSUE RESOLVED**: Recent Experiments section was displaying "No movies assigned" despite experiments having movies.
+
+**Technical Problem**:
+- Server returned experiment data in nested Prisma relationship format (`movieExperiments.movie.movieTitle`)
+- Frontend expected flat array of movie titles in `experimentMovies` property
+- Data structure mismatch caused display of empty movie lists
+
+**Solution Implemented**:
+- **Server-side transformation** in `/server/routes/dashboard.ts`
+- Map nested `movieExperiments` relationships to flat `experimentMovies` string array
+- Preserve all other experiment data while fixing display format
+
+**Result**:
+- ✅ Recent Experiments now show actual movie titles (e.g., "Bruce Lee Versus Gay Power, See No Evil")
+- ✅ Accurate movie counts displayed (e.g., "2 movies" instead of "0 movies")
+- ✅ Dashboard fully functional with proper experiment data visualization
+
+## 📊 Current Database State
 
 **PRIMARY GOAL**: Build a comprehensive admin portal and content management system for the Big Screen Bad Movies community. This system serves as the central hub for managing all aspects of bad movie viewing experiments.
 
@@ -869,6 +887,14 @@ app.use('/api/public', rateLimit({
 - **Component Reusability**: Maximum code sharing between admin/public
 - **Consistent APIs**: Same backend serves both frontends perfectly
 - **Modern Deployment**: CDN, PWA capabilities, mobile optimization
+
+#### **Future Infrastructure Enhancements**
+- **Optimole CDN Integration**: Planned for experiment image optimization
+  - Automatic image resizing and format optimization
+  - Reduced server bandwidth and improved loading speeds
+  - Responsive image variants for all devices
+  - **Current Limitation**: Requires production domain for whitelisting (blocked in local dev environment)
+  - **Implementation Plan**: Ready for production deployment once public domain is available
 
 #### **Business Benefits**
 - **Faster Time to Market**: Build on proven foundations

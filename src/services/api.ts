@@ -19,6 +19,7 @@ export interface RecentExperiment {
   id: number;
   experimentNumber: string;
   eventDate: string;
+  eventImage: string | null;
   experimentMovies: string[];
   createdAt: string;
 }

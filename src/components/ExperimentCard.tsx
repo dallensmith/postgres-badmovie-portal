@@ -41,10 +41,15 @@ export const ExperimentCard: React.FC<ExperimentCardProps> = React.memo(({
     [experiment.eventImage]
   );
   
-  const formattedDate = useMemo(() => 
-    new Date(experiment.eventDate).toLocaleDateString(), 
-    [experiment.eventDate]
-  );
+  const formattedDate = useMemo(() => {
+    // Handle the date properly for EST timezone to avoid off-by-one errors
+    const date = new Date(experiment.eventDate);
+    // Extract just the date components to avoid timezone shifting issues
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    return `${month}/${day}/${year}`;
+  }, [experiment.eventDate]);
   
   const movieCount = useMemo(() => 
     experiment.movieExperiments?.length || 0, 

@@ -58,6 +58,11 @@ A comprehensive admin portal for managing "bad movie viewing experiments" - comm
 - **Revolutionary metadata enhancement**: Added OMDb as secondary data source to fill TMDb gaps
 - **Rotten Tomatoes integration**: Automatic fetching of RT ratings, URLs, and review counts
 - **Enhanced ratings system**: Now includes IMDb, Rotten Tomatoes, Metacritic, and TMDb ratings
+
+**📊 Dashboard Data Accuracy Fix (Latest Minor Update)**
+- **Fixed Recent Experiments display**: Corrected data transformation to show actual movie titles
+- **Accurate movie counts**: Recent experiments now display correct number of assigned movies
+- **Server-side data mapping**: Proper transformation of Prisma relationship data for frontend consumption
 - **Awards tracking**: Automatic capture of Oscar wins, nominations, and other recognition
 - **Individual movie sync**: "🍅 Fill Missing with OMDb" button in movie edit form for selective enhancement
 - **Batch processing**: Site-wide "🍅 Fill Missing with OMDb" button for mass enhancement of all movies
@@ -336,6 +341,13 @@ The admin portal's exceptional performance (sub-1-second loads, 97.7% OMDb succe
 - [ ] **API for third-party apps** enabling mobile development
 - [ ] **Analytics dashboard** for community engagement insights
 - [ ] **Performance caching** (Redis) for high-traffic optimization
+
+#### **Performance & Infrastructure**
+- [ ] **Optimole CDN integration** for experiment images
+  - Automatic image optimization and responsive variants
+  - Reduced server load for image delivery
+  - Improved loading speeds across all devices
+  - **Note**: Requires production domain for whitelisting (blocked in local dev)
 
 #### **Community Growth**
 - [ ] **Experiment attendance tracking** and member profiles

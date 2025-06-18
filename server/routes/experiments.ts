@@ -7,7 +7,16 @@ const router = express.Router();
 // Validation schemas
 const createExperimentSchema = z.object({
   experimentNumber: z.string().max(10),
-  eventDate: z.string().transform(str => new Date(str)),
+  eventDate: z.string().transform(str => {
+    // Store date as-is without timezone conversion
+    // If it's YYYY-MM-DD format, create a date object that preserves the day
+    if (str.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      // Create date object without timezone shifting by using the date parts directly
+      const [year, month, day] = str.split('-').map(Number);
+      return new Date(year, month - 1, day); // month is 0-indexed in JavaScript
+    }
+    return new Date(str);
+  }),
   eventLocation: z.string().max(255),
   eventHost: z.string().max(255),
   eventNotes: z.string().optional().nullable(),

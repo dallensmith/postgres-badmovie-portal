@@ -431,7 +431,14 @@ function ExperimentModal({
               </label>
               <input
                 type="date"
-                value={formData.eventDate ? formData.eventDate.split('T')[0] : ''}
+                value={formData.eventDate ? (() => {
+                  // Extract date properly for form input - use UTC components to avoid timezone shifts
+                  const date = new Date(formData.eventDate);
+                  const year = date.getUTCFullYear();
+                  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+                  const day = String(date.getUTCDate()).padStart(2, '0');
+                  return `${year}-${month}-${day}`;
+                })() : ''}
                 onChange={(e) => handleInputChange('eventDate', e.target.value)}
                 className="w-full bg-dark-700 border border-dark-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 required
